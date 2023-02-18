@@ -1,2 +1,7 @@
 # Indoor
 Team Development by Team Indoor
+物体検知のコードをほぼそのまま持ってきました。
+軽くコードを見ておいてください。
+見逃している部分(detectorが含まれているなど)があったら訂正してください。
+sqlalchemyからsqlite3への変換は明日相談します。
+requirements.txtをインストールしようとしたらエラーが出たので訂正出来たらしてください。
