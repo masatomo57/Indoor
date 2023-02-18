@@ -1,6 +1,6 @@
-from apps.app import db
-from apps.auth.forms import LoginForm, SignUpForm
-from apps.crud.models import User
+from app import db
+from auth.forms import LoginForm, SignUpForm
+from crud.models import User
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import login_user, logout_user
 

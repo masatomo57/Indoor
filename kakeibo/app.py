@@ -1,11 +1,10 @@
-<<<<<<< HEAD
 from flask import Flask, render_template
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
 
-from apps.config import config
+from config import config
 
 db = SQLAlchemy()
 csrf = CSRFProtect()
@@ -33,13 +32,13 @@ def create_app(config_key):
     login_manager.init_app(app)
 
     # crudパッケージからviewsをimportする
-    from apps.crud import views as crud_views
+    from crud import views as crud_views
 
     # register_blueprintを使いviewsのcrudをアプリへ登録する
     app.register_blueprint(crud_views.crud, url_prefix="/crud")
 
     # これから作成するauthパッケージからviewsをimportする
-    from apps.auth import views as auth_views
+    from auth import views as auth_views
 
     # register_blueprintを使いviewsのauthをアプリへ登録する
     app.register_blueprint(auth_views.auth, url_prefix="/auth")
@@ -60,19 +59,19 @@ def page_not_found(e):
 def internal_server_error(e):
     """500 Internal Server Error"""
     return render_template("500.html"), 500
-=======
+
+'''
 from flask import Flask, render_template, g
 
 # アプリケーション定義
 app = Flask(__name__)
 
 # データベースを呼び出す関数の定義、データベースができたらコメントアウト外してください。
-'''
 def get_db():
     if 'db' not in g:
         g.db = sqlite3.connect('データベースの名前.db')
     return g.db
-'''
+
 
 @app.route("/")
 def index():
@@ -87,7 +86,7 @@ def charts():
     return render_template("charts.html")
 
 # CS50モジュールのSQLを使いたくないため上のコメントアウトを書いています。以下はCS50のbirthdayにおけるCS50のSQLを使わなかった場合の例です。
-'''
+
 import os
 
 import sqlite3
@@ -137,4 +136,3 @@ def index():
 
     db.close()
 '''
->>>>>>> 7675cdf78d400179db34065f305dc0df7e7bc523
