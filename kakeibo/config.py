@@ -13,4 +13,5 @@ class LocalConfig(BaseConfig):
 # config辞書にマッピングする
 config = {
     "local": LocalConfig,
+    "base": BaseConfig,
 }
