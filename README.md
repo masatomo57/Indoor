@@ -8,6 +8,6 @@ requirements.txtをインストールしようとしたらエラーが出たの�
 
 publicのtest.gitに物体検知の簡易的なコードを入れました。良かったら見てみてください。
 最初のpip install でエラーが出るかもしれんせんが、そこがクリア出来たら多分動きます。
-https://github.com/ml-flaskbook/flaskbookの下のやり方を実行してみてください。
+https://github.com/ml-flaskbook/flaskbook　の下のやり方を実行してみてください。
 
 https://github.com/xxsatoxx/test.git
