@@ -5,29 +5,6 @@
 {% endblock %}
 
 {% block main %}
-<div class="mx-auto dt-auth-main">
-    <div class="card dt-auth-login">
-        <header>ログイン</header>
-        <section>
-            <form action="/login" method="post">
-                {% for message in get_flashed_messages() %}
-                <span class="dt-auth-flash">{{ message }}</span>
-                {% endfor %}
-                {{ form.csrf_token }}
-                <div class="mb-3">
-                    {{ form.email(class="form-control dt-auth-input",placeholder="メールアドレス") }}
-                </div>
-                <div class="mb-3">
-                    {{ form.password(class="form-control dt-auth-input",placeholder="パスワード") }}
-                </div>
-                <input class="form-check-input" type="checkbox" name="remember_me" id="remember_me">
-                <div><label class="form-check-label" for="remember_me">ログイン状態を保存する</label></div>
-                {{ form.submit(class="btn btn-md btn-primary btn-block dt-auth-btn") }}
-            </form>
-        </section>
-    </div>
-</div>
-    <!--
     <form action="/login" method="post">
         <div class="mb-3">
             <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="Username" type="text">
@@ -37,5 +14,4 @@
         </div>
         <button class="btn btn-primary" type="submit">LogIn</button>
     </form>
-    -->
 {% endblock %}

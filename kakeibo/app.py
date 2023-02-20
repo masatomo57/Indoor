@@ -14,9 +14,8 @@ import sqlite3
 app = Flask(__name__)
 
 # Ensure templates are auto-reloaded
-# app.config["TEMPLATES_AUTO_RELOAD"] = True
-app.config['SECRET_KEY'] = os.urandom(16)
-csrf = CSRFProtect(app)
+app.config["TEMPLATES_AUTO_RELOAD"] = True
+
 # Custom filter
 app.jinja_env.filters["tax"] = tax
 
@@ -76,15 +75,6 @@ def login():
     # Forget any user_id
     session.clear()
 
-    form = LoginForm()
-    if form.validate_on_submit():
-        # process form data
-        flash('Login requested for user {}, remember_me={}'.format(
-            form.email.data, form.remember_me.data))
-        return redirect("/")
-    return render_template("login.html", title='Sign In', form=form)
-
-'''
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
 
@@ -116,7 +106,6 @@ def login():
     # User reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("login.html")
-'''
 
 @app.route("/logout")
 def logout():
