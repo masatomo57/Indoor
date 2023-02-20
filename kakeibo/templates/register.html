@@ -76,9 +76,7 @@
            var startDate = YM + "-" + "01 00:00:00";
            var lastDate = YM + "-" + lastDateArray[2] + " 23:59:59";
 
-           // 今月の「初日」と「最終日」をUIに表示
-           getElmId('start_date').value = YM + "-01";
-           getElmId('last_date').value = YM + "-" + lastDateArray[2];
+
 
            // 今月のデータを表示
            displaySpendingData(startDate, lastDate);
