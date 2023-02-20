@@ -57,7 +57,8 @@ def charts():
 def kakeibo():
     return render_template("kakeibo/index.html")
 
-app.route("/register")
+
+@app.route("/register")
 @login_required
 def register():
     return render_template("register.html")
