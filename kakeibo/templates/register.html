@@ -2,8 +2,7 @@
 {% block title %}データ登録{% endblock %}
 
 {% block main %}
-    <form action="/register" method="post">
-    <!-- 登録項目: 日時、品目、単価、個数 -->
+      <!-- 登録項目: 日時、品目、単価、個数 -->
         <div id="regist_spending" class="container">
             <h2>データ登録</h2>
             <table id="regist_data_tb">
@@ -26,6 +25,8 @@
                 <th>合計金額</th>
             </tr>
         </table>
+    <!-- 入力されたデータを登録する画面 -->
+    <form action="/register" method="post">
         <button class="btn btn-primary" type="submit">登録</button>
     </form>
 
