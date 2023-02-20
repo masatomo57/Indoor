@@ -1,15 +1,11 @@
 import os
 
-from flask import Flask, flash, redirect, render_template, request, session, url_for, g
+from flask import Flask, render_template, flash, redirect, request, url_for, session, g
 from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
-
-import requests
-import urllib.parse
-
-from functools import wraps
-
+import datetime
+from helpers import apology, login_required, tax
 import sqlite3
 
 # Configure application
@@ -19,25 +15,22 @@ app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 # Custom filter
+app.jinja_env.filters["tax"] = tax
 
 # Configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-# ログインを要求する関数の定義
-def login_required(f):
-    """
-    Decorate routes to require login.
 
-    https://flask.palletsprojects.com/en/1.1.x/patterns/viewdecorators/
-    """
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if session.get("user_id") is None:
-            return redirect("/login")
-        return f(*args, **kwargs)
-    return decorated_function
+# ブラウザがレスポンスをキャッシュしないようにしている
+@app.after_request
+def after_request(response):
+    """Ensure responses aren't cached"""
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    response.headers["Expires"] = 0
+    response.headers["Pragma"] = "no-cache"
+    return response
 
 # データベースを呼び出す関数の定義
 def get_db():
@@ -64,10 +57,12 @@ def index():
 def charts():
     return render_template("charts.html")
 
+
 @app.route("/kakeibo")
 @login_required
 def kakeibo():
     return render_template("kakeibo.html")
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -94,11 +89,10 @@ def login():
         rows_count = db.execute("SELECT count(*) FROM users WHERE username = ?", (request.form.get("username"),)).fetchall()
 
         # Ensure username exists and password is correct
-        if rows_count[0][0] != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
+        if rows_count[0][0] != 1 or not check_password_hash(rows[0][2], request.form.get("password")):
             return redirect("/login")
-
         # Remember which user has logged in
-        session["user_id"] = rows[0]["id"]
+        session["user_id"] = rows[0][1]
 
         db.close()
 
@@ -132,8 +126,6 @@ def signup():
             return redirect("/signup")
         elif request.form.get("password")=="" or not request.form.get("password")==request.form.get("confirmation"):
             return redirect("/signup")
-        elif duplication:
-            return redirect("/signup")
         else:
             db.execute("INSERT INTO users (username, hash) VALUES(?, ?)", (request.form.get("username"), generate_password_hash(request.form.get("password"))))
             db.commit()
@@ -142,6 +134,7 @@ def signup():
             return redirect("/login")
     else:
         return render_template("signup.html")
+
 
 # CS50モジュールのSQLを使いたくないため上のget_dbを定義しています。以下はCS50のbirthdayにおけるCS50のSQLを使わなかった場合の例です。これを参考にfinanceの移植、書き換えをお願いします。
 '''
