@@ -6,8 +6,6 @@ from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
 import datetime
 from helpers import apology, login_required, tax
-from forms import LoginForm, SignUpForm
-from flask_wtf.csrf import CSRFProtect
 import sqlite3
 
 # Configure application
@@ -59,6 +57,10 @@ def charts():
 def kakeibo():
     return render_template("kakeibo/index.html")
 
+app.route("/register")
+@login_required
+def register():
+    return render_template("register.html")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
