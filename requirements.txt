@@ -1,4 +1,6 @@
 Flask
 Flask-Session
 requests
-flask-wtf
+Flask-WTF
+Flask-Login
+Flask-Mail
