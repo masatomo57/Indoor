@@ -31,4 +31,5 @@ class LoginForm(FlaskForm):
         ],
     )
     password = PasswordField("パスワード", validators=[DataRequired("パスワードは必須です。")])
+    remember_me = BooleanField("ログイン状態を保存する")
     submit = SubmitField("ログイン")
