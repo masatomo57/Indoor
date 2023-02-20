@@ -79,8 +79,8 @@ def login():
         # process form data
         flash('Login requested for user {}, remember_me={}'.format(
             form.email.data, form.remember_me.data))
-        return redirect('/index')
-    return render_template('login.html', title='Sign In', form=form)
+        return redirect("/")
+    return render_template("login.html", title='Sign In', form=form)
 
 '''
     # User reached route via POST (as by submitting a form via POST)
