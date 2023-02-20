@@ -13,8 +13,8 @@ import sqlite3
 app = Flask(__name__)
 
 # Ensure templates are auto-reloaded
-app.config["TEMPLATES_AUTO_RELOAD"] = True
-
+# app.config["TEMPLATES_AUTO_RELOAD"] = True
+app.config['SECret_KEY'] = os.urandom(16)
 # Custom filter
 app.jinja_env.filters["tax"] = tax
 
