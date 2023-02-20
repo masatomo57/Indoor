@@ -9,7 +9,7 @@
     <div class="card dt-auth-login">
         <header>ログイン</header>
         <section>
-            <form method="post" action="{{ url_for('auth.login') }}">
+            <form action="/login" method="post">
                 {% for message in get_flashed_messages() %}
                 <span class="dt-auth-flash">{{ message }}</span>
                 {% endfor %}
