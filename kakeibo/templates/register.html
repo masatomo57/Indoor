@@ -74,10 +74,11 @@
                         table.innerHTML = "<tr><th>日付</th><th>品目</th><th colspan='3'>合計金額</th></tr>";
 
                         for (i = 0; i < results.rows.length; i++){
+                            var rowData = results.rows.item(i);
                             var displayData = document.createElement('tr');
 
                             // テーブル識別用id属性付加
-                            displayData.setAttribute("id", results.rows.item(i).id);
+                            displayData.setAttribute("id", rowData.id);
 
                             // テーブルデータ生成
                             displayData.innerHTML = '<td>' + results.rows.item(i).registed_at.split(' ')[0] + '</td><td>' + results.rows.item(i).contents + '</td><td class="sum">'+ results.rows.item(i).sum + '</td><td><button class="delete_btn">削除</button></td><td><button class="edit_btn">編集</button></td>';
