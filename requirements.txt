@@ -6,3 +6,4 @@ Flask-Login
 Flask-Mail
 Werkzeug
 WTForms
+email_validator
