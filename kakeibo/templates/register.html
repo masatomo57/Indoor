@@ -15,4 +15,18 @@
             </table>
         </div>
     </form>
+
+    <form action="/register" method="post">
+        <main>
+            <input type="date" id="start_date"> 〜 <input type="date" id="last_date"><button id="display_btn">  指定期間表示</button>
+            <table id="hab_tb">
+                <tr>
+                    <th>日付</th>
+                    <th>品目</th>
+                    <th>合計金額</th>
+                </tr>
+            </table>
+        </main>
+    </form>
+
 {% endblock %}
