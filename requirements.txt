@@ -4,3 +4,5 @@ requests
 Flask-WTF
 Flask-Login
 Flask-Mail
+Werkzeug
+WTForms
