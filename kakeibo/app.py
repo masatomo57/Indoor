@@ -64,7 +64,7 @@ def kakeibo():
     return render_template("kakeibo.html")
 
 
-@app.route("/register" methods=["GET", "POST"])
+@app.route("/register", methods=["GET", "POST"])
 @login_required
 def register():
     if request.method == "POST":
