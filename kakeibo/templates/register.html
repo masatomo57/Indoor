@@ -35,6 +35,8 @@
         // 「年月日」を配列で取得 ( [0]:年, [1]:月, [2]:日 )
         var dateArray = getTSDate(date);
 
+        ////////  データベースの整合は後で考える　////////
+
         // DB情報を設定
         var dbName = 'household_account_book';                 // DB名
         var dbVersion = '1.0';                                 // DBバージョン
@@ -47,6 +49,8 @@
             trns.executeSql('create table if not exists hab (id integer primary key autoincrement,contents text not null,price int not null,registed_at datetime)')
           }
         );
+
+        /////////  データベースの整合は後で考える ////////////
 
         // 登録日付に「本日の年月日」を設定
         document.getElementById("regist_date").value = dateArray[0] + "-" + dateArray[1] + "-" + dateArray[2]
