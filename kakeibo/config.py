@@ -1,3 +1,4 @@
+'''
 # BaseConfigクラスを作成する
 class BaseConfig:
     # SECRET_KEYは、自由に変更してOK!
@@ -15,3 +16,7 @@ config = {
     "local": LocalConfig,
     "base": BaseConfig,
 }
+'''
+
+SECRET_KEY = "2AZSMss3p5QPbcY2hBsJ"
+WTF_CSRF_SECRET_KEY = "AuwzyszU5sugKN7KZs6f"
