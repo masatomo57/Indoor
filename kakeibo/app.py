@@ -7,14 +7,16 @@ from werkzeug.security import check_password_hash, generate_password_hash
 import datetime
 from helpers import apology, login_required, tax
 from forms import LoginForm, SignUpForm
+from flask_wtf.csrf import CSRFProtect
 import sqlite3
 
 # Configure application
 app = Flask(__name__)
 
 # Ensure templates are auto-reloaded
-app.config["TEMPLATES_AUTO_RELOAD"] = True
-
+# app.config["TEMPLATES_AUTO_RELOAD"] = True
+app.config['SECRET_KEY'] = os.urandom(16)
+csrf = CSRFProtect(app)
 # Custom filter
 app.jinja_env.filters["tax"] = tax
 

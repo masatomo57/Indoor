@@ -20,6 +20,8 @@
                 <div class="mb-3">
                     {{ form.password(class="form-control dt-auth-input",placeholder="パスワード") }}
                 </div>
+                <input class="form-check-input" type="checkbox" name="remember_me" id="remember_me">
+                <div><label class="form-check-label" for="remember_me">ログイン状態を保存する</label></div>
                 {{ form.submit(class="btn btn-md btn-primary btn-block dt-auth-btn") }}
             </form>
         </section>
