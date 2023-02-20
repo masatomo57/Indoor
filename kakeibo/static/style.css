@@ -21,3 +21,22 @@ nav .navbar-brand .green
 {
     color: #2e944b;
 }
+#regist_spending {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#regist_data_tb {
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+#regist_data_tb td {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+}
+
+#regist_spending_btn {
+    margin-top: 20px;
+}
