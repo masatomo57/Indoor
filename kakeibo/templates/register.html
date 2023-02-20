@@ -4,15 +4,29 @@
 {% block main %}
     <form action="/register" method="post">
     <!-- 登録項目: 日時、品目、単価、個数 -->
-        <div id="regist_spending">
+        <div id="regist_spending" class="container">
             <h2>データ登録</h2>
             <table id="regist_data_tb">
-                <tr><td>日付</td><td><input type="date" id="regist_date"></td></tr>
+                <tr><td>日付</td><td><input type="date" id="regist_date" style="width: 100%;"></td></tr>
                 <tr><td>品目</td><td><input type="text" id="regist_contents" required></td></tr>
                 <tr><td>単価</td><td><input type="number" id="regist_price" min="1"></td></tr>
-                <tr><td>個数</td><td><input type="number" id="regist_price" min="1"></td></tr>
+                <tr><td>個数</td><td><input type="number" id="regist_quantity" min="1"></td></tr>
                 <tr><td colspan="2"><button id="regist_spending_btn">登録</button></td></tr>
             </table>
         </div>
     </form>
+    <!--
+    <form action="/register" method="post">
+        <main>
+            <input type="date" id="start_date"> 〜 <input type="date" id="last_date"><button id="display_btn">  指定期間表示</button>
+            <table id="hab_tb">
+                <tr>
+                    <th>日付</th>
+                    <th>品目</th>
+                    <th>合計金額</th>
+                </tr>
+            </table>
+        </main>
+    </form>
+    -->
 {% endblock %}

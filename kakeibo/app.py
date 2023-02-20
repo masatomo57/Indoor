@@ -63,10 +63,13 @@ def kakeibo():
     return render_template("kakeibo/index.html")
 
 
-@app.route("/register")
+@app.route("/register", methods=["GET", "POST"])
 @login_required
 def register():
-    return render_template("register.html")
+    if request.method == "POST":
+        return render_template("register.html")
+    else:
+        return render_template("register.html")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
