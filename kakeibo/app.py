@@ -51,6 +51,11 @@ def index():
 def charts():
     return render_template("charts/index.html")
 
+@app.route("/charts/tomato")
+@login_required
+def tomato():
+    return render_template("charts/tomato.html")
+
 
 @app.route("/kakeibo")
 @login_required
