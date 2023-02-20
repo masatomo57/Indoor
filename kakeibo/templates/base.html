@@ -12,7 +12,7 @@
         <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"></script>
 
         <!-- https://favicon.io/emoji-favicons/money-bag/ -->
-        <link href="/static/styles.css" rel="stylesheet">
+        <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
 
         <title>
             おトクに！家計簿 {% block title %}{% endblock %}
@@ -26,12 +26,13 @@
             <div class="container-fluid">
                 <a class="navbar-brand" href="/">おトクに！家計簿</a>
                 <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#navbar" data-bs-toggle="collapse" type="button">
-                    ホーム
+                    <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbar">
                     {% if session["user_id"] %}
                         <ul class="navbar-nav me-auto mt-2">
-                            <li class="nav-item"><a class="nav-link" href="/charts"></a></li>
+                            <li class="nav-item"><a class="nav-link" href="/charts">チャート</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/kakeibo">家計簿</a></li>
                         </ul>
                         <ul class="navbar-nav ms-auto mt-2">
                             <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>

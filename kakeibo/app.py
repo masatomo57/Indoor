@@ -121,10 +121,12 @@ def signup():
 
         db = get_db()
 
-        duplication=db.execute("SELECT id FROM users WHERE username=?", (request.form.get("username"),))
+        duplication=db.execute("SELECT id FROM users WHERE username=?", (request.form.get("username"),)).fetchall()
         if request.form.get("username")=="" or request.form.get("password")=="":
             return redirect("/signup")
         elif request.form.get("password")=="" or not request.form.get("password")==request.form.get("confirmation"):
+            return redirect("/signup")
+        elif duplication:
             return redirect("/signup")
         else:
             db.execute("INSERT INTO users (username, hash) VALUES(?, ?)", (request.form.get("username"), generate_password_hash(request.form.get("password"))))
