@@ -14,19 +14,16 @@
                 <tr><td colspan="2"><button id="regist_spending_btn">計算</button></td></tr>
             </table>
         </div>
-        <main>
-            <div class="container">
-                <!-- 空白は全角を使用 -->
-               <input type="date" id="start_date"> 〜 <input type="date" id="last_date">　　<button id="display_btn">指定期間表示</button>
-            </div>
-            <table id="hab_tb" class="container" style="width: 50%;">
-                <tr>
-                    <th>日付</th>
-                    <th>品目</th>
-                    <th>合計金額</th>
-                </tr>
-            </table>
-        </main>
+        <div class="container">
+        <!-- 空白は全角を使用 -->
+            <input type="date" id="start_date"> 〜 <input type="date" id="last_date">　　<button id="display_btn">指定期間表示</button>
+        </div>
+        <table id="hab_tb" class="container" style="width: 50%;">
+            <tr>
+                <th>日付</th>
+                <th>品目</th>
+                <th>合計金額</th>
+            </tr>
+        </table>
     </form>
-
 {% endblock %}
