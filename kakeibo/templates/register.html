@@ -230,7 +230,7 @@
             displayData.setAttribute("id", edit_id);
 
             // 編集用HTMLコード作成
-            displayData.innerHTML = '<td><input type="date" id="edit_date" value="' + td[0].textContent.split(" ")[0] + '"></td><td><input type="text" id="edit_contents" value="' + td[1].textContent + '"></td><td class="sum"><input type="number" id="edit_sum" value="' + td[2].outerText + '"></td><td></td><td><button id="edit_exec_btn">編集実行</button></td>';
+            displayData.innerHTML = '<td><input type="date" id="edit_date" value="' + td[0].textContent.split(" ")[0] + '"></td><td><input type="text" id="edit_contents" value="' + td[1].textContent + '"></td><td><input type="number" id="edit_sum" value="' + td[2].outerText + '"></td><td></td><td><button id="edit_exec_btn">編集実行</button></td>';
 
             //編集用HTMLコードをテーブルに設定
             table.appendChild(displayData);
