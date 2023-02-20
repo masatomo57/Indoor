@@ -62,6 +62,7 @@
          *  計算したデータのテーブル(日付, 品目, 単価, 個数)を表示
         */
 
+        function execDisplayDesignatedPeriodData() {
             db.transaction(function (tx) {
                 // SELECT文を実行
                 tx.executeSql("select id, contents, price, quantity, sum, registed_at from hab WHERE registed_at BETWEEN '" + startDate + "' AND '" + lastDate + "' order by registed_at ASC" , [],
@@ -103,6 +104,7 @@
                    })
                }
            )
+        }
 
         /**
          *  データ登録処理
