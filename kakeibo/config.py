@@ -1,3 +1,4 @@
+
 # BaseConfigクラスを作成する
 class BaseConfig:
     # SECRET_KEYは、自由に変更してOK!

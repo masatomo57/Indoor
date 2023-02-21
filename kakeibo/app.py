@@ -17,6 +17,8 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 # Custom filter
 app.jinja_env.filters["tax"] = tax
 
+app.config.from_object('config')
+
 # Configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
@@ -38,14 +40,6 @@ def get_db():
         g.db = sqlite3.connect('kakeibo.db')
     return g.db
 
-@app.after_request
-def after_request(response):
-    """Ensure responses aren't cached"""
-    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    response.headers["Expires"] = 0
-    response.headers["Pragma"] = "no-cache"
-    return response
-
 @app.route("/")
 @login_required
 def index():
@@ -55,13 +49,18 @@ def index():
 @app.route("/charts")
 @login_required
 def charts():
-    return render_template("charts.html")
+    return render_template("charts/index.html")
+
+@app.route("/charts/tomato")
+@login_required
+def tomato():
+    return render_template("charts/tomato.html")
 
 
 @app.route("/kakeibo")
 @login_required
 def kakeibo():
-    return render_template("kakeibo.html")
+    return render_template("kakeibo/index.html")
 
 
 @app.route("/register", methods=["GET", "POST"])
