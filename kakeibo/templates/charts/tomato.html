@@ -1,4 +1,49 @@
-{% extends "index.html" %}
+{% extends "base.html" %}
 {% block title %}トマトチャート{% endblock %}
 
-{% block content %}トマトチャート{% endblock %}
+{% block main %}
+<div>
+    <canvas id="myChart"></canvas>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const ctx = document.getElementById('myChart');
+
+    const skipped = (ctx, value) => ctx.p0.skip || ctx.p1.skip ? value : undefined;
+    const down = (ctx, value) => ctx.p0.parsed.y > ctx.p1.parsed.y ? value : undefined;
+    // </block:segmentUtils>
+
+    // <block:genericOptions:2>
+    const genericOptions = {
+        fill: false,
+        interaction: {
+            intersect: false
+        },
+        radius: 0,
+    };
+    // </block:genericOptions>
+
+    // <block:config:0>
+    var chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ["00年","01年","02年","03年","04年","05年"],
+            datasets: [{
+            label: 'トマト',
+            data: [65, 70, 53, NaN, 56, 57, 40],
+            borderColor: 'rgb(75, 192, 192)',
+            segment: {
+                borderColor: ctx => skipped(ctx, 'rgb(0,0,0,0.2)') || down(ctx, 'rgb(192,75,75)'),
+                borderDash: ctx => skipped(ctx, [6, 6]),
+            },
+            spanGaps: true
+            }]
+        },
+    });
+</script>
+{% endblock %}
+
+{% block content %}{% endblock %}

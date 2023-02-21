@@ -67,7 +67,8 @@ def kakeibo():
 @login_required
 def register():
     if request.method == "POST":
-        return render_template("register.html")
+        # Redirect user to home page
+        return redirect("/")
     else:
         return render_template("register.html")
 
