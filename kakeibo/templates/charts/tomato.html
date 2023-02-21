@@ -3,14 +3,14 @@
 
 {% block main %}
 <div>
-    <canvas id="myChart"></canvas>
+    <canvas id="TomatoChart"></canvas>
 </div>
 
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-    const ctx = document.getElementById('myChart');
+    const ctx = document.getElementById('TomatoChart');
 
     const skipped = (ctx, value) => ctx.p0.skip || ctx.p1.skip ? value : undefined;
     const down = (ctx, value) => ctx.p0.parsed.y > ctx.p1.parsed.y ? value : undefined;
@@ -30,10 +30,10 @@
     var chart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: ["00年","01年","02年","03年","04年","05年"],
+            labels: {{ label_list|tojson }},
             datasets: [{
             label: 'トマト',
-            data: [65, 70, 53, NaN, 56, 57, 40],
+            data: {{ price_list|tojson }},
             borderColor: 'rgb(75, 192, 192)',
             segment: {
                 borderColor: ctx => skipped(ctx, 'rgb(0,0,0,0.2)') || down(ctx, 'rgb(192,75,75)'),
