@@ -45,18 +45,18 @@ def get_db():
 def index():
     return render_template("index.html")
 
-
 @app.route("/charts")
 @login_required
 def charts():
-    return render_template("charts/index.html")
+    return redirect("/charts/tomato")
 
 @app.route("/charts/tomato")
 @login_required
 def tomato():
     label_list = ["00年","01年","02年","03年","04年","05年"]
     price_list = [65, 70, 53, None, 56, 57, 40]
-    return render_template("charts/tomato.html", label_list=label_list, price_list=price_list)
+    name = "トマト"
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name)
 
 
 @app.route("/kakeibo")

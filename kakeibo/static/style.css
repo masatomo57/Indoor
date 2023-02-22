@@ -4,6 +4,11 @@ nav .navbar-brand
     font-size: xx-large;
 }
 
+nav
+{
+    width: 100%;
+}
+
 /* Colors for brand */
 nav .navbar-brand .blue
 {
@@ -72,3 +77,27 @@ nav .navbar-brand .green
 }
 /* -- css for register -- */
 /* ---------------------- */
+
+
+.chartsidebar {
+    width: 200px;
+    text-align: center;
+    position: sticky;
+    box-sizing: border-box;
+    top: 50px;
+    height: 100%;
+    width: 220px;
+    overflow-y: scroll;
+    padding: 20px;
+}
+
+.chart {
+    width: 75vw;
+    text-align: center;
+    margin-left: 10px;/*サイドバーとメインコンテンツの間に隙間をあけた*/
+}
+
+.chartpage {
+    height: 100vh;
+    display:flex;/*サイドバーとメインコンテンツを横並びにする指定をした*/
+}

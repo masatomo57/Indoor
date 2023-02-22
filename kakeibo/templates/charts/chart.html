@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block title %}{{ name }}チャート{% endblock %}
+
+{% block main %}{{ name }}チャート{% endblock %}
+
+{% block sidebar %}
+<div class="chartsidebar">
+    <nav>
+        <h2>野菜</h2>
+        <ul>
+            <li>キャベツ</li>
+            <li>ねぎ</li>
+            <li>レタス</li>
+            <li>ばれいしょ</li>
+            <li>たまねぎ</li>
+            <li>きゅうり</li>
+            <li>トマト</li>
+            <li>ほうれんそう</li>
+            <li>にんじん</li>
+            <li>はくさい</li>
+            <li>だいこん</li>
+            <li>なす</li>
+        </ul>
+        <h2>加工食品</h2>
+        <ul>
+            <li>Subject</li>
+            <li>Subject</li>
+            <li>Subject</li>
+            <li>Subject</li>
+            <li>Subject</li>
+        </ul>
+        <h2>食肉・鶏卵</h2>
+        <ul>
+            <li>Subject</li>
+            <li>Subject</li>
+            <li>Subject</li>
+            <li>Subject</li>
+            <li>Subject</li>
+        </ul>
+        <h2>魚介類</h2>
+        <ul>
+            <li>Subject</li>
+            <li>Subject</li>
+            <li>Subject</li>
+            <li>Subject</li>
+            <li>Subject</li>
+        </ul>
+    </nav>
+</div>
+{% endblock %}
+
+{% block chart %}
+<div>
+    <canvas id="chart" class="chart"></canvas>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const ctx = document.getElementById('chart');
+
+    const skipped = (ctx, value) => ctx.p0.skip || ctx.p1.skip ? value : undefined;
+    const down = (ctx, value) => ctx.p0.parsed.y > ctx.p1.parsed.y ? value : undefined;
+    // </block:segmentUtils>
+
+    // <block:genericOptions:2>
+    const genericOptions = {
+        fill: false,
+        interaction: {
+            intersect: false
+        },
+        radius: 0,
+    };
+    // </block:genericOptions>
+
+    // <block:config:0>
+    var chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: {{ label_list|tojson }},
+            datasets: [{
+            label: '{{ name }}',
+            data: {{ price_list|tojson }},
+            borderColor: 'rgb(75, 192, 192)',
+            segment: {
+                borderColor: ctx => skipped(ctx, 'rgb(0,0,0,0.2)') || down(ctx, 'rgb(192,75,75)'),
+                borderDash: ctx => skipped(ctx, [6, 6]),
+            },
+            spanGaps: true
+            }]
+        },
+    });
+</script>
+{% endblock %}
