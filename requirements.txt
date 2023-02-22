@@ -7,3 +7,10 @@ Flask-Mail
 Werkzeug
 WTForms
 email_validator
+beautifulsoup4
+requests
+bs4
+pandas
+numpy
+re
+datetime
