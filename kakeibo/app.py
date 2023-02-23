@@ -68,7 +68,67 @@ def index():
 @app.route("/charts")
 @login_required
 def charts():
-    return redirect("/charts/tomato")
+    return redirect("/charts/cabbage")
+
+@app.route("/charts/cabbage")
+@login_required
+def cabbage():
+    name = "キャベツ"
+    data = read_csv(name)
+    label_list = data["date"]
+    price_list = data["price"]
+
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name)
+
+@app.route("/charts/greenonion")
+@login_required
+def greenonion():
+    name = "ねぎ"
+    data = read_csv(name)
+    label_list = data["date"]
+    price_list = data["price"]
+
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name)
+
+@app.route("/charts/lettuce")
+@login_required
+def lettuce():
+    name = "レタス"
+    data = read_csv(name)
+    label_list = data["date"]
+    price_list = data["price"]
+
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name)
+
+@app.route("/charts/potato")
+@login_required
+def potato():
+    name = "ばれいしょ"
+    data = read_csv(name)
+    label_list = data["date"]
+    price_list = data["price"]
+
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name)
+
+@app.route("/charts/onion")
+@login_required
+def onion():
+    name = "たまねぎ"
+    data = read_csv(name)
+    label_list = data["date"]
+    price_list = data["price"]
+
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name)
+
+@app.route("/charts/cucumber")
+@login_required
+def cucumber():
+    name = "きゅうり"
+    data = read_csv(name)
+    label_list = data["date"]
+    price_list = data["price"]
+
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name)
 
 @app.route("/charts/tomato")
 @login_required
@@ -79,6 +139,58 @@ def tomato():
     price_list = data["price"]
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name)
+
+@app.route("/charts/spinach")
+@login_required
+def spinach():
+    name = "ほうれんそう"
+    data = read_csv(name)
+    label_list = data["date"]
+    price_list = data["price"]
+
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name)
+
+@app.route("/charts/carrot")
+@login_required
+def carrot():
+    name = "にんじん"
+    data = read_csv(name)
+    label_list = data["date"]
+    price_list = data["price"]
+
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name)
+
+@app.route("/charts/chinesecabbage")
+@login_required
+def chinesecabbage():
+    name = "はくさい"
+    data = read_csv(name)
+    label_list = data["date"]
+    price_list = data["price"]
+
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name)
+
+@app.route("/charts/raddish")
+@login_required
+def raddish():
+    name = "だいこん"
+    data = read_csv(name)
+    label_list = data["date"]
+    price_list = data["price"]
+
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name)
+
+@app.route("/charts/eggplant")
+@login_required
+def eggplant():
+    name = "なす"
+    data = read_csv(name)
+    label_list = data["date"]
+    price_list = data["price"]
+
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name)
+
+
 
 
 @app.route("/kakeibo")
