@@ -1,6 +1,133 @@
 {% extends "base.html" %}
-{% block title %}家計簿{% endblock %}
+{% block title %}家計簿カレンダー{% endblock %}
 
+{% block head %}
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+        <style>
+            .container {
+                font-family: 'Noto Sans JP', sans-serif;
+            }
+            a {
+                text-decoration: none;
+            }
+            th {
+                height: 30px;
+                text-align: center;
+            }
+            td {
+                height: 100px;
+            }
+            .today {
+                background: orange !important;
+            }
+            th:first-child, td:nth-child(7n+1) {
+                color: red;
+                border-color: black;
+            }
+            th:last-child, td:nth-child(7n) {
+                color: blue;
+                border-color: black;
+            }
+            #prev, #month, #next {
+                display: inline-block;
+                vertical-align: middle;
+                margin: 0;
+            }
+        </style>
+{% endblock %}
+        
 {% block main %}
-家計簿
+<main class="container-fluid py-5 text-center">
+    <div class="container">
+    <botton id="prev">&lt;</botton>&nbsp;&nbsp;<h3 id="month"></h3>&nbsp;&nbsp;<botton id="next">&gt;</botton>
+    <p></p>
+    <table class="table table-bordered">
+        <tr>
+            <th>日</th>
+            <th>月</th>
+            <th>火</th>
+            <th>水</th>
+            <th>木</th>
+            <th>金</th>
+            <th>土</th>
+        </tr>
+        <tbody id="calendar-body">
+        </tbody>
+    </table>
+    </div>
+    </main>
+    <script>
+        var today = new Date();
+        var currentMonth = today.getMonth();
+        var currentYear = today.getFullYear();
+        //var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        var prevButton = document.getElementById("prev");
+        var nextButton = document.getElementById("next");
+
+        //前の月へ戻る
+        prevButton.addEventListener("click", function() {
+        currentYear = (currentMonth == 1) ? currentYear - 1 : currentYear;
+        currentMonth = (currentMonth == 1) ? 12 : currentMonth - 1;
+        displayCalendar();
+        });
+
+        //次の月へ進む
+        nextButton.addEventListener("click", function() {
+        currentYear = (currentMonth == 12) ? currentYear + 1 : currentYear;
+        currentMonth = (currentMonth == 12) ? 1 : currentMonth + 1;
+        displayCalendar();
+        });
+
+        function displayCalendar() {
+            var firstDay = (new Date(currentYear, currentMonth)).getDay();
+            var daysInMonth = 32 - new Date(currentYear, currentMonth, 32).getDate();
+
+            var calendarBody = document.getElementById("calendar-body");
+            calendarBody.innerHTML = "";
+
+            var monthYear = document.getElementById("month");
+            var month = currentMonth % 12 + 1;
+            monthYear.innerHTML = currentYear + "年" + month + "月";
+
+            var date = 1;
+            for (var i = 0; i < 6; i++) {
+                var row = document.createElement("tr");
+
+                for (var j = 0; j < 7; j++) {
+                    if (i === 0 && j < firstDay) {
+                        var cell = document.createElement("td");
+                        var cellText = document.createTextNode("");
+                        cell.appendChild(cellText);
+                        row.appendChild(cell);
+                    } else if (date > daysInMonth) {
+                        if (j == 6) {
+                            break;
+                        }
+                        var cell = document.createElement("td");
+                        var cellText = document.createTextNode("");
+                        cell.appendChild(cellText);
+                        row.appendChild(cell);
+                    } else {
+                        var cell = document.createElement("td");
+                        var cellText = document.createTextNode(date);
+                        if (date === today.getDate() && currentMonth === today.getMonth() && currentYear === today.getFullYear()) {
+                            cell.classList.add("today");
+                        }
+                        cell.appendChild(cellText);
+                        row.appendChild(cell);
+                        date++;
+                    }
+                }
+                calendarBody.appendChild(row);
+                //週の終わりまで空の箱を用意する。
+                if (date > daysInMonth) {
+                    break;
+                }
+            }
+        }
+
+        displayCalendar();
+    </script>
 {% endblock %}
