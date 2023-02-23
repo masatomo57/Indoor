@@ -42,14 +42,22 @@ def get_db():
         g.db = sqlite3.connect('kakeibo.db')
     return g.db
 
-'''
-def read_csv():
-    data = []
-    date_data = []
-    price_data = []
-    with open(data1, "r") as f:
+
+def read_csv(vegetable):
+    price = []
+    date = []
+    data = {}
+    with open("DATA.csv", "r") as f:
         reader = csv.DictReader(f)
-'''
+        for row in reader:
+            date.append(row["DATE"])
+            if row[vegetable] == '':
+                price.append(None)
+            else:
+                price.append(row[vegetable])
+    data["price"] = price
+    data["date"] = date
+    return data
 
 
 @app.route("/")
@@ -65,9 +73,10 @@ def charts():
 @app.route("/charts/tomato")
 @login_required
 def tomato():
-    label_list = ["00", "01", "02", "03", "04"]
     name = "トマト"
-    price_list = [123,125, None, 145, 142]
+    data = read_csv(name)
+    label_list = data["date"]
+    price_list = data["price"]
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name)
 

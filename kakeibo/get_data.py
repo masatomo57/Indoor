@@ -1,5 +1,7 @@
 # ライブラリのインストール
 #!pip install beautifulsoup4
+#!pip install openpyxl
+
 #必要に応じて以下でインポートしているライブラリもインストールしてください
 
 # ライブラリのインポート
@@ -68,34 +70,34 @@ def get_data():
     # リスト内にdate型のデータを格納
     for i in range(len(df2)):
 
-    # 平成/令和〇年〇月〇日の週
+        # 平成/令和〇年〇月〇日の週
         sentence = df2.iloc[i, 0]
 
-    # 成、和、年、月、日で文字列を分割
-    spilited_sentence = re.split('[成和年月日]', sentence)
+        # 成、和、年、月、日で文字列を分割
+        spilited_sentence = re.split('[成和年月日]', sentence)
 
-    # 平成元年を平成1年に変換
-    if spilited_sentence[1] == "元":
-        spilited_sentence[1] = 1
+        # 平成元年を平成1年に変換
+        if spilited_sentence[1] == "元":
+            spilited_sentence[1] = 1
 
-    # 「の週」の部分を削除
-    del spilited_sentence[-1]
+        # 「の週」の部分を削除
+        del spilited_sentence[-1]
 
-    # 数字を数値型に変換
-    for i in range(1, len(spilited_sentence)):
-        spilited_sentence[i] = int(spilited_sentence[i])
+        # 数字を数値型に変換
+        for i in range(1, len(spilited_sentence)):
+            spilited_sentence[i] = int(spilited_sentence[i])
 
-    # 西暦に変換
-    if spilited_sentence[0] == "平":
-        spilited_sentence[0] = 1988 + spilited_sentence[1]
-    elif spilited_sentence[0] == "令":
-        spilited_sentence[0] = 2018 + spilited_sentence[1]
+        # 西暦に変換
+        if spilited_sentence[0] == "平":
+            spilited_sentence[0] = 1988 + spilited_sentence[1]
+        elif spilited_sentence[0] == "令":
+            spilited_sentence[0] = 2018 + spilited_sentence[1]
 
-    # date型に変換
-    date_data = datetime.date(spilited_sentence[0], spilited_sentence[2], spilited_sentence[3])
+        # date型に変換
+        date_data = datetime.date(spilited_sentence[0], spilited_sentence[2], spilited_sentence[3])
 
-    # リストに追加
-    date_list.append(date_data)
+        # リストに追加
+        date_list.append(date_data)
 
     # データフレームにDATEカラムを作成し、そこにリストの内容を格納
     df2["DATE"]= date_list
@@ -106,3 +108,6 @@ def get_data():
     df2.to_csv('DATA.csv')
 
     return df2
+
+#動作テスト用
+#print(get_data())

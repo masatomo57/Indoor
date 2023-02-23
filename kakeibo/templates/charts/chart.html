@@ -80,7 +80,7 @@
         data: {
             labels: {{ label_list|tojson }},
             datasets: [{
-            label: '{{ name }}',
+            label: `{{ name }}（円/Kg）`,
             data: {{ price_list|tojson }},
             borderColor: 'rgb(75, 192, 192)',
             segment: {
