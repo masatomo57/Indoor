@@ -80,21 +80,17 @@ nav .navbar-brand .green
 
 
 .chartsidebar {
-    width: 200px;
-    text-align: center;
-    position: sticky;
     box-sizing: border-box;
-    top: 50px;
-    height: 100%;
-    width: 220px;
     overflow-y: scroll;
-    padding: 20px;
+    width: 180px;
+    padding: 10px;
 }
 
 .chart {
     width: 75vw;
     text-align: center;
     margin-left: 10px;/*サイドバーとメインコンテンツの間に隙間をあけた*/
+    overflow-x: scroll;
 }
 
 .chartpage {

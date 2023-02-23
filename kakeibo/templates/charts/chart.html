@@ -5,7 +5,7 @@
 
 {% block sidebar %}
 <div class="chartsidebar">
-    <nav>
+    <nav class="chartnav">
         <h2>野菜</h2>
         <ul>
             <li><a href="/charts/cabbage">キャベツ</a></li>
@@ -50,8 +50,8 @@
 {% endblock %}
 
 {% block chart %}
-<div>
-    <canvas id="chart" class="chart"></canvas>
+<div class="chart">
+    <canvas id="chart" class="canvas"></canvas>
 </div>
 
 

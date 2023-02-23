@@ -6,8 +6,12 @@ from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
 import datetime
 from helpers import apology, login_required, tax
+
 from get_data import get_data
 import csv
+import time
+import schedule
+
 import sqlite3
 
 # Configure application
@@ -42,7 +46,15 @@ def get_db():
         g.db = sqlite3.connect('kakeibo.db')
     return g.db
 
+'''
+# 毎週水曜日に新しいデータをとってくる
+schedule.every().wednesday.at("00:00").do(get_data)
+while True:
+    schedule.run_pending()
+    time.sleep(1)
+'''
 
+# DATA.csvを読み込む関数の定義
 def read_csv(vegetable):
     price = []
     date = []
@@ -279,7 +291,6 @@ def signup():
             return redirect("/login")
     else:
         return render_template("signup.html")
-
 
 # CS50モジュールのSQLを使いたくないため上のget_dbを定義しています。以下はCS50のbirthdayにおけるCS50のSQLを使わなかった場合の例です。これを参考にfinanceの移植、書き換えをお願いします。
 '''
