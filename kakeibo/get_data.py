@@ -30,10 +30,10 @@ def get_data():
 
     # 「価格推移グラフのバックデータ(EXCEL : 99KB)」を狙い撃つ
     for i in range(len(candidate_list)):
-    if "価格推移" in candidate_list[i].text:
-        url = candidate_list[i].attrs["href"]
-    else:
-        pass
+        if "価格推移" in candidate_list[i].text:
+            url = candidate_list[i].attrs["href"]
+        else:
+            pass
 
     # 農林水産省が提供するデータのダウンロードリンク
     url = "https://www.maff.go.jp/j/zyukyu/anpo/kouri/k_yasai" + url[1:]
@@ -45,7 +45,7 @@ def get_data():
     filename='data.xlsx'
     urlData = requests.get(url).content
     with open(filename ,mode='wb') as f:
-    f.write(urlData)
+        f.write(urlData)
 
     # data.xlsxをpandasのデータフレーム型で読み込む
     df = pd.read_excel('data.xlsx', index_col=0, header=1)
@@ -69,7 +69,7 @@ def get_data():
     for i in range(len(df2)):
 
     # 平成/令和〇年〇月〇日の週
-    sentence = df2.iloc[i, 0]
+        sentence = df2.iloc[i, 0]
 
     # 成、和、年、月、日で文字列を分割
     spilited_sentence = re.split('[成和年月日]', sentence)

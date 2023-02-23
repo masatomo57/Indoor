@@ -6,6 +6,8 @@ from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
 import datetime
 from helpers import apology, login_required, tax
+from get_data import get_data
+import csv
 import sqlite3
 
 # Configure application
@@ -40,6 +42,16 @@ def get_db():
         g.db = sqlite3.connect('kakeibo.db')
     return g.db
 
+'''
+def read_csv():
+    data = []
+    date_data = []
+    price_data = []
+    with open(data1, "r") as f:
+        reader = csv.DictReader(f)
+'''
+
+
 @app.route("/")
 @login_required
 def index():
@@ -53,9 +65,10 @@ def charts():
 @app.route("/charts/tomato")
 @login_required
 def tomato():
-    label_list = ["00年","01年","02年","03年","04年","05年"]
-    price_list = [65, 70, 53, None, 56, 57, 40]
+    label_list = ["00", "01", "02", "03", "04"]
     name = "トマト"
+    price_list = [123,125, None, 145, 142]
+
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name)
 
 
