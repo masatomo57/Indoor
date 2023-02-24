@@ -12,6 +12,5 @@ requests
 bs4
 pandas
 numpy
-re
 datetime
 schedule
