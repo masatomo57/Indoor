@@ -45,10 +45,7 @@
             /* 背景変わらない😢*/
             .col-md-6.offset-md-3 {
                 background-color: #fff; /* 背景色を設定 */
-                background-image: url('./kakeibo.png'); /* 背景画像を追加 */
-                background-repeat: no-repeat; /* 背景画像の繰り返しを無効化 */
-                background-position: center; /* 背景画像を中央に配置 */
-                background-size: contain; /* 背景画像を要素に合わせて縮小表示 */
+                background-image: url('/static/kakeibo.png'); /* 背景画像を追加 */
             }
             #month {
                 padding-left: 30px;
@@ -57,25 +54,24 @@
             .col-sm-8.offset-sm-2.text-center {
                 padding-bottom: 50px;
             }
+            .first-table th:first-child, td:nth-child(7n+1) {
+                color: red;
+                border-color: black;
+            }
+            .first-table th:last-child, td:nth-child(7n) {
+                color: blue;
+                border-color: black;
+            }
         </style>
 {% endblock %}
         
 {% block main %}
     <main class="container-fluid py-5 text-center">
+    <div class="first-table">
     <div class="container">
     <botton id="prev">＜</botton><h3 id="month"></h3><botton id="next">＞</botton>
     <p></p>
     <div id="calendar">
-    <style>
-            th:first-child, td:nth-child(7n+1) {
-                color: red;
-                border-color: black;
-            }
-            th:last-child, td:nth-child(7n) {
-                color: blue;
-                border-color: black;
-            }
-    </style>
     <table class="table table-bordered">
         <tr>
             <th>日</th>
@@ -91,9 +87,11 @@
     </table>
     </div>
     </div>
+    </div>
     </main>
     <div id="form-register">
         <div class="col-md-6 offset-md-3">
+        <br>
         <h3>～　入力フォーム　～</h3>
         <p></p><br>
         <form>
