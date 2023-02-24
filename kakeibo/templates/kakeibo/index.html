@@ -27,7 +27,7 @@
                 vertical-align: middle;
                 margin: 0;
             }
-            td:hover {
+            td:not(:empty):hover {
                 background-color: yellow;
             }
             #prev:hover {
@@ -42,14 +42,13 @@
             .col-sm-4 {
                 padding-right: 70px;
             }
-            /* 背景変わらない😢*/
             .col-md-6.offset-md-3 {
                 background-color: #fff; /* 背景色を設定 */
                 background-image: url('/static/kakeibo.png'); /* 背景画像を追加 */
             }
             #month {
-                padding-left: 30px;
-                padding-right: 30px;
+                padding-left: 20px;
+                padding-right: 20px;
             }
             .col-sm-8.offset-sm-2.text-center {
                 padding-bottom: 50px;
@@ -62,14 +61,34 @@
                 color: blue;
                 border-color: black;
             }
+            .triangle-right{
+                border-style: solid;
+                border-width: 10px 0 10px 10px;
+                border-color: transparent transparent transparent black;
+                display: inline-block;
+                width: 0;
+                height: 0;
+            }
+            .triangle-left{
+                border-style: solid;
+                border-width: 10px 10px 10px 0;
+                border-color: transparent black transparent transparent;
+                display: inline-block;
+                width: 0;
+                height: 0;
+            }
+            .py-5 {
+                padding-top: 1rem!important;
+                padding-bottom: 3rem!important;
+            }
         </style>
 {% endblock %}
-
+        
 {% block main %}
     <main class="container-fluid py-5 text-center">
     <div class="first-table">
     <div class="container">
-    <botton id="prev">＜</botton><h3 id="month"></h3><botton id="next">＞</botton>
+    <botton id="prev" class="triangle-left"></botton><h3 id="month"></h3><botton id="next" class="triangle-right"></botton>
     <p></p>
     <div id="calendar">
     <table class="table table-bordered">
@@ -178,7 +197,10 @@
                         cell.appendChild(cellText);
                         row.appendChild(cell);
                     } else if (date > daysInMonth) {
-                        break;
+                        var cell = document.createElement("td");
+                        var cellText = document.createTextNode("");
+                        cell.appendChild(cellText);
+                        row.appendChild(cell);
                     } else {
                         var cell = document.createElement("td");
                         var cellText = document.createTextNode(date);
@@ -240,14 +262,14 @@
           }
         );
         ////////  データベースの整合は後で考える //////////
-
+        
         // 登録日付に「本日の年月日」を設定
         document.getElementById("regist_date").value = dateArray[0] + "-" + dateArray[1] + "-" + dateArray[2]
         /* 計算したデータのテーブル(日付, 品目, 税込価格, 削除ボタン, 編集ボタン)を表示*/
         function execDisplayDesignatedPeriodData() {
             db.transaction(function (tx) {
                 // SELECT文を実行
-                tx.executeSql("select id, name, sum, registed_at from Hab ORDER BY registed_at ASC" , [],
+                tx.executeSql("select id, name, sum, registed_at from Hab ORDER BY registed_at DESC" , [],
                     function (tx, results) {
                         // テーブルを取得
                         var table = getElmId('Hab_tb');
@@ -431,7 +453,7 @@
         function getElmCls(contents){
             return document.getElementsByClassName(contents);
         }
-        /* タイムスタンプから年月日文字列を取得 */
+        /* タイムスタンプから年月日文字列を取得 */       
         function getTSDate(date){
             var dateArray = new Array();
             dateArray.push(zero_pad(date.getFullYear(),4));
@@ -443,7 +465,7 @@
         function zero_pad(val, show_length){
             var str_val = String(val);
             if( str_val.length < show_length ){
-                var zero = "";
+                var zero = ""; 
                 for(var i = 0; i < ( show_length - str_val.length ); i++){
                     zero += "0";
                 }
