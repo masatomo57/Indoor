@@ -69,6 +69,7 @@ def read_csv(vegetable):
                 price.append(row[vegetable])
     data["price"] = price
     data["date"] = date
+    data["lastprice"] = price[len(price)-1]
     return data
 
 
@@ -89,8 +90,9 @@ def cabbage():
     data = read_csv(name)
     label_list = data["date"]
     price_list = data["price"]
+    last_price = data["lastprice"]
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
 @app.route("/charts/greenonion")
 @login_required
@@ -99,8 +101,9 @@ def greenonion():
     data = read_csv(name)
     label_list = data["date"]
     price_list = data["price"]
+    last_price = data["lastprice"]
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
 @app.route("/charts/lettuce")
 @login_required
@@ -109,8 +112,9 @@ def lettuce():
     data = read_csv(name)
     label_list = data["date"]
     price_list = data["price"]
+    last_price = data["lastprice"]
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
 @app.route("/charts/potato")
 @login_required
@@ -119,8 +123,9 @@ def potato():
     data = read_csv(name)
     label_list = data["date"]
     price_list = data["price"]
+    last_price = data["lastprice"]
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
 @app.route("/charts/onion")
 @login_required
@@ -129,8 +134,9 @@ def onion():
     data = read_csv(name)
     label_list = data["date"]
     price_list = data["price"]
+    last_price = data["lastprice"]
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
 @app.route("/charts/cucumber")
 @login_required
@@ -139,8 +145,9 @@ def cucumber():
     data = read_csv(name)
     label_list = data["date"]
     price_list = data["price"]
+    last_price = data["lastprice"]
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
 @app.route("/charts/tomato")
 @login_required
@@ -149,8 +156,9 @@ def tomato():
     data = read_csv(name)
     label_list = data["date"]
     price_list = data["price"]
+    last_price = data["lastprice"]
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
 @app.route("/charts/spinach")
 @login_required
@@ -159,8 +167,9 @@ def spinach():
     data = read_csv(name)
     label_list = data["date"]
     price_list = data["price"]
+    last_price = data["lastprice"]
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
 @app.route("/charts/carrot")
 @login_required
@@ -169,8 +178,9 @@ def carrot():
     data = read_csv(name)
     label_list = data["date"]
     price_list = data["price"]
+    last_price = data["lastprice"]
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
 @app.route("/charts/chinesecabbage")
 @login_required
@@ -179,8 +189,9 @@ def chinesecabbage():
     data = read_csv(name)
     label_list = data["date"]
     price_list = data["price"]
+    last_price = data["lastprice"]
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
 @app.route("/charts/raddish")
 @login_required
@@ -189,8 +200,9 @@ def raddish():
     data = read_csv(name)
     label_list = data["date"]
     price_list = data["price"]
+    last_price = data["lastprice"]
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
 @app.route("/charts/eggplant")
 @login_required
@@ -199,8 +211,9 @@ def eggplant():
     data = read_csv(name)
     label_list = data["date"]
     price_list = data["price"]
+    last_price = data["lastprice"]
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
 
 

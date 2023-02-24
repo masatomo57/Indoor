@@ -1,7 +1,11 @@
 {% extends "base.html" %}
 {% block title %}{{ name }}{% endblock %}
 
-{% block main %}{{ name }}（円/Kg）{% endblock %}
+{% block main %}
+{{ name }}
+
+最新価格：{{ last_price or '-'}}円/Kg
+{% endblock %}
 
 {% block sidebar %}
 <div class="chartsidebar">
