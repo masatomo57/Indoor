@@ -216,7 +216,15 @@ def kakeibo():
 def register():
     if request.method == "POST":
         # Redirect user to home page
-        return redirect("/")
+        if not (request.form.get("regist_date") or request.form.get("regist_name") or request.form.get("regist_price") or request.form.get("regist_quantity")):
+            return redirect("/")
+        regist_name = request.form.get("regist_name")
+        regist_price = request.form.get("regist_price")
+        regist_quantity = request.form.get("regist_quantity")
+        regist_date = request.form.get("regist_date")
+        db = get_db()
+        db.execute("INSERT INT buying (user_id,item,price,shares,transacted) VALUES (?,?,?,?,?)",session["user_id"],regist_name,regist_price,regist_quantity,regist_date)
+        db.close()
     else:
         return render_template("register.html")
 
