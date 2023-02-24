@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}{{ name }}{% endblock %}
 
-{% block main %}{{ name }}{% endblock %}
+{% block main %}{{ name }}（円/Kg）{% endblock %}
 
 {% block sidebar %}
 <div class="chartsidebar">
@@ -50,38 +50,34 @@
 {% endblock %}
 
 {% block chart %}
-<div class="chart">
-    <canvas id="chart" class="canvas"></canvas>
+<div class="chart" style="position: relative; overflow-x: scroll;">
+    <div style="height:200px;">
+        <canvas id="chart" class="canvas"></canvas>
+    </div>
 </div>
 
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
+    var xAxisLabelMinWidth = 10;
+    var data = {{ price_list|tojson }};
+    var width = data.length*xAxisLabelMinWidth;
+    document.getElementById('chart').style.width = width+"px";
+    document.getElementById('chart').style.height = "500px";
+
     const ctx = document.getElementById('chart');
 
     const skipped = (ctx, value) => ctx.p0.skip || ctx.p1.skip ? value : undefined;
     const down = (ctx, value) => ctx.p0.parsed.y > ctx.p1.parsed.y ? value : undefined;
-    // </block:segmentUtils>
 
-    // <block:genericOptions:2>
-    const genericOptions = {
-        fill: false,
-        interaction: {
-            intersect: false
-        },
-        radius: 0,
-    };
-    // </block:genericOptions>
-
-    // <block:config:0>
     var chart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: {{ label_list|tojson }},
             datasets: [{
-            label: `{{ name }}（円/Kg）`,
-            data: {{ price_list|tojson }},
+            label: "{{ name }}",
+            data: data,
             borderColor: 'rgb(75, 192, 192)',
             segment: {
                 borderColor: ctx => skipped(ctx, 'rgb(0,0,0,0.2)') || down(ctx, 'rgb(192,75,75)'),
@@ -90,6 +86,9 @@
             spanGaps: true
             }]
         },
+        options: {
+            responsive: false,
+        }
     });
 </script>
 {% endblock %}

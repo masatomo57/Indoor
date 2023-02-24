@@ -64,7 +64,7 @@
             }
         </style>
 {% endblock %}
-        
+
 {% block main %}
     <main class="container-fluid py-5 text-center">
     <div class="first-table">
@@ -240,7 +240,7 @@
           }
         );
         ////////  データベースの整合は後で考える //////////
-        
+
         // 登録日付に「本日の年月日」を設定
         document.getElementById("regist_date").value = dateArray[0] + "-" + dateArray[1] + "-" + dateArray[2]
         /* 計算したデータのテーブル(日付, 品目, 税込価格, 削除ボタン, 編集ボタン)を表示*/
@@ -431,7 +431,7 @@
         function getElmCls(contents){
             return document.getElementsByClassName(contents);
         }
-        /* タイムスタンプから年月日文字列を取得 */       
+        /* タイムスタンプから年月日文字列を取得 */
         function getTSDate(date){
             var dateArray = new Array();
             dateArray.push(zero_pad(date.getFullYear(),4));
@@ -443,7 +443,7 @@
         function zero_pad(val, show_length){
             var str_val = String(val);
             if( str_val.length < show_length ){
-                var zero = ""; 
+                var zero = "";
                 for(var i = 0; i < ( show_length - str_val.length ); i++){
                     zero += "0";
                 }
