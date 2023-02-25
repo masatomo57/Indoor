@@ -17,8 +17,8 @@
 </div>
 -->
 
-<div>
-    <div style="height:200px;">
+<div class="chart">
+    <div style="height:500px;">
         <canvas id="chart" class="canvas"></canvas>
     </div>
 </div>
@@ -26,8 +26,11 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
+    var xAxisLabelMinWidth = 500;
     var data = [65, 59, 80, 81, 56, 55, 40];
-
+    var width = data.length*xAxisLabelMinWidth;
+    document.getElementById('chart').style.width = width+"px";
+    document.getElementById('chart').style.height = "1000px";
 
     const ctx = document.getElementById('chart');
 
