@@ -46,7 +46,7 @@ def get_db():
         g.db = sqlite3.connect('kakeibo.db')
     return g.db
 
-# サーバーに載せる時にコメントアウト外す
+# csvファイルを更新する関数、サーバーに載せる時にコメントアウト外す
 '''
 get_data()
 '''
