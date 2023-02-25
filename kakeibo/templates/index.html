@@ -26,20 +26,20 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-    var xAxisLabelMinWidth = 500;
-    var data = [65, 59, 80, 81, 56, 55, 40];
+    var xAxisLabelMinWidth = 100;
+    var data =  {{ price_list|tojson }};
     var width = data.length*xAxisLabelMinWidth;
     document.getElementById('chart').style.width = width+"px";
-    document.getElementById('chart').style.height = "1000px";
+    document.getElementById('chart').style.height = "500px";
 
     const ctx = document.getElementById('chart');
 
     var chart = new Chart(ctx, {
         type: "bar",
         data: {
-            labels: ["0","1","2","3","4","5","6"],
+            labels: {{ label_list|tojson }},
             datasets: [{
-                label: "おトク",
+                label: "{{ name }}",
                 data: data,
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',

@@ -73,7 +73,12 @@ def read_csv(vegetable):
 @app.route("/")
 @login_required
 def index():
-    return render_template("index.html")
+    name = "おトク"
+    data = read_csv(name)
+    label_list = data["date"]
+    price_list = data["price"]
+
+    return render_template("index.html", label_list=label_list, price_list=price_list, name=name)
 
 @app.route("/charts")
 @login_required
