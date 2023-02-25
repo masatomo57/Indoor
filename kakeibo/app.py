@@ -46,12 +46,9 @@ def get_db():
         g.db = sqlite3.connect('kakeibo.db')
     return g.db
 
+# サーバーに載せる時にコメントアウト外す
 '''
-# 毎週水曜日に新しいデータをとってくる
-schedule.every().wednesday.at("00:00").do(get_data)
-while True:
-    schedule.run_pending()
-    time.sleep(1)
+get_data()
 '''
 
 # DATA.csvを読み込む関数の定義
