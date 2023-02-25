@@ -74,7 +74,7 @@ def read_csv(vegetable):
 @login_required
 def index():
     name = "おトク"
-    data = read_csv(name)
+    data = read_csv("キャベツ")
     label_list = data["date"]
     price_list = data["price"]
 
