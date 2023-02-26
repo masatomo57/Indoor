@@ -13,6 +13,7 @@ for username in users:
     # print(username[0])
     last_week_transact = db.execute("SELECT sum(price*shares) AS sum FROM transact WHERE user_id=? AND transacted BETWEEN DATE('now', 'localtime', '-9 day') AND DATE('now', 'localtime', '-3 day')", (username[0],)).fetchall()[0]
     print(last_week_transact[0])
+    
 
 
 db.close()
