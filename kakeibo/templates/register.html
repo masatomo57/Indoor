@@ -1,41 +1,8 @@
 {% extends "base.html" %}
-{% block title %}家計簿カレンダー{% endblock %}
+{% block title %}データ登録{% endblock %}
 
 {% block head %}
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
         <style>
-            .container {
-                font-family: 'Noto Sans JP', sans-serif;
-            }
-            a {
-                text-decoration: none;
-            }
-            th {
-                height: 30px;
-                text-align: center;
-            }
-            td {
-                height: 100px;
-            }
-            .today {
-                background: orange !important;
-            }
-            #prev, #month, #next {
-                display: inline-block;
-                vertical-align: middle;
-                margin: 0;
-            }
-            td:not(:empty):hover {
-                background-color: yellow;
-            }
-            #prev:hover {
-                background-color: yellow;
-            }
-            #next:hover {
-                background-color: yellow;
-            }
             #form-container {
                 display: none;
             }
@@ -46,67 +13,13 @@
                 background-color: #fff; /* 背景色を設定 */
                 background-image: url('/static/kakeibo.png'); /* 背景画像を追加 */
             }
-            #month {
-                padding-left: 20px;
-                padding-right: 20px;
-            }
             .col-sm-8.offset-sm-2.text-center {
                 padding-bottom: 50px;
-            }
-            .first-table th:first-child, td:nth-child(7n+1) {
-                color: red;
-                border-color: black;
-            }
-            .first-table th:last-child, td:nth-child(7n) {
-                color: blue;
-                border-color: black;
-            }
-            .triangle-right{
-                border-style: solid;
-                border-width: 10px 0 10px 10px;
-                border-color: transparent transparent transparent black;
-                display: inline-block;
-                width: 0;
-                height: 0;
-            }
-            .triangle-left{
-                border-style: solid;
-                border-width: 10px 10px 10px 0;
-                border-color: transparent black transparent transparent;
-                display: inline-block;
-                width: 0;
-                height: 0;
-            }
-            .py-5 {
-                padding-top: 1rem!important;
             }
         </style>
 {% endblock %}
         
 {% block main %}
-    <main class="container-fluid py-5 text-center">
-    <div class="first-table">
-    <div class="container">
-    <botton id="prev" class="triangle-left"></botton><h3 id="month"></h3><botton id="next" class="triangle-right"></botton>
-    <p></p>
-    <div id="calendar">
-    <table class="table table-bordered">
-        <tr>
-            <th>日</th>
-            <th>月</th>
-            <th>火</th>
-            <th>水</th>
-            <th>木</th>
-            <th>金</th>
-            <th>土</th>
-        </tr>
-        <tbody id="calendar-body">
-        </tbody>
-    </table>
-    </div>
-    </div>
-    </div>
-    </main>
     <div id="form-register">
         <form action="/test1" method="post">
         <div class="col-md-6 offset-md-3">
@@ -154,103 +67,18 @@
         <tr>
             <th>日付</th>
             <th>品目</th>
-            <th>税込価格</th>
+            <th>価格</th>
         </tr>
+        {% for data in database %}
+        <tr>
+          <td>{{ data[0] }}</td>
+          <td>{{ data[1] }}</td>
+          <td>{{ data[2] }}</td>
+        </tr>
+        {% endfor %}
     </table>
     <script>
         var today = new Date();
-        var currentMonth = today.getMonth();
-        var currentYear = today.getFullYear();
-        //var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        var prevButton = document.getElementById("prev");
-        var nextButton = document.getElementById("next");
-
-        //前の月へ戻る
-        prevButton.addEventListener("click", function() {
-            currentYear = (currentMonth == 1) ? currentYear - 1 : currentYear;
-            currentMonth = (currentMonth == 1) ? 12 : currentMonth - 1;
-            displayCalendar();
-        });
-
-        //次の月へ進む
-        nextButton.addEventListener("click", function() {
-            currentYear = (currentMonth == 12) ? currentYear + 1 : currentYear;
-            currentMonth = (currentMonth == 12) ? 1 : currentMonth + 1;
-            displayCalendar();
-        });
-
-        // カレンダーを表示するための関数
-        function displayCalendar() {
-            var firstDay = (new Date(currentYear, currentMonth)).getDay();
-            var daysInMonth = 32 - new Date(currentYear, currentMonth, 32).getDate();
-
-            var calendarBody = document.getElementById("calendar-body");
-            calendarBody.innerHTML = "";
-
-            var monthYear = document.getElementById("month");
-            var month = currentMonth % 12 + 1;
-            monthYear.innerHTML = currentYear + "年" + month + "月";
-
-            var date = 1;
-            for (var i = 0; i < 6; i++) {
-                var row = document.createElement("tr");
-
-                for (var j = 0; j < 7; j++) {
-                    if (i === 0 && j < firstDay) {
-                        var cell = document.createElement("td");
-                        var cellText = document.createTextNode("");
-                        cell.appendChild(cellText);
-                        row.appendChild(cell);
-                    } else if (date > daysInMonth) {
-                        var cell = document.createElement("td");
-                        var cellText = document.createTextNode("");
-                        cell.appendChild(cellText);
-                        row.appendChild(cell);
-                    } else {
-                        var cell = document.createElement("td");
-                        var cellText = document.createTextNode(date);
-                        if (date === today.getDate() && currentMonth === today.getMonth() && currentYear === today.getFullYear()) {
-                            cell.classList.add("today");
-                        }
-                        cell.appendChild(cellText);
-                        row.appendChild(cell);
-                        date++;
-                    }
-                }
-                calendarBody.appendChild(row);
-                //週の終わりまで空の箱を用意する。
-                if (date > daysInMonth) {
-                    break;
-                }
-            }
-        }
-        displayCalendar();
-
-        ///////////////////////////////////////////////////////////
-        // ここは、まだやり方模索中
-        // カレンダーの日付を表示するテーブルを取得
-        var calendarBody = document.getElementById("calendar-body");
-        
-        // フォームを取得する
-        var formContainer = document.getElementById("form-container");
-
-        /*
-        // 日付セルにクリックイベントを追加する
-        calendarBody.addEventListener("click", function(e) {-
-            // クリックされた要素がtd要素である場合にのみ処理を実行する
-            if (e.target && e.target.nodeName === "TD") {
-                // フォームを日付セルの上に配置する
-                var cellRect = e.target.getBoundingClientRect();
-                var formHeight = formContainer.offsetHeight;
-                formContainer.style.top = (cellRect.top - formHeight) + "px";
-                formContainer.style.left = cellRect.left + "px";
-
-                // フォームを表示する
-                var formContainer = document.getElementById("form-container");
-            }
-        });*/
-        ///////////////////////////////////////////////////////////
-
         // 「年月日」を配列で取得 ( [0]:年, [1]:月, [2]:日 )
         var dateArray = getTSDate(today);
 
@@ -270,67 +98,17 @@
            getElmId('last_date').value = YM + "-" + lastDateArray[2];
            
            // 今月のデータを表示
-           displaySpendingData(startDate, lastDate);
+           displaySpendingData();
         }
 
         function getSpendingData(startDate, lastDate) {
-            // ダミーデータの例
-            var dummyData = [
-                { date: "2022-01-01", item: "トマト", price: 1000 },
-                { date: "2022-01-05", item: "キャベツ", price: 500 },
-                { date: "2022-01-10", item: "白菜", price: 800 },
-                { date: "2022-02-01", item: "ピーマン", price: 2000 },
-                { date: "2022-02-05", item: "ほうれん草", price: 700 },
-                { date: "2022-02-10", item: "ミルク", price: 1500 },
-            ];
-
-            var result = dummyData.filter(function (data) {
-                return startDate <= data.date && data.date <= lastDate;
-            });
-
-            // 日付の昇順にソートする
-            result.sort(function (a, b) {
-                return a.date.localeCompare(b.date);
-            });
-            return result
         }
         
         // 登録日付に「本日の年月日」を設定
         document.getElementById("regist_date").value = dateArray[0] + "-" + dateArray[1] + "-" + dateArray[2]
        　
          /* 計算したデータのテーブル(日付, 品目, 税込価格, 削除ボタン, 編集ボタン)を表示*/
-        function displaySpendingData(startDate, lastDate) {
-            // テーブルを取得
-            var table = getElmId('kakei_tb');
-            // テーブルヘッダー生成
-            table.innerHTML = "<tr><th>日付</th><th>品目</th><th colspan='3'>税込価格</th></tr>";
-            var spendingData = getSpendingData(startDate, lastDate);
-            for (var i = 0; i < spendingData.length; i++) {
-                var data = spendingData[i];
-
-                var row = document.createElement('tr');
-                var dateCell = document.createElement('td');
-                dateCell.textContent = data.date;
-                row.appendChild(dateCell);
-
-                var itemCell = document.createElement('td');
-                itemCell.textContent = data.item;
-                row.appendChild(itemCell);
-
-                var priceCell = document.createElement('td');
-                priceCell.textContent = data.price;
-                row.appendChild(priceCell);
-
-                var buttonCell = document.createElement('td');
-                var deleteButton = document.createElement('button');
-                deleteButton.textContent = '削除';
-                deleteButton.addEventListener('click', onClickDelBtn, false);
-                buttonCell.appendChild(deleteButton);
-
-                var editButton = document.createElement('button');
-                editButton.textContent = '編集';
-                editButton.addEventListener('click', onClickEditBtn, false);
-            }
+        function displaySpendingData() {
         }
         /* データ登録処理*/
         function registSpending(){
