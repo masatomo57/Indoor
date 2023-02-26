@@ -210,18 +210,18 @@ def eggplant():
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
-@app.route("/charts/cabbage")
+@app.route("/charts/bread")
 @login_required
 def cabbage():
-    name = "キャベツ"
-    data = read_csv("yasai.csv", name)
+    name = "食パン"
+    data = read_csv("kakou.csv", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
-@app.route("/charts/cabbage")
+@app.route("/charts/bread")
 @login_required
 def cabbage():
     name = "キャベツ"
