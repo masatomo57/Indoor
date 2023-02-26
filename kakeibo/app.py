@@ -45,7 +45,7 @@ def get_db():
 
 
 # yasai.csvを読み込む関数の定義
-def read_csv(csv_file, vegetable):
+def read_csv(csv_file, item):
     price = []
     date = []
     data = {}
@@ -53,10 +53,10 @@ def read_csv(csv_file, vegetable):
         reader = csv.DictReader(f)
         for row in reader:
             date.append(row["DATE"])
-            if row[vegetable] == '':
+            if row[item] == '':
                 price.append(None)
             else:
-                price.append(row[vegetable])
+                price.append(row[item])
     data["price"] = price
     data["date"] = date
     data["lastprice"] = price[len(price)-1]
@@ -67,7 +67,7 @@ def read_csv(csv_file, vegetable):
 @login_required
 def index():
     name = "おトク"
-    data = read_csv("キャベツ")
+    data = read_csv(yasai.csv, name)
     label_list = data["date"]
     price_list = data["price"]
 
@@ -82,7 +82,7 @@ def charts():
 @login_required
 def cabbage():
     name = "キャベツ"
-    data = read_csv(name)
+    data = read_csv(yasai.csv, name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
@@ -93,7 +93,7 @@ def cabbage():
 @login_required
 def greenonion():
     name = "ねぎ"
-    data = read_csv(name)
+    data = read_csv(yasai.csv, name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
@@ -104,7 +104,7 @@ def greenonion():
 @login_required
 def lettuce():
     name = "レタス"
-    data = read_csv(name)
+    data = read_csv(yasai.csv, name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
@@ -115,7 +115,7 @@ def lettuce():
 @login_required
 def potato():
     name = "ばれいしょ"
-    data = read_csv(name)
+    data = read_csv(yasai.csv, name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
@@ -126,7 +126,7 @@ def potato():
 @login_required
 def onion():
     name = "たまねぎ"
-    data = read_csv(name)
+    data = read_csv(yasai.csv, name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
@@ -137,7 +137,7 @@ def onion():
 @login_required
 def cucumber():
     name = "きゅうり"
-    data = read_csv(name)
+    data = read_csv(yasai.csv, name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
@@ -148,7 +148,7 @@ def cucumber():
 @login_required
 def tomato():
     name = "トマト"
-    data = read_csv(name)
+    data = read_csv(yasai.csv, name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
@@ -159,7 +159,7 @@ def tomato():
 @login_required
 def spinach():
     name = "ほうれんそう"
-    data = read_csv(name)
+    data = read_csv(yasai.csv, name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
@@ -170,7 +170,7 @@ def spinach():
 @login_required
 def carrot():
     name = "にんじん"
-    data = read_csv(name)
+    data = read_csv(yasai.csv, name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
@@ -181,7 +181,7 @@ def carrot():
 @login_required
 def chinesecabbage():
     name = "はくさい"
-    data = read_csv(name)
+    data = read_csv(yasai.csv, name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
@@ -192,7 +192,7 @@ def chinesecabbage():
 @login_required
 def raddish():
     name = "だいこん"
-    data = read_csv(name)
+    data = read_csv(yasai.csv, name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
@@ -203,7 +203,7 @@ def raddish():
 @login_required
 def eggplant():
     name = "なす"
-    data = read_csv(name)
+    data = read_csv(yasai.csv, name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
