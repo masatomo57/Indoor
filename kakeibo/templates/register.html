@@ -75,6 +75,7 @@
           <td>{{ data[1] }}</td>
           <td>{{ data[2] }}</td>
           <td><button type="button" onclick="deleteData('{{data[0]}}', '{{data[1]}}', '{{data[2]}}')">削除</button></td>
+          <td><button type="button" onclick="editData('{{data[0]}}', '{{data[1]}}', '{{data[2]}}')">編集</button></td>
         </tr>
         {% endfor %}
     </table>
@@ -106,12 +107,6 @@
         function registSpending(){
             // 入力データのチェック
             if( chkRegistData('regist_date','regist_name', 'regist_price', 'regist_quantity') ) {
-                // 表示データを更新
-                execDisplayDesignatedPeriodData();
-                //登録データ（品目・単価・個数）の入力ボックスの値を初期化
-                getElmId('regist_name').value = ""
-                getElmId('regist_price').value = ""
-                getElmId('regist_quantity').value = "";
             }
         }
         /* 登録データのチェック1 */
@@ -170,9 +165,45 @@
                     tr.remove(); // テーブルから該当行を削除
                 }
                 };
-                xhr.send(JSON.stringify({date: date, name: name, price: price}));
-                execDisplayDesignatedPeriodData();
+                xhr.send(JSON.stringify({date: date, name: item, price: price}));
             }
+        }
+
+          //「編集ボタン」クリック時の処理
+          function editData(date, item, price){
+            //テーブルから該当行を取得し、各セルを編集可能にする
+            var tr = event.target.closest('tr');
+            tr.children[0].contentEditable = true;
+            tr.children[1].contentEditable = true;
+            tr.children[2].contentEditable = true;
+
+            //編集ボタンを編集実行ボタンに変更
+            var editBtn = tr.children[4].children[0];
+            editBtn.textContent = "編集実行";
+            editBtn.onclick = function(){
+            //編集実行ボタンが押された場合の処理
+            var newDate = tr.children[0].textContent;
+            var newItem = tr.children[1].textContent;
+            var newPrice = tr.children[2].textContent;
+            if(newDate === date && newItem === item && newPrice === price){
+            //何も変更されていない場合は何もしない
+                return;
+            }
+            //データベースの更新処理を行う
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/test4');
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    console.log(xhr.responseText);
+                //テーブルから該当行を削除して、更新されたデータを表示する
+                    tr.remove();
+                    var database = JSON.parse(xhr.responseText);
+                    displayDatabase(database);
+                }
+            };
+            xhr.send(JSON.stringify({date: date, name: newItem, price: newPrice}));
+            };
         }
         // 指定期間の「表示」ボタンクリック時の処理
         function onClickDisplayDesignatedPeriodDataBtn(){         

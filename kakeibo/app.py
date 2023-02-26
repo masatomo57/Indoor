@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, render_template, flash, redirect, request, url_for, session, g
+from flask import Flask, render_template, flash, redirect, request, url_for, session, g, jsonify
 from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -418,10 +418,6 @@ def test1():
         regist_price = request.form.get("price")
         regist_quantity = request.form.get("quantity")
         regist_date = request.form.get("date")
-        print(regist_name)
-        print(regist_price)
-        print(regist_quantity)
-        print(regist_date)
         # Redirect user to home page
         if not (regist_name or regist_price or regist_quantity or regist_date):
             return redirect("/register")
@@ -430,14 +426,13 @@ def test1():
         db.execute("INSERT INTO buying (user_id,item,price,shares,transacted) VALUES (?,?,?,?,?)",(session["user_id"],regist_name,regist_price,regist_quantity,regist_date))
         db.commit()
         db.close()
-        return redirect("/register")
+        return render_template('register.html', database=[])
 
 @app.route("/test2", methods=["POST"])
 @login_required
 def test2():
     # 表示期間ボタンを押すので、対象期間の日付と品目と税込金額が必要
     # (例)2023-02-26
-    tax = 1.1
     start_date = request.form.get("start_date")
     last_date = request.form.get("last_date")
     conn = sqlite3.connect('kakeibo.db')
@@ -445,7 +440,7 @@ def test2():
     cur.execute('SELECT transacted,item,price FROM buying WHERE user_id = ? AND transacted BETWEEN ? AND ?', (session["user_id"], start_date, last_date))
     database = cur.fetchall()
     conn.close()
-    return render_template('register.html', database=database, tax=tax)
+    return render_template('register.html', database=database)
 
 @app.route("/test3", methods=["POST"])
 @login_required
@@ -455,22 +450,31 @@ def test3():
     data = request.json
     date = data['date']
     item = data['name']
-    price = data['sum']
+    price = data['price']
     conn = sqlite3.connect('kakeibo.db')
     cur = conn.cursor()
-    cur.execute("DELETE FROM buying WHERE user_id = ? AND transacted=? AND item=? AND price=?", (session["user_id"], date, item, price))
+    cur.execute("DELETE FROM buying WHERE user_id = ? AND transacted = ? AND item = ? AND price = ?", (session["user_id"], date, item, price))
     conn.commit()
     cur.execute("SELECT * FROM buying WHERE user_id = ?", (session["user_id"],))
     database = cur.fetchall()
     conn.close()
-    return render_template('register.html',database=database)
 
 @app.route("/test4", methods=["POST"])
 @login_required
 def test4():
-    # test4の処理を実装
-    # 編集ボタン(テーブルの編集)(ここは最悪なくて良い)
-    return redirect("/reister")
+     # 編集実行ボタンが押されたときの処理
+    data = request.json
+    date = data['date']
+    item = data['name']
+    price = data['price']
+    conn = sqlite3.connect('kakeibo.db')
+    cur = conn.cursor()
+    cur.execute("UPDATE buying SET item=?, price=? WHERE user_id=? AND transacted=?", (item, price, session["user_id"], date))
+    conn.commit()
+    cur.execute("SELECT * FROM buying WHERE user_id = ?", (session["user_id"],))
+    database = cur.fetchall()
+    conn.close()
+    return render_template('register.html', database=database)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

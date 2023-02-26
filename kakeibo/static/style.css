@@ -46,26 +46,26 @@ nav .navbar-brand .green
 #regist_spending_btn {
     margin-top: 8px;
 }
-#Habs_tb {
+#kakei_tb {
     margin-top: 10px;
     border-spacing: 0;
 }
-#Habs_tb tr:nth-child(2n+1) {
+#kakei_tb tr:nth-child(2n+1) {
   background: #d2ead2;
 }
-#Habs_tb th, tr, td {
+#kakei_tb th, tr, td {
     border: 1px solid;
 }
-#Habs_tb th {
+#kakei_tb th {
     background: #a7d4a7;
     border-right: none;
     border-left: none;
 }
-#Habs_tb th:last-child {
+#kakei_tb th:last-child {
     text-align: left;
     padding-left: 20px;
 }
-#Habs_tb td {
+#kakei_tb td {
     padding: 8px 20px;
     border-top: none;
     border-right: none;
