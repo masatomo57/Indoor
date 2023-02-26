@@ -19,10 +19,12 @@ for username in users:
     for item in items:
         last_week_consumptions = db.execute("SELECT sum(price*shares) FROM buying WHERE user_id=? AND item=? AND transacted BETWEEN DATE('now', 'localtime', '-9 day') AND DATE('now', 'localtime', '-3 day')", (username[0],item)).fetchall()[0][0]
         if last_week_consumptions == None:
-            last_week_consumptions = 0
+            continue
         last_week_consumptions = float(last_week_consumptions)
         otoku_price += float(yasai_data[item][len(yasai_data)-1]) - last_week_consumptions
-        db.execute("INSERT INTO otoku (user_id, price, day) VALUES(?, ?, ?)", (username, otoku_price, ))
 
+    # データベース作ったら入れる
+    # db.execute("INSERT INTO otoku (user_id, price, day) VALUES(?, ?, DATE('now', 'localtime', '-9 day'))", (username, otoku_price))
+    # db.commit()
 
 db.close()
