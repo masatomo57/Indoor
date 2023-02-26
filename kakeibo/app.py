@@ -7,7 +7,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 import datetime
 from helpers import apology, login_required, tax
 
-from get_data import get_data
+from kakeibo.get_yasai_data import get_data
 import csv
 import time
 import schedule
