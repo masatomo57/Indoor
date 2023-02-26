@@ -44,12 +44,12 @@ def get_db():
 
 
 
-# DATA.csvを読み込む関数の定義
-def read_yasai_csv(vegetable):
+# yasai.csvを読み込む関数の定義
+def read_csv(csv_file, vegetable):
     price = []
     date = []
     data = {}
-    with open("DATA.csv", "r") as f:
+    with open(csv_file, "r") as f:
         reader = csv.DictReader(f)
         for row in reader:
             date.append(row["DATE"])
