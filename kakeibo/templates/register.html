@@ -74,6 +74,7 @@
           <td>{{ data[0] }}</td>
           <td>{{ data[1] }}</td>
           <td>{{ data[2] }}</td>
+          <td><button type="button" onclick="deleteData('{{data[0]}}', '{{data[1]}}', '{{data[2]}}')">削除</button></td>
         </tr>
         {% endfor %}
     </table>
@@ -96,20 +97,11 @@
            // 今月の「初日」と「最終日」をUIに表示
            getElmId('start_date').value = YM + "-01";
            getElmId('last_date').value = YM + "-" + lastDateArray[2];
-           
-           // 今月のデータを表示
-           displaySpendingData();
         }
-
-        function getSpendingData(startDate, lastDate) {
-        }
-        
+            
         // 登録日付に「本日の年月日」を設定
         document.getElementById("regist_date").value = dateArray[0] + "-" + dateArray[1] + "-" + dateArray[2]
        　
-         /* 計算したデータのテーブル(日付, 品目, 税込価格, 削除ボタン, 編集ボタン)を表示*/
-        function displaySpendingData() {
-        }
         /* データ登録処理*/
         function registSpending(){
             // 入力データのチェック
@@ -160,7 +152,7 @@
             return correctFlg;
         }
        /*「削除ボタン」クリック時の処理 */
-        function onClickDelBtn(event){
+         function deleteData(date, item, price){
             // データ削除の確認ダイアログ表示
             if( confirm("データを削除しますか？") ){
                 //データを表示
@@ -168,7 +160,7 @@
                 var date = tr.children[0].textContent;
                 var item = tr.children[1].textContent;
                 var price = tr.children[2].textContent;
-    
+
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', '/test3');
                 xhr.setRequestHeader('Content-Type', 'application/json');
