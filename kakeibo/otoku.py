@@ -4,7 +4,7 @@ from app import get_db, read_csv
 
 db = get_db()
 
-last_week_transact = db.execute("SELECT * FROM transact WHERE transacted BETWEEN ").fetchall()
+last_week_transact = db.execute("SELECT * FROM transact WHERE transacted BETWEEN 2023-02-26").fetchall()
 
 db = get_db()
 if request.method == "POST":
