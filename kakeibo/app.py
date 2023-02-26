@@ -49,7 +49,7 @@ def read_csv(csv_file, item):
     price = []
     date = []
     data = {}
-    with open(csv_file, "r") as f:
+    with open(f"{csv_file}", "r") as f:
         reader = csv.DictReader(f)
         for row in reader:
             date.append(row["DATE"])
