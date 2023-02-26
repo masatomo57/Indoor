@@ -9,4 +9,4 @@ Team Development by Team Indoor
 そのため、git pullのタイミング次第ではエラーが発生する恐れがあります。申し訳ございません。
 
 2023/02/25
-gitのエラーが発生。HTTPSで試している
+gitのエラーが発生。HTTPSで試している、ブラウザからの挑戦
