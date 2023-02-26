@@ -142,10 +142,14 @@
             </div>
         </form>
         </div>
-        <!--</form>-->
+       </form>
     </div>
     <p></p>
     <h3>～　支出一覧　～</h3>
+    <form action="/test2" method="post">
+        <input type="date" id="start_date" name="start_date">〜<input type="date" id="last_date" name="last_date">
+        <button id="display_btn" type="submit">指定期間表示</button>
+    </form>
     <table id="kakei_tb" class="container" style="width: 50%;">
         <tr>
             <th>日付</th>
@@ -270,7 +274,25 @@
         }
 
         function getSpendingData(startDate, lastDate) {
-            
+            // ダミーデータの例
+            var dummyData = [
+                { date: "2022-01-01", item: "トマト", price: 1000 },
+                { date: "2022-01-05", item: "キャベツ", price: 500 },
+                { date: "2022-01-10", item: "白菜", price: 800 },
+                { date: "2022-02-01", item: "ピーマン", price: 2000 },
+                { date: "2022-02-05", item: "ほうれん草", price: 700 },
+                { date: "2022-02-10", item: "ミルク", price: 1500 },
+            ];
+
+            var result = dummyData.filter(function (data) {
+                return startDate <= data.date && data.date <= lastDate;
+            });
+
+            // 日付の昇順にソートする
+            result.sort(function (a, b) {
+                return a.date.localeCompare(b.date);
+            });
+            return result
         }
         
         // 登録日付に「本日の年月日」を設定
