@@ -269,14 +269,15 @@ def test1():
 def test2():
     # 表示期間ボタンを押すので、対象期間の日付と品目と税込金額が必要
     # (例)2023-02-26
+    tax = 1.1
     start_date = request.form.get("start_date")
     last_date = request.form.get("last_date")
     conn = sqlite3.connect('kakeibo.db')
     cur = conn.cursor()
-    cur.execute('SELECT item,date,sum FROM buying')
-    spending_data = cur.fetchall()
+    cur.execute('SELECT transacted,item,price FROM buying WHERE user_id = ? AND transacted BETWEEN ? AND ?', (session["user_id"], start_date, last_date))
+    database = cur.fetchall()
     conn.close()
-    return render_template('register.html', data=spending_data)
+    return render_template('register.html', database=database, tax=tax)
 
 @app.route("/test3", methods=["POST"])
 @login_required
