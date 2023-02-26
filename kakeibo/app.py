@@ -212,7 +212,7 @@ def eggplant():
 
 @app.route("/charts/bread")
 @login_required
-def cabbage():
+def bread():
     name = "食パン"
     data = read_csv("kakou.csv", name)
     label_list = data["date"]
@@ -223,7 +223,7 @@ def cabbage():
 
 @app.route("/charts/instantnoodle")
 @login_required
-def cabbage():
+def instantnoodle():
     name = "即席めん"
     data = read_csv("kakou.csv", name)
     label_list = data["date"]
@@ -234,7 +234,7 @@ def cabbage():
 
 @app.route("/charts/udon")
 @login_required
-def cabbage():
+def udon():
     name = "ゆでうどん"
     data = read_csv("kakou.csv", name)
     label_list = data["date"]
@@ -245,7 +245,7 @@ def cabbage():
 
 @app.route("/charts/flour")
 @login_required
-def cabbage():
+def flour():
     name = "小麦粉"
     data = read_csv("kakou.csv", name)
     label_list = data["date"]
@@ -256,7 +256,7 @@ def cabbage():
 
 @app.route("/charts/milk")
 @login_required
-def cabbage():
+def milk():
     name = "牛乳"
     data = read_csv("kakou.csv", name)
     label_list = data["date"]
@@ -267,7 +267,7 @@ def cabbage():
 
 @app.route("/charts/cheese")
 @login_required
-def cabbage():
+def cheese():
     name = "チーズ"
     data = read_csv("kakou.csv", name)
     label_list = data["date"]
@@ -278,7 +278,7 @@ def cabbage():
 
 @app.route("/charts/tofu")
 @login_required
-def cabbage():
+def tofu():
     name = "豆腐"
     data = read_csv("kakou.csv", name)
     label_list = data["date"]
@@ -289,7 +289,7 @@ def cabbage():
 
 @app.route("/charts/canolaoil")
 @login_required
-def cabbage():
+def canolaoil():
     name = "食用油（キャノーラ油）"
     data = read_csv("kakou.csv", name)
     label_list = data["date"]
@@ -300,7 +300,7 @@ def cabbage():
 
 @app.route("/charts/saladoil")
 @login_required
-def cabbage():
+def saladoil():
     name = "食用油（サラダ油）"
     data = read_csv("kakou.csv", name)
     label_list = data["date"]
@@ -311,7 +311,7 @@ def cabbage():
 
 @app.route("/charts/margarine")
 @login_required
-def cabbage():
+def margarine():
     name = "マーガリン"
     data = read_csv("kakou.csv", name)
     label_list = data["date"]
@@ -322,7 +322,7 @@ def cabbage():
 
 @app.route("/charts/mayonnaise")
 @login_required
-def cabbage():
+def mayonnaise():
     name = "マヨネーズ"
     data = read_csv("kakou.csv", name)
     label_list = data["date"]
@@ -333,7 +333,7 @@ def cabbage():
 
 @app.route("/charts/soysauce")
 @login_required
-def cabbage():
+def soysauce():
     name = "しょう油"
     data = read_csv("kakou.csv", name)
     label_list = data["date"]
@@ -344,7 +344,7 @@ def cabbage():
 
 @app.route("/charts/miso")
 @login_required
-def cabbage():
+def miso():
     name = "みそ"
     data = read_csv("kakou.csv", name)
     label_list = data["date"]
@@ -355,7 +355,7 @@ def cabbage():
 
 @app.route("/charts/fishcake")
 @login_required
-def cabbage():
+def fishcake():
     name = "かまぼこ"
     data = read_csv("kakou.csv", name)
     label_list = data["date"]
@@ -366,7 +366,7 @@ def cabbage():
 
 @app.route("/charts/cannedtuna")
 @login_required
-def cabbage():
+def cannedtuna():
     name = "まぐろ缶詰"
     data = read_csv("kakou.csv", name)
     label_list = data["date"]
@@ -377,7 +377,7 @@ def cabbage():
 
 @app.route("/charts/butter")
 @login_required
-def cabbage():
+def butter():
     name = "バター"
     data = read_csv("kakou.csv", name)
     label_list = data["date"]
