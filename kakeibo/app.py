@@ -221,165 +221,165 @@ def cabbage():
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
-@app.route("/charts/bread")
+@app.route("/charts/instantnoodle")
 @login_required
 def cabbage():
-    name = "キャベツ"
-    data = read_csv("yasai.csv", name)
+    name = "即席めん"
+    data = read_csv("kakou.csv", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
-@app.route("/charts/cabbage")
+@app.route("/charts/udon")
 @login_required
 def cabbage():
-    name = "キャベツ"
-    data = read_csv("yasai.csv", name)
+    name = "ゆでうどん"
+    data = read_csv("kakou.csv", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
-@app.route("/charts/cabbage")
+@app.route("/charts/flour")
 @login_required
 def cabbage():
-    name = "キャベツ"
-    data = read_csv("yasai.csv", name)
+    name = "小麦粉"
+    data = read_csv("kakou.csv", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
-@app.route("/charts/cabbage")
+@app.route("/charts/milk")
 @login_required
 def cabbage():
-    name = "キャベツ"
-    data = read_csv("yasai.csv", name)
+    name = "牛乳"
+    data = read_csv("kakou.csv", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
-@app.route("/charts/cabbage")
+@app.route("/charts/cheese")
 @login_required
 def cabbage():
-    name = "キャベツ"
-    data = read_csv("yasai.csv", name)
+    name = "チーズ"
+    data = read_csv("kakou.csv", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
-@app.route("/charts/cabbage")
+@app.route("/charts/tofu")
 @login_required
 def cabbage():
-    name = "キャベツ"
-    data = read_csv("yasai.csv", name)
+    name = "豆腐"
+    data = read_csv("kakou.csv", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
-@app.route("/charts/cabbage")
+@app.route("/charts/canolaoil")
 @login_required
 def cabbage():
-    name = "キャベツ"
-    data = read_csv("yasai.csv", name)
+    name = "食用油（キャノーラ油）"
+    data = read_csv("kakou.csv", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
-@app.route("/charts/cabbage")
+@app.route("/charts/saladoil")
 @login_required
 def cabbage():
-    name = "キャベツ"
-    data = read_csv("yasai.csv", name)
+    name = "食用油（サラダ油）"
+    data = read_csv("kakou.csv", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
-@app.route("/charts/cabbage")
+@app.route("/charts/margarine")
 @login_required
 def cabbage():
-    name = "キャベツ"
-    data = read_csv("yasai.csv", name)
+    name = "マーガリン"
+    data = read_csv("kakou.csv", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
-@app.route("/charts/cabbage")
+@app.route("/charts/mayonnaise")
 @login_required
 def cabbage():
-    name = "キャベツ"
-    data = read_csv("yasai.csv", name)
+    name = "マヨネーズ"
+    data = read_csv("kakou.csv", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
-@app.route("/charts/cabbage")
+@app.route("/charts/soysauce")
 @login_required
 def cabbage():
-    name = "キャベツ"
-    data = read_csv("yasai.csv", name)
+    name = "しょう油"
+    data = read_csv("kakou.csv", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
-@app.route("/charts/cabbage")
+@app.route("/charts/miso")
 @login_required
 def cabbage():
-    name = "キャベツ"
-    data = read_csv("yasai.csv", name)
+    name = "みそ"
+    data = read_csv("kakou.csv", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
-@app.route("/charts/cabbage")
+@app.route("/charts/fishcake")
 @login_required
 def cabbage():
-    name = "キャベツ"
-    data = read_csv("yasai.csv", name)
+    name = "かまぼこ"
+    data = read_csv("kakou.csv", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
-@app.route("/charts/cabbage")
+@app.route("/charts/cannedtuna")
 @login_required
 def cabbage():
-    name = "キャベツ"
-    data = read_csv("yasai.csv", name)
+    name = "まぐろ缶詰"
+    data = read_csv("kakou.csv", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
-@app.route("/charts/cabbage")
+@app.route("/charts/butter")
 @login_required
 def cabbage():
-    name = "キャベツ"
-    data = read_csv("yasai.csv", name)
+    name = "バター"
+    data = read_csv("kakou.csv", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
