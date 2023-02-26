@@ -5,12 +5,8 @@ from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
 import datetime
-from helpers import apology, login_required, tax
-
-from kakeibo.get_yasai_data import get_data
+from helpers import login_required, tax
 import csv
-import time
-import schedule
 
 import sqlite3
 
@@ -46,13 +42,10 @@ def get_db():
         g.db = sqlite3.connect('kakeibo.db')
     return g.db
 
-# csvファイルを更新する関数、サーバーに載せる時にコメントアウト外す
-'''
-get_data()
-'''
+
 
 # DATA.csvを読み込む関数の定義
-def read_csv(vegetable):
+def read_yasai_csv(vegetable):
     price = []
     date = []
     data = {}
