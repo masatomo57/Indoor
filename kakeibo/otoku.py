@@ -3,6 +3,10 @@ import sqlite3
 from app import get_db, read_csv
 
 db = get_db()
+
+last_week_transact = db.execute("SELECT * FROM transact WHERE transacted").fetchall()
+
+db = get_db()
 if request.method == "POST":
     name=request.form.get("name")
     month=request.form.get("month")
