@@ -12,7 +12,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-    var xAxisLabelMinWidth = 20;
+    var xAxisLabelMinWidth = 30;
     var data =  {{ price_list|tojson }};
     var width = data.length*xAxisLabelMinWidth;
     document.getElementById('chart').style.width = width+"px";
