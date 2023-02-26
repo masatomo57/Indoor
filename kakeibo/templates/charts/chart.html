@@ -66,7 +66,7 @@
 
 {% block chart %}
 <div class="chart" style="position: relative; overflow-x: scroll;">
-    <div style="height:200px;">
+    <div id="canvas_box" style="height:200px;">
         <canvas id="chart" class="canvas"></canvas>
     </div>
 </div>
@@ -81,7 +81,7 @@
     document.getElementById('chart').style.width = width+"px";
     document.getElementById('chart').style.height = "500px";
 
-    let ctx = document.getElementById('chart');
+    const ctx = document.getElementById('chart');
 
     const skipped = (ctx, value) => ctx.p0.skip || ctx.p1.skip ? value : undefined;
     const down = (ctx, value) => ctx.p0.parsed.y > ctx.p1.parsed.y ? value : undefined;
@@ -105,5 +105,11 @@
             responsive: false,
         }
     });
+
+    let canvas_box = getElementById('canvas_box');
+    cabvas_box.scrollIntoView({
+        inline: "end";
+    });
+
 </script>
 {% endblock %}
