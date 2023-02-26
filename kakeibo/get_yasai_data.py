@@ -44,13 +44,13 @@ def get_data():
     #url = "https://www.maff.go.jp/j/zyukyu/anpo/kouri/k_yasai/attach/xls/h22index-57.xlsx"
 
     # data.xlsxとしてダウンロード
-    filename='yasai_data.xlsx'
+    filename='yasai.xlsx'
     urlData = requests.get(url).content
     with open(filename ,mode='wb') as f:
         f.write(urlData)
 
     # data.xlsxをpandasのデータフレーム型で読み込む
-    df = pd.read_excel('yasai_data.xlsx', index_col=0, header=1)
+    df = pd.read_excel('yasai.xlsx', index_col=0, header=1)
 
     # データフレーム内の不要な部分を削除
     df1 = df.dropna(how='all').dropna(how='all', axis=0)
@@ -59,10 +59,10 @@ def get_data():
     df1.replace("-", np.nan, inplace=True)
 
     # 一旦csvファイルとして出力
-    df1.to_csv('data1.csv')
+    df1.to_csv('yasai1.csv')
 
     # 出力したcsvファイルをデータフレーム型で読み込む（日付部分のカラム名を作成）
-    df2 = pd.read_csv("data1.csv")
+    df2 = pd.read_csv("yasai1.csv")
 
     # 日付データをdatetimeのdate型に変換したものを格納しておくリスト
     date_list = []
@@ -105,9 +105,9 @@ def get_data():
     # DATEカラムを一番左側に移動させ、もともと日付の入っていたカラムを削除
     df2 = df2[['DATE', 'キャベツ', 'ねぎ', 'レタス', 'ばれいしょ', 'たまねぎ', 'きゅうり', 'トマト', 'ほうれんそう', 'にんじん', 'はくさい', 'だいこん', 'なす']]
 
-    df2.to_csv('DATA.csv')
+    df2.to_csv('yasai.csv')
 
     return df2
 
 #動作テスト用
-#print(get_data())
+print(get_data())
