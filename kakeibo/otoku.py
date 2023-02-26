@@ -6,9 +6,8 @@ from pandas import read_csv
 
 file_name='yasai.csv'
 df=read_csv(file_name, header=0)
-header=df.columns[2:]
-print(header)
-
+items=df.columns[2:]
+print(items)
 
 
 
