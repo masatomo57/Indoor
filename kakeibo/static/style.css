@@ -91,7 +91,7 @@ nav .navbar-brand .green
     text-align: center;
     margin-left: 10px;/*サイドバーとメインコンテンツの間に隙間をあけた*/
     overflow-x: scroll;
-    position: relative; 
+    position: relative;
 }
 
 .chartpage {
