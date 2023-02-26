@@ -16,3 +16,4 @@ datetime
 schedule
 tika
 ipython
+openpyxl
