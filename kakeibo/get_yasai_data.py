@@ -44,13 +44,13 @@ def get_data():
     #url = "https://www.maff.go.jp/j/zyukyu/anpo/kouri/k_yasai/attach/xls/h22index-57.xlsx"
 
     # data.xlsxとしてダウンロード
-    filename='data.xlsx'
+    filename='yasai_data.xlsx'
     urlData = requests.get(url).content
     with open(filename ,mode='wb') as f:
         f.write(urlData)
 
     # data.xlsxをpandasのデータフレーム型で読み込む
-    df = pd.read_excel('data.xlsx', index_col=0, header=1)
+    df = pd.read_excel('yasai_data.xlsx', index_col=0, header=1)
 
     # データフレーム内の不要な部分を削除
     df1 = df.dropna(how='all').dropna(how='all', axis=0)
