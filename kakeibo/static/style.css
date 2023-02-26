@@ -87,9 +87,8 @@ nav .navbar-brand .green
 }
 
 .chart {
-    width: 75vw;
     text-align: center;
-    margin-left: 10px;/*サイドバーとメインコンテンツの間に隙間をあけた*/
+    margin: 0 auto;
     overflow-x: scroll;
     position: relative;
 }
