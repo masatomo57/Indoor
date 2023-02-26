@@ -4,10 +4,11 @@ import sqlite3
 from pandas import read_csv
 
 
-file_name='yasai.csv'
-df=read_csv(file_name, header=0)
-items=df.columns[2:]
-print(items)
+files=['yasai.csv', 'kakou.csv']
+for file in files:
+    df=read_csv(file, header=0)
+    items=df.columns[2:]
+    
 
 
 
