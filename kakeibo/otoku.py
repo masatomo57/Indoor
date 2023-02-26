@@ -8,19 +8,17 @@ file='yasai.csv'
 yasai_data=read_csv(file, header=0)
 items=yasai_data.columns[2:]
 
-
-
 conn = sqlite3.connect('kakeibo.db')
 db = conn.cursor()
 
-
-
-
 users = db.execute("SELECT username FROM users").fetchall()
+
+otoku = 0
 
 for username in users:
     for item in items:
         last_week_consumptions = db.execute("SELECT item, price, shares FROM buying WHERE user_id=? AND item=? AND transacted BETWEEN DATE('now', 'localtime', '-9 day') AND DATE('now', 'localtime', '-3 day')", (username[0],item)).fetchall()
-        yasai_data[item][]
+        otoku += yasai_data[item][len[yasai_data]-1] - last_week_consumptions
+        
 
 db.close()
