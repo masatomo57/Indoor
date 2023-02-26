@@ -49,7 +49,7 @@ def read_csv(csv_file, item):
     price = []
     date = []
     data = {}
-    with open(f"{csv_file}", "r") as f:
+    with open(csv_file, "r") as f:
         reader = csv.DictReader(f)
         for row in reader:
             date.append(row["DATE"])
@@ -67,7 +67,7 @@ def read_csv(csv_file, item):
 @login_required
 def index():
     name = "おトク"
-    data = read_csv(yasai.csv, name)
+    data = read_csv("yasai.csv", name)
     label_list = data["date"]
     price_list = data["price"]
 
