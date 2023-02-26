@@ -289,11 +289,13 @@ def test3():
     item = data['name']
     price = data['sum']
     conn = sqlite3.connect('kakeibo.db')
-    c = conn.cursor()
-    c.execute("DELETE * FROM kakei WHERE date=? AND item=? AND price=?", (date, item, price))
+    cur = conn.cursor()
+    cur.execute("DELETE FROM buying WHERE user_id = ? AND transacted=? AND item=? AND price=?", (session["user_id"], date, item, price))
     conn.commit()
+    cur.execute("SELECT * FROM buying WHERE user_id = ?", (session["user_id"],))
+    database = cur.fetchall()
     conn.close()
-    return redirect("/register")
+    return render_template('register.html',database=database)
 
 @app.route("/test4", methods=["POST"])
 @login_required
