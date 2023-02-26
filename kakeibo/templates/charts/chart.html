@@ -65,7 +65,7 @@
 {% endblock %}
 
 {% block chart %}
-<div class="chart" style="position: relative; overflow-x: scroll;">
+<div class="chart">
     <div id="canvas_box" style="height:200px;">
         <canvas id="chart" class="canvas"></canvas>
     </div>
@@ -106,11 +106,11 @@
         }
     });
 
-    const canvasbox = document.getElementById('canvas_box');
-    canvasbox.scrollIntoView({
+    const canvas = document.getElementById('chart');
+    canvas.scrollIntoView({
         behavior: "smooth",
-        block: "start",
-        inline: "start"
+        block: "end",
+        inline: "end"
     });
 
 </script>
