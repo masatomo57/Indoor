@@ -13,7 +13,7 @@ db = conn.cursor()
 
 users = db.execute("SELECT username FROM users").fetchall()
 
-otoku = 0
+otoku_price = 0
 
 for username in users:
     for item in items:
@@ -21,7 +21,8 @@ for username in users:
         if last_week_consumptions == None:
             last_week_consumptions = 0
         last_week_consumptions = float(last_week_consumptions)
-        otoku += yasai_data[item][len(yasai_data)-1] - last_week_consumptions
+        otoku_price += float(yasai_data[item][len(yasai_data)-1]) - last_week_consumptions
+        db.execute("INSERT INTO otoku (user_id, price, day) VALUES(?, ?, ?)", (username, otoku_price, ))
 
 
 db.close()
