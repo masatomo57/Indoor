@@ -242,20 +242,25 @@ def register():
         # 日付と税込み金額を渡してほしい(カレンダー表示のため)
         return render_template("register.html")
 
-@app.route("/test1", methods=["GET", "POST"])
+@app.route("/test1", methods=["POST"])
 @login_required
 def test1():
     if request.method == "POST":
-        # Redirect user to home page
-        if not (request.form.get("regist_date") or request.form.get("regist_name") or request.form.get("regist_price") or request.form.get("regist_quantity")):
-            return redirect("/register")
         regist_name = request.form.get("name")
         regist_price = request.form.get("price")
         regist_quantity = request.form.get("quantity")
         regist_date = request.form.get("date")
-        # 出来れば税込金額のカラム(sum)も欲しい
+        print(regist_name)
+        print(regist_price)
+        print(regist_quantity)
+        print(regist_date)
+        # Redirect user to home page
+        if not (regist_name or regist_price or regist_quantity or regist_date):
+            return redirect("/register")
+        # 出来れば税込金額のカラム(sum)も欲しいかも!
         db = get_db()
-        db.execute("INSERT INT buying (user_id,item,price,shares,transacted) VALUES (?,?,?,?,?)",session["user_id"],regist_name,regist_price,regist_quantity,regist_date)
+        db.execute("INSERT INTO buying (user_id,item,price,shares,transacted) VALUES (?,?,?,?,?)",(session["user_id"],regist_name,regist_price,regist_quantity,regist_date))
+        db.commit()
         db.close()
         return redirect("/register")
 
