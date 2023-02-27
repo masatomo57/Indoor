@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}データ登録{% endblock %}
+{% block title %}データ入力{% endblock %}
 
 {% block head %}
         <style>
@@ -14,39 +14,84 @@
                 background-image: url('/static/kakeibo.png'); /* 背景画像を追加 */
             }
             .col-sm-8.offset-sm-2.text-center {
-                padding-bottom: 50px;
+                padding-bottom: 30px;
+            }
+            .css {
+                padding-top: 40px;
             }
         </style>
 {% endblock %}
-        
+
 {% block main %}
     <div id="form-register">
         <form action="/test1" method="post">
         <div class="col-md-6 offset-md-3">
         <br>
-        <h3>～　入力フォーム　～</h3>
+        <h3>入力フォーム</h3>
         <p></p><br>
         <form>
             <div class="form-group row">
                 <label for="date" class="col-sm-2 col-form-label">日付</label>
                 <div class="col-sm-4">
-                    <input type="date" class="form-control" id="regist_date" name="date">
+                    <input type="date" class="form-control" id="regist_date" name="date" placeholder="(必須)">
                 </div>
-                <!-- 品目の制限は後で加える -->
                 <label for="name" class="col-sm-2 col-form-label">品目</label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control" id="regist_name" name="name">
+                    <input type="text" class="form-control" id="regist_name" name="name" list="item" placeholder="(必須)">
+                    <datalist id="item">
+                        <option value="トマト">
+                        <option value="キャベツ">
+                        <option value="レタス">
+                        <option value="はくさい">
+                        <option value="だいこん">
+                        <option value="ねぎ">
+                        <option value="ばれいしょ">
+                        <option value="たまねぎ">
+                        <option value="きゅうり">
+                        <option value="ほうれんそう">
+                        <option value="なす">
+                        <option value="にんじん">
+                        <option value="食パン">
+                        <option value="即席めん">
+                        <option value="ゆでうどん">
+                        <option value="小麦粉">
+                        <option value="牛乳">
+                        <option value="チーズ">
+                        <option value="豆腐">
+                        <option value="食用油（キャノーラ油）">
+                        <option value="食用油（サラダ油）">
+                        <option value="マーガリン">
+                        <option value="マヨネーズ">
+                        <option value="しょう油">
+                        <option value="みそ">
+                        <option value="かまぼこ">
+                        <option value="まぐろ缶詰">
+                        <option value="バター">
+                    </datalist>
                 </div>
                 <p></p>
             </div>
             <div class="form-group row">
-                <label for="price" class="col-sm-2 col-form-label">単価</label>
+                <label for="price" class="col-sm-2 col-form-label">総額</label>
                 <div class="col-sm-4">
-                    <input type="number" class="form-control" id="regist_price" name="price" min="1">
+                    <input type="number" class="form-control" id="regist_price" name="price" min="1" placeholder="(必須)">
                 </div>
                 <label for="date" class="col-sm-2 col-form-label">数量</label>
                 <div class="col-sm-4">
-                    <input type="number" class="form-control" id="regist_quantity" name="quantity" min="1">
+                    <input type="number" class="form-control" id="regist_quantity" name="quantity" min="0.01" step="0.01" list="divided" placeholder="(必須)">
+                    <datalist id="divided">
+                        <option value="0.5">
+                        <option value="0.25">
+                        <option value="0.025">
+                    </datalist>
+                </div>
+                <p></p>
+            </div>
+            <div class="form-group row">
+                <label for="gram" class="col-sm-2 col-form-label">重さ</label>
+                <div class="col-sm-4 d-flex align-items-center">
+                    <input type="number" class="form-control" id="regist_gram" name="gram" min="1" placeholder="(推奨)">
+                    <span class="ml-2 text-muted">&nbsp;&nbsp;(g)</span>
                 </div>
                 <p></p><br>
                 <div class="col-sm-8 offset-sm-2 text-center">
@@ -58,24 +103,32 @@
        </form>
     </div>
     <p></p>
-    <h3>～　支出一覧　～</h3>
+    <div class="css">
+    <h3>支出一覧</h3>
+    </div>
     <form action="/test2" method="post">
-        <input type="date" id="start_date" name="start_date">〜<input type="date" id="last_date" name="last_date">
-        <button id="display_btn" type="submit">指定期間表示</button>
+        <input type="date" id="start_date" name="start_date"></div>&nbsp;〜&nbsp;<input type="date" id="last_date" name="last_date">
+        &nbsp;&nbsp;<button id="display_btn" type="submit">指定期間表示</button>
     </form>
     <table id="kakei_tb" class="container" style="width: 50%;">
         <tr>
             <th>日付</th>
             <th>品目</th>
-            <th>価格</th>
+            <th>総額</th>
+            <th>数量</th>
+            <th>重さ</th>
+            <th></th>
+            <th></th>
         </tr>
         {% for data in database %}
         <tr>
-          <td>{{ data[0] }}</td>
-          <td>{{ data[1] }}</td>
-          <td>{{ data[2] }}</td>
-          <td><button type="button" onclick="deleteData('{{data[0]}}', '{{data[1]}}', '{{data[2]}}')">削除</button></td>
-          <td><button type="button" onclick="editData('{{data[0]}}', '{{data[1]}}', '{{data[2]}}')">編集</button></td>
+            <td>{{ data[0] }}</td>
+            <td>{{ data[1] }}</td>
+            <td>{{ data[2] }}</td>
+            <td>{{ data[3] }}</td>
+            <td>{{ data[4] }}</td>
+            <td><button type="button" onclick="deleteData('{{data[0]}}', '{{data[1]}}', '{{data[2]}}','{{data[3]}}','{{data[4]}}')">削除</button></td>
+            <td><button type="button" onclick="editData('{{data[0]}}', '{{data[1]}}', '{{data[2]}}','{{data[3]}}','{{data[4]}}')">編集</button></td>
         </tr>
         {% endfor %}
     </table>
@@ -87,10 +140,10 @@
          displayThisMonthData();
 
         function displayThisMonthData(){
-            
+
            // 今月の最終日の年月日を配列で取得
            var lastDateArray = getTSDate(new Date(getLastDay(today.getFullYear(),today.getMonth())));
-           
+
            var YM = lastDateArray[0] + "-" + lastDateArray[1];
            var startDate = YM + "-" + "01 00:00:00";
            var lastDate = YM + "-" + lastDateArray[2] + " 23:59:59";
@@ -99,10 +152,12 @@
            getElmId('start_date').value = YM + "-01";
            getElmId('last_date').value = YM + "-" + lastDateArray[2];
         }
-            
+
         // 登録日付に「本日の年月日」を設定
         document.getElementById("regist_date").value = dateArray[0] + "-" + dateArray[1] + "-" + dateArray[2]
-       　
+
+        // 「登録」ボタンにイベントリスナーを設定
+         getElmId("regist_btn").addEventListener('click', registSpending, false);
         /* データ登録処理*/
         function registSpending(){
             // 入力データのチェック
@@ -133,21 +188,21 @@
                     correctFlg = false;
                 }
             }
-            // 個数のチェック
-            if ( getElmId(price_id).value.length === 0 ){
-                alert('個数を入力してください。');
+            // 数量のチェック
+            if ( getElmId(quantity_id).value.length === 0 ){
+                alert('数量を入力してください。');
                 correctFlg = false;
             } else {
                 // 個数の書式チェック
-                if ( getElmId(quantity_id).value.match(/^[0-9]*$/g) === null ){
-                    alert('個数が正しくありません。');
+                if ( getElmId(quantity_id).value.match(/^\d+(\.\d+)?$/g) === null ){
+                    alert('数量が正しくありません。');
                     correctFlg = false;
                 }
             }
             return correctFlg;
         }
        /*「削除ボタン」クリック時の処理 */
-         function deleteData(date, item, price){
+        function deleteData(date, item, price, quantity, gram){
             // データ削除の確認ダイアログ表示
             if( confirm("データを削除しますか？") ){
                 //データを表示
@@ -155,6 +210,8 @@
                 var date = tr.children[0].textContent;
                 var item = tr.children[1].textContent;
                 var price = tr.children[2].textContent;
+                var quantity = tr.children[3].textContent;
+                var gram = tr.children[4].textContent;
 
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', '/test3');
@@ -165,27 +222,31 @@
                     tr.remove(); // テーブルから該当行を削除
                 }
                 };
-                xhr.send(JSON.stringify({date: date, name: item, price: price}));
+                xhr.send(JSON.stringify({date: date, name: item, price: price, quantity: quantity, gram: gram}));
             }
         }
 
-          //「編集ボタン」クリック時の処理
-          function editData(date, item, price){
-            //テーブルから該当行を取得し、各セルを編集可能にする
+        //「編集ボタン」クリック時の処理
+        function editData(date, item, price, quantity, gram){
+        //テーブルから該当行を取得し、各セルを編集可能にする
             var tr = event.target.closest('tr');
-            tr.children[0].contentEditable = true;
-            tr.children[1].contentEditable = true;
+            tr.children[0].contentEditable = false;
+            tr.children[1].contentEditable = false;
             tr.children[2].contentEditable = true;
+            tr.children[3].contentEditable = true;
+            tr.children[4].contentEditable = true;
 
             //編集ボタンを編集実行ボタンに変更
-            var editBtn = tr.children[4].children[0];
+            var editBtn = tr.children[6].children[0];
             editBtn.textContent = "編集実行";
             editBtn.onclick = function(){
             //編集実行ボタンが押された場合の処理
             var newDate = tr.children[0].textContent;
             var newItem = tr.children[1].textContent;
             var newPrice = tr.children[2].textContent;
-            if(newDate === date && newItem === item && newPrice === price){
+            var newQuantity = tr.children[3].textContent;
+            var newGram = tr.children[4].textContent;
+            if(newDate === date && newItem === item && newPrice === price && newQuantity == quantity && newGram == gram){
             //何も変更されていない場合は何もしない
                 return;
             }
@@ -194,44 +255,46 @@
             xhr.open('POST', '/test4');
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.onreadystatechange = function() {
-                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                    console.log(xhr.responseText);
-                //テーブルから該当行を削除して、更新されたデータを表示する
-                    tr.remove();
-                    var database = JSON.parse(xhr.responseText);
-                    displayDatabase(database);
-                }
+            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                console.log(xhr.responseText);
+            //テーブルから該当行を削除して、更新されたデータを表示する
+                tr.remove();
+                var database = JSON.parse(xhr.responseText);
+            displayDatabase(database);
+            }
             };
             xhr.send(JSON.stringify({date: date, name: newItem, price: newPrice}));
             };
         }
+
+        // 「指定期間表示」ボタンにイベントリスナーを設定
+        getElmId("display_btn").addEventListener('click', onClickDisplayDesignatedPeriodDataBtn, false);
         // 指定期間の「表示」ボタンクリック時の処理
-        function onClickDisplayDesignatedPeriodDataBtn(){         
+        function onClickDisplayDesignatedPeriodDataBtn(){
             execDisplayDesignatedPeriodData();
         }
         // 指定期間のデータを表示
         function execDisplayDesignatedPeriodData(){
             // 表示開始時刻データ作成
             var startDate = getElmId('start_date').value + " 00:00:00";
-            
+
             // 表示終了時刻データ作成
             var lastDate = getElmId('last_date').value + " 23:59:59";
-            
             // 指定期間のチェック処理
             if( chkDesignatedPeriod(startDate, lastDate) === true ) {
-                displaySpendingData(startDate,lastDate);
+                displaySpendingData();
             } else {
                 alert("開始日付は終了日付より前の日付を選択してください。");
             }
         }
          // 「指定期間」の入力値チェック
-        function chkDesignatedPeriod(startDate, lastDate) { 
-            var startYmd = getElmId('start_date').value.split('-'); 
-            var lastYmd = getElmId('last_date').value.split('-'); 
+        function chkDesignatedPeriod(startDate, lastDate) {
+            var startYmd = getElmId('start_date').value.split('-');
+            var lastYmd = getElmId('last_date').value.split('-');
 
             startTP = Number(new Date(startYmd[0],startYmd[1] - 1,startYmd[2], 0, 0, 0, 0));
             lastTP = Number(new Date(lastYmd[0],lastYmd[1] - 1,lastYmd[2], 23, 59, 59, 0));
-            
+
             if( startTP < lastTP ){
                 return true;
             } else {
@@ -241,7 +304,7 @@
         //指定月の最終日を取得
         function getLastDay(year, month){
             var end_days = [31,28,31,30,31,30,31,31,30,31,30,31];
-            
+
             // 閏年の確認
             if (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0)) {
                 end_days[1] = 29;
@@ -257,7 +320,7 @@
         function getElmCls(contents){
             return document.getElementsByClassName(contents);
         }
-        /* タイムスタンプから年月日文字列を取得 */       
+        /* タイムスタンプから年月日文字列を取得 */
         function getTSDate(date){
             var dateArray = new Array();
             dateArray.push(zero_pad(date.getFullYear(),4));
@@ -269,7 +332,7 @@
         function zero_pad(val, show_length){
             var str_val = String(val);
             if( str_val.length < show_length ){
-                var zero = ""; 
+                var zero = "";
                 for(var i = 0; i < ( show_length - str_val.length ); i++){
                     zero += "0";
                 }
@@ -277,10 +340,5 @@
             }
             return str_val;
         };
-        // 「登録」ボタンにイベントリスナーを設定
-        getElmId("regist_btn").addEventListener('click', registSpending, false);
-          
-        // 「指定期間表示」ボタンにイベントリスナーを設定
-        getElmId("display_btn").addEventListener('click', onClickDisplayDesignatedPeriodDataBtn, false);
     </script>
 {% endblock %}

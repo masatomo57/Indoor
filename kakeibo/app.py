@@ -418,12 +418,25 @@ def test1():
         regist_price = request.form.get("price")
         regist_quantity = request.form.get("quantity")
         regist_date = request.form.get("date")
+        regist_gram = request.form.get("gram")
         # Redirect user to home page
-        if not (regist_name or regist_price or regist_quantity or regist_date):
+        if not regist_name:
             return redirect("/register")
-        # 出来れば税込金額のカラム(sum)も欲しいかも!
+        if not regist_price:
+            return redirect("/register")
+        if not regist_quantity:
+            return redirect("/register")
+        if not regist_date:
+            return redirect("/register")
+        if not regist_gram:
+            return redirect("/register")
+        # 税込金額のカラムをsum,重さのカラムをgramとする
         db = get_db()
-        db.execute("INSERT INTO buying (user_id,item,price,shares,transacted) VALUES (?,?,?,?,?)",(session["user_id"],regist_name,regist_price,regist_quantity,regist_date))
+        regist_sum = int(float(regist_price) * tax)
+        if not regist_gram:
+            db.execute("INSERT INTO buying (user_id,item,price,shares,transacted,sum) VALUES (?,?,?,?,?,?)",(session["user_id"],regist_name,regist_price,regist_quantity,regist_date,regist_sum))
+        else:
+           db.execute("INSERT INTO buying (user_id,item,price,shares,gram,transacted,sum) VALUES (?,?,?,?,?,?,?)",(session["user_id"],regist_name,regist_price,regist_quantity,regist_gram,regist_date,regist_sum))
         db.commit()
         db.close()
         return render_template('register.html', database=[])
@@ -431,13 +444,11 @@ def test1():
 @app.route("/test2", methods=["POST"])
 @login_required
 def test2():
-    # 表示期間ボタンを押すので、対象期間の日付と品目と税込金額が必要
-    # (例)2023-02-26
     start_date = request.form.get("start_date")
     last_date = request.form.get("last_date")
     conn = sqlite3.connect('kakeibo.db')
     cur = conn.cursor()
-    cur.execute('SELECT transacted,item,price FROM buying WHERE user_id = ? AND transacted BETWEEN ? AND ?', (session["user_id"], start_date, last_date))
+    cur.execute('SELECT transacted,item,price,shares,gram FROM buying WHERE user_id = ? AND transacted BETWEEN ? AND ?', (session["user_id"], start_date, last_date))
     database = cur.fetchall()
     conn.close()
     return render_template('register.html', database=database)
@@ -451,13 +462,16 @@ def test3():
     date = data['date']
     item = data['name']
     price = data['price']
+    quantity = data['quantity']
+    gram = data['gram']
     conn = sqlite3.connect('kakeibo.db')
     cur = conn.cursor()
-    cur.execute("DELETE FROM buying WHERE user_id = ? AND transacted = ? AND item = ? AND price = ?", (session["user_id"], date, item, price))
+    cur.execute("DELETE FROM buying WHERE user_id = ? AND transacted = ? AND item = ? AND price = ? AND shares = ? AND gram = ?", (session["user_id"], date, item, price, quantity, gram))
     conn.commit()
     cur.execute("SELECT * FROM buying WHERE user_id = ?", (session["user_id"],))
     database = cur.fetchall()
     conn.close()
+    return jsonify(database)
 
 @app.route("/test4", methods=["POST"])
 @login_required
@@ -467,9 +481,11 @@ def test4():
     date = data['date']
     item = data['name']
     price = data['price']
+    quantity = data['quantity']
+    gram = data['gram']
     conn = sqlite3.connect('kakeibo.db')
     cur = conn.cursor()
-    cur.execute("UPDATE buying SET item=?, price=? WHERE user_id=? AND transacted=?", (item, price, session["user_id"], date))
+    cur.execute("UPDATE buying SET price=?,shares=?,gram=? WHERE user_id=? AND item=? AND transacted=?", (price, quantity, gram, date, session["user_id"], item, date))
     conn.commit()
     cur.execute("SELECT * FROM buying WHERE user_id = ?", (session["user_id"],))
     database = cur.fetchall()
