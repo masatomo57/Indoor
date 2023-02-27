@@ -3,8 +3,8 @@ import sqlite3
 from pandas import read_csv
 
 
-def weekly_otoku_calculate(filename):
-    conn = sqlite3.connect('kakeibo.db')
+def weekly_otoku_calculate(filename,database):
+    conn = sqlite3.connect(database)
     db = conn.cursor()
 
     users = db.execute("SELECT username FROM users").fetchall()
@@ -27,8 +27,8 @@ def weekly_otoku_calculate(filename):
 
     conn.close()
 
-def monthly_otoku_calculate(filename):
-    conn = sqlite3.connect('kakeibo.db')
+def monthly_otoku_calculate(filename, database):
+    conn = sqlite3.connect(database)
     db = conn.cursor()
 
     users = db.execute("SELECT username FROM users").fetchall()
@@ -52,5 +52,5 @@ def monthly_otoku_calculate(filename):
     conn.close()
 
 # 毎週水曜日0時に実行する。前週月曜日から日曜日までの購入履歴を取得する。
-weekly_otoku_calculate("yasai.csv")
+weekly_otoku_calculate("yasai.csv", "kakeibo.db")
 
