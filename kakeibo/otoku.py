@@ -53,4 +53,6 @@ def monthly_otoku_calculate(filename, database):
 
 # 毎週水曜日0時に実行する。前週月曜日から日曜日までの購入履歴を取得する。
 weekly_otoku_calculate("yasai.csv", "kakeibo.db")
+monthly_otoku_calculate("kakou.csv", "kakeibo.db")
+
 
