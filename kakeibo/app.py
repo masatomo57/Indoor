@@ -485,7 +485,7 @@ def test4():
     gram = data['gram']
     conn = sqlite3.connect('kakeibo.db')
     cur = conn.cursor()
-    cur.execute("UPDATE buying SET price=?,shares=?,gram=? WHERE user_id=? AND item=? AND transacted=?", (price, quantity, gram, date, session["user_id"], item, date))
+    cur.execute("UPDATE buying SET price=?,shares=?,gram=? WHERE user_id=? AND item=? AND transacted=?", (price, quantity, gram, session["user_id"], item, date))
     conn.commit()
     cur.execute("SELECT * FROM buying WHERE user_id = ?", (session["user_id"],))
     database = cur.fetchall()
