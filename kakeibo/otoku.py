@@ -23,10 +23,8 @@ for username in users:
         last_week_consumptions = float(last_week_consumptions)
         otoku_price += float(yasai_data[item][len(yasai_data)-1]) - last_week_consumptions
 
-    # データベース作ったら入れる
-    # db.execute("INSERT INTO otoku (user_id, price, day) VALUES(?, ?, DATE('now', 'localtime', '-9 day'))", (username, otoku_price))
-    # db.commit()
+    db.execute("INSERT INTO otoku (user_id, price, calculated) VALUES(?, ?, DATE('now', 'localtime', '-9 day'))", (username, otoku_price))
+    db.commit()
 
 db.close()
 
-CREATE TABLE buying(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, user_id INTEGER NOT NULL, price INTEGER NOT NULL, calculated TIMESTAMP NOT NULL DEFAULT (DATETIME(CURRENT_TIMESTAMP, 'localtime')));
