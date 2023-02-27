@@ -28,3 +28,5 @@ for username in users:
     # db.commit()
 
 db.close()
+
+CREATE TABLE buying(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, user_id INTEGER NOT NULL, item TEXT NOT NULL, price INTEGER NOT NULL, shares INTEGER NOT NULL, transacted TIMESTAMP NOT NULL DEFAULT (DATETIME(CURRENT_TIMESTAMP, 'localtime')));
