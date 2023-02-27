@@ -11,8 +11,8 @@ def weekly_otoku_calculate(filename,database):
 
     otoku_price = 0
 
-    yasai_data=read_csv(filename, header=0)
-    items=yasai_data.columns[2:]
+    data=read_csv(filename, header=0)
+    items=data.columns[2:]
 
     for username in users:
         for item in items:
@@ -35,8 +35,8 @@ def monthly_otoku_calculate(filename, database):
 
     otoku_price = 0
 
-    yasai_data=read_csv(filename, header=0)
-    items=yasai_data.columns[2:]
+    data=read_csv(filename, header=0)
+    items=data.columns[2:]
 
     for username in users:
         for item in items:
