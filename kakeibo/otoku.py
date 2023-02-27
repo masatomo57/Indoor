@@ -55,4 +55,4 @@ def monthly_otoku_calculate(filename, database):
 weekly_otoku_calculate("yasai.csv", "kakeibo.db")
 monthly_otoku_calculate("kakou.csv", "kakeibo.db")
 
-
+CREATE TABLE otoku(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, user_id INTEGER NOT NULL, price INTEGER NOT NULL, calculated TIMESTAMP NOT NULL DEFAULT (DATETIME(CURRENT_TIMESTAMP, 'localtime')));
