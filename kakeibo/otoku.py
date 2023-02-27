@@ -1,4 +1,3 @@
-# 毎週水曜日0時に実行する。先週月曜日から日曜日までの購入履歴を取得する。
 import csv
 import sqlite3
 from pandas import read_csv
@@ -52,6 +51,6 @@ def monthly_otoku_calculate(filename):
 
     conn.close()
 
-
+# 毎週水曜日0時に実行する。前週月曜日から日曜日までの購入履歴を取得する。
 weekly_otoku_calculate("yasai.csv")
 
