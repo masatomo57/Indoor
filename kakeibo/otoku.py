@@ -51,8 +51,9 @@ def monthly_otoku_calculate(filename, database):
 
     conn.close()
 
-# 毎週水曜日0時に実行する。前週月曜日から日曜日までの購入履歴を取得する。
+# 毎週水曜日0時に実行する。前週月曜日から日曜日までのお得を計算する。
 weekly_otoku_calculate("yasai.csv", "kakeibo.db")
+# 毎月1日0時に実行する。先月1日から末日までのお得を計算する。
 monthly_otoku_calculate("kakou.csv", "kakeibo.db")
 
 CREATE TABLE otoku(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, user_id INTEGER NOT NULL, price INTEGER NOT NULL, calculated TIMESTAMP NOT NULL DEFAULT (DATETIME(CURRENT_TIMESTAMP, 'localtime')));
