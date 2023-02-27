@@ -251,5 +251,5 @@ name = ["DATE", "食パン","即席めん","ゆでうどん","小麦粉","牛乳
 #=================================================================
 
 #動作確認用
-get_kakou_data()
+#get_kakou_data()
 #reload_kakou_data("/content/kakou.csv", name)
