@@ -46,7 +46,7 @@ def monthly_otoku_calculate(filename, database):
             last_week_consumptions = float(last_week_consumptions)
             otoku_price += float(yasai_data[item][len(yasai_data)-1]) - last_week_consumptions
 
-        db.execute("INSERT INTO otoku (user_id, price, calculated) VALUES(?, ?, DATE('now', 'localtime', '-9 day'))", (username[0], otoku_price))
+        db.execute("INSERT INTO otoku (user_id, price, calculated) VALUES(?, ?, DATE('now', 'localtime', '-1 month'))", (username[0], otoku_price))
         conn.commit()
 
     conn.close()
