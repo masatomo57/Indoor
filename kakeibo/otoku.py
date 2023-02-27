@@ -3,7 +3,7 @@ import sqlite3
 from pandas import read_csv
 
 
-def weekly_otoku_calculate(filename,database):
+def weekly_otoku_calculate(filename, kind, database):
     conn = sqlite3.connect(database)
     db = conn.cursor()
 
@@ -22,12 +22,12 @@ def weekly_otoku_calculate(filename,database):
             last_week_consumptions = float(last_week_consumptions)
             otoku_price += float(yasai_data[item][len(yasai_data)-1]) - last_week_consumptions
 
-        db.execute("INSERT INTO otoku (user_id, price, calculated) VALUES(?, ?, DATE('now', 'localtime', '-9 day'))", (username[0], otoku_price))
+        db.execute("INSERT INTO otoku (user_id, kind, price, calculated) VALUES(?, ?, ?, DATE('now', 'localtime', '-9 day'))", (username[0], kind, otoku_price))
         conn.commit()
 
     conn.close()
 
-def monthly_otoku_calculate(filename, database):
+def monthly_otoku_calculate(filename, kind, database):
     conn = sqlite3.connect(database)
     db = conn.cursor()
 
@@ -46,14 +46,14 @@ def monthly_otoku_calculate(filename, database):
             last_week_consumptions = float(last_week_consumptions)
             otoku_price += float(yasai_data[item][len(yasai_data)-1]) - last_week_consumptions
 
-        db.execute("INSERT INTO otoku (user_id, price, calculated) VALUES(?, ?, DATE('now', 'localtime', '-1 month'))", (username[0], otoku_price))
+        db.execute("INSERT INTO otoku (user_id, kind, price, calculated) VALUES(?, ?, ?, DATE('now', 'localtime', '-1 month'))", (username[0], kind, otoku_price))
         conn.commit()
 
     conn.close()
 
 # 毎週水曜日0時に実行する。前週月曜日から日曜日までのお得を計算する。
-weekly_otoku_calculate("yasai.csv", "kakeibo.db")
+weekly_otoku_calculate("yasai.csv", "野菜", "kakeibo.db")
 # 毎月1日0時に実行する。先月1日から末日までのお得を計算する。
-monthly_otoku_calculate("kakou.csv", "kakeibo.db")
+monthly_otoku_calculate("kakou.csv", "加工食品", "kakeibo.db")
 
-CREATE TABLE otoku(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, user_id INTEGER NOT NULL, price INTEGER NOT NULL, calculated TIMESTAMP NOT NULL DEFAULT (DATETIME(CURRENT_TIMESTAMP, 'localtime')));
+
