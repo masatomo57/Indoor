@@ -40,7 +40,7 @@ def monthly_otoku_calculate(filename, database):
 
     for username in users:
         for item in items:
-            last_week_consumptions = db.execute("SELECT sum(price*shares) FROM buying WHERE user_id=? AND item=? AND transacted BETWEEN DATE('now', 'localtime', '-9 day') AND DATE('now', 'localtime', '-3 day')", (username[0],item)).fetchall()[0][0]
+            last_week_consumptions = db.execute("SELECT sum(price*shares) FROM buying WHERE user_id=? AND item=? AND transacted BETWEEN DATE('now', 'localtime', '-1 month') AND DATE('now', 'localtime', '-1 day')", (username[0],item)).fetchall()[0][0]
             if last_week_consumptions == None:
                 continue
             last_week_consumptions = float(last_week_consumptions)
