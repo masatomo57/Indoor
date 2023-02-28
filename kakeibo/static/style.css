@@ -97,7 +97,7 @@ nav .navbar-brand .green
 
 .chartpage {
     height: 100vh;
-    display:flex;/*サイドバーとメインコンテンツを横並びにする指定をした*/
+    display: flex;/*サイドバーとメインコンテンツを横並びにする指定をした*/
 }
 
 .demo_rect{
