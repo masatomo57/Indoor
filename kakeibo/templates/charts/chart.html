@@ -58,15 +58,14 @@
         </nav>
     </div>
 
-    {{ name }}
-
-    最新価格：{{ last_price or '-'}}円/Kg
-
     <div class="chart">
         <div id="canvas_box" style="height:200px;">
             <canvas id="chart" class="canvas"></canvas>
         </div>
     </div>
+    {{ name }}
+
+    最新価格：{{ last_price or '-'}}円/Kg
 
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
