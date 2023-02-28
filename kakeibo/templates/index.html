@@ -2,54 +2,54 @@
 {% block title %}ホーム画面{% endblock %}
 
 {% block main %}
-
-<div class="chart" style="position: relative; overflow-x: scroll;">
-    <div style="height:500px;">
-        <canvas id="chart" class="canvas"></canvas>
+<main class="container-fluid py-5 text-center">
+    <div class="chart" style="position: relative; overflow-x: scroll;">
+        <div style="height:500px;">
+            <canvas id="chart" class="canvas"></canvas>
+        </div>
     </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<script>
-    var xAxisLabelMinWidth = 30;
-    var data =  {{ price_list|tojson }};
-    var width = data.length*xAxisLabelMinWidth;
-    document.getElementById('chart').style.width = width+"px";
-    document.getElementById('chart').style.height = "500px";
+    <script>
+        var xAxisLabelMinWidth = 30;
+        var data =  {{ price_list|tojson }};
+        var width = data.length*xAxisLabelMinWidth;
+        document.getElementById('chart').style.width = width+"px";
+        document.getElementById('chart').style.height = "500px";
 
-    const ctx = document.getElementById('chart');
+        const ctx = document.getElementById('chart');
 
-    var chart = new Chart(ctx, {
-        type: "bar",
-        data: {
-            labels: {{ label_list|tojson }},
-            datasets: [{
-                label: "{{ name }}",
-                data: data,
-                backgroundColor: 'rgba(255, 159, 64, 0.2)',
-                borderColor: 'rgb(255, 159, 64)',
-                borderWidth: 1
-            }],
-        },
-        options: {
-            responsive: false,
-            scales: {
-                y: {
-                    beginAtZero: true
+        var chart = new Chart(ctx, {
+            type: "bar",
+            data: {
+                labels: {{ label_list|tojson }},
+                datasets: [{
+                    label: "{{ name }}",
+                    data: data,
+                    backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                    borderColor: 'rgb(255, 159, 64)',
+                    borderWidth: 1
+                }],
+            },
+            options: {
+                responsive: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
                 }
-            }
-        },
-    });
+            },
+        });
 
-    const canvas = document.getElementById('chart');
-    canvas.scrollIntoView({
-        behavior: "smooth",
-        block: "end",
-        inline: "end"
-    });
+        const canvas = document.getElementById('chart');
+        canvas.scrollIntoView({
+            behavior: "smooth",
+            block: "end",
+            inline: "end"
+        });
 
-</script>
-
+    </script>
+</main>
 
 {% endblock %}

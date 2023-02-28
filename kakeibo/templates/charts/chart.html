@@ -2,116 +2,114 @@
 {% block title %}{{ name }}{% endblock %}
 
 {% block main %}
-{{ name }}
-
-最新価格：{{ last_price or '-'}}円/Kg
-{% endblock %}
-
-{% block sidebar %}
-<div class="chartsidebar">
-    <nav class="chartnav">
-        <h2>野菜</h2>
-        <ul>
-            <li><a href="/charts/cabbage">キャベツ</a></li>
-            <li><a href="/charts/greenonion">ねぎ</a></li>
-            <li><a href="/charts/lettuce">レタス</a></li>
-            <li><a href="/charts/potato">ばれいしょ</a></li>
-            <li><a href="/charts/onion">たまねぎ</a></li>
-            <li><a href="/charts/cucumber">きゅうり</a></li>
-            <li><a href="/charts/tomato">トマト</a></li>
-            <li><a href="/charts/spinach">ほうれんそう</a></li>
-            <li><a href="/charts/carrot">にんじん</a></li>
-            <li><a href="/charts/chinesecabbage">はくさい</a></li>
-            <li><a href="/charts/raddish">だいこん</a></li>
-            <li><a href="/charts/eggplant">なす</a></li>
-        </ul>
-        <h2>加工食品</h2>
-        <ul>
-            <li><a href="/charts/bread">食パン</a></li>
-            <li><a href="/charts/instantnoodle">即席めん</a></li>
-            <li><a href="/charts/udon">ゆでうどん</a></li>
-            <li><a href="/charts/flour">小麦粉</a></li>
-            <li><a href="/charts/milk">牛乳</a></li>
-            <li><a href="/charts/cheese">チーズ</a></li>
-            <li><a href="/charts/tofu">豆腐</a></li>
-            <li><a href="/charts/canolaoil">食用油（キャノーラ油）</a></li>
-            <li><a href="/charts/saladoil">食用油（サラダ油）</a></li>
-            <li><a href="/charts/margarine">マーガリン</a></li>
-            <li><a href="/charts/mayonnaise">マヨネーズ</a></li>
-            <li><a href="/charts/soysauce">しょう油</a></li>
-            <li><a href="/charts/miso">みそ</a></li>
-            <li><a href="/charts/fishcakes">かまぼこ</a></li>
-            <li><a href="/charts/cannedtuna">まぐろ缶詰</a></li>
-            <li><a href="/charts/butter">バター</a></li>
-        </ul>
-        <h2>食肉・鶏卵</h2>
-        <ul>
-            <li>Subject</li>
-            <li>Subject</li>
-            <li>Subject</li>
-            <li>Subject</li>
-            <li>Subject</li>
-        </ul>
-        <h2>魚介類</h2>
-        <ul>
-            <li>Subject</li>
-            <li>Subject</li>
-            <li>Subject</li>
-            <li>Subject</li>
-            <li>Subject</li>
-        </ul>
-    </nav>
-</div>
-{% endblock %}
-
-{% block chart %}
-<div class="chart">
-    <div id="canvas_box" style="height:200px;">
-        <canvas id="chart" class="canvas"></canvas>
+<div class="chartpage">
+    <div class="chartsidebar">
+        <nav class="chartnav">
+            <h2>野菜</h2>
+            <ul>
+                <li><a href="/charts/cabbage">キャベツ</a></li>
+                <li><a href="/charts/greenonion">ねぎ</a></li>
+                <li><a href="/charts/lettuce">レタス</a></li>
+                <li><a href="/charts/potato">ばれいしょ</a></li>
+                <li><a href="/charts/onion">たまねぎ</a></li>
+                <li><a href="/charts/cucumber">きゅうり</a></li>
+                <li><a href="/charts/tomato">トマト</a></li>
+                <li><a href="/charts/spinach">ほうれんそう</a></li>
+                <li><a href="/charts/carrot">にんじん</a></li>
+                <li><a href="/charts/chinesecabbage">はくさい</a></li>
+                <li><a href="/charts/raddish">だいこん</a></li>
+                <li><a href="/charts/eggplant">なす</a></li>
+            </ul>
+            <h2>加工食品</h2>
+            <ul>
+                <li><a href="/charts/bread">食パン</a></li>
+                <li><a href="/charts/instantnoodle">即席めん</a></li>
+                <li><a href="/charts/udon">ゆでうどん</a></li>
+                <li><a href="/charts/flour">小麦粉</a></li>
+                <li><a href="/charts/milk">牛乳</a></li>
+                <li><a href="/charts/cheese">チーズ</a></li>
+                <li><a href="/charts/tofu">豆腐</a></li>
+                <li><a href="/charts/canolaoil">食用油（キャノーラ油）</a></li>
+                <li><a href="/charts/saladoil">食用油（サラダ油）</a></li>
+                <li><a href="/charts/margarine">マーガリン</a></li>
+                <li><a href="/charts/mayonnaise">マヨネーズ</a></li>
+                <li><a href="/charts/soysauce">しょう油</a></li>
+                <li><a href="/charts/miso">みそ</a></li>
+                <li><a href="/charts/fishcakes">かまぼこ</a></li>
+                <li><a href="/charts/cannedtuna">まぐろ缶詰</a></li>
+                <li><a href="/charts/butter">バター</a></li>
+            </ul>
+            <h2>食肉・鶏卵</h2>
+            <ul>
+                <li>Subject</li>
+                <li>Subject</li>
+                <li>Subject</li>
+                <li>Subject</li>
+                <li>Subject</li>
+            </ul>
+            <h2>魚介類</h2>
+            <ul>
+                <li>Subject</li>
+                <li>Subject</li>
+                <li>Subject</li>
+                <li>Subject</li>
+                <li>Subject</li>
+            </ul>
+        </nav>
     </div>
-</div>
+
+    {{ name }}
+
+    最新価格：{{ last_price or '-'}}円/Kg
+
+    <div class="chart">
+        <div id="canvas_box" style="height:200px;">
+            <canvas id="chart" class="canvas"></canvas>
+        </div>
+    </div>
 
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<script>
-    var xAxisLabelMinWidth = 10;
-    var data = {{ price_list|tojson }};
-    var width = data.length*xAxisLabelMinWidth;
-    document.getElementById('chart').style.width = width+"px";
-    document.getElementById('chart').style.height = "500px";
+    <script>
+        var xAxisLabelMinWidth = 10;
+        var data = {{ price_list|tojson }};
+        var width = data.length*xAxisLabelMinWidth;
+        document.getElementById('chart').style.width = width+"px";
+        document.getElementById('chart').style.height = "500px";
 
-    const ctx = document.getElementById('chart');
+        const ctx = document.getElementById('chart');
 
-    const skipped = (ctx, value) => ctx.p0.skip || ctx.p1.skip ? value : undefined;
-    const down = (ctx, value) => ctx.p0.parsed.y > ctx.p1.parsed.y ? value : undefined;
+        const skipped = (ctx, value) => ctx.p0.skip || ctx.p1.skip ? value : undefined;
+        const down = (ctx, value) => ctx.p0.parsed.y > ctx.p1.parsed.y ? value : undefined;
 
-    var chart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: {{ label_list|tojson }},
-            datasets: [{
-            label: "{{ name }}",
-            data: data,
-            borderColor: 'rgb(75, 192, 192)',
-            segment: {
-                borderColor: ctx => skipped(ctx, 'rgb(0,0,0,0.2)') || down(ctx, 'rgb(192,75,75)'),
-                borderDash: ctx => skipped(ctx, [6, 6]),
+        var chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: {{ label_list|tojson }},
+                datasets: [{
+                label: "{{ name }}",
+                data: data,
+                borderColor: 'rgb(75, 192, 192)',
+                segment: {
+                    borderColor: ctx => skipped(ctx, 'rgb(0,0,0,0.2)') || down(ctx, 'rgb(192,75,75)'),
+                    borderDash: ctx => skipped(ctx, [6, 6]),
+                },
+                spanGaps: true
+                }]
             },
-            spanGaps: true
-            }]
-        },
-        options: {
-            responsive: false,
-        }
-    });
+            options: {
+                responsive: false,
+            }
+        });
 
-    const canvas = document.getElementById('chart');
-    canvas.scrollIntoView({
-        behavior: "smooth",
-        block: "end",
-        inline: "end"
-    });
+        const canvas = document.getElementById('chart');
+        canvas.scrollIntoView({
+            behavior: "smooth",
+            block: "end",
+            inline: "end"
+        });
 
-</script>
+    </script>
+</div>
 {% endblock %}

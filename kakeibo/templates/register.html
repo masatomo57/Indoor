@@ -18,8 +18,9 @@
             }
         </style>
 {% endblock %}
-        
+
 {% block main %}
+<main class="container-fluid py-5 text-center">
     <div id="form-register">
         <form action="/test1" method="post">
         <div class="col-md-6 offset-md-3">
@@ -86,10 +87,10 @@
          displayThisMonthData();
 
         function displayThisMonthData(){
-            
+
            // 今月の最終日の年月日を配列で取得
            var lastDateArray = getTSDate(new Date(getLastDay(today.getFullYear(),today.getMonth())));
-           
+
            var YM = lastDateArray[0] + "-" + lastDateArray[1];
            var startDate = YM + "-" + "01 00:00:00";
            var lastDate = YM + "-" + lastDateArray[2] + " 23:59:59";
@@ -98,7 +99,7 @@
            getElmId('start_date').value = YM + "-01";
            getElmId('last_date').value = YM + "-" + lastDateArray[2];
         }
-            
+
         // 登録日付に「本日の年月日」を設定
         document.getElementById("regist_date").value = dateArray[0] + "-" + dateArray[1] + "-" + dateArray[2]
        　
@@ -175,17 +176,17 @@
             }
         }
         // 指定期間の「表示」ボタンクリック時の処理
-        function onClickDisplayDesignatedPeriodDataBtn(){         
+        function onClickDisplayDesignatedPeriodDataBtn(){
             execDisplayDesignatedPeriodData();
         }
         // 指定期間のデータを表示
         function execDisplayDesignatedPeriodData(){
             // 表示開始時刻データ作成
             var startDate = getElmId('start_date').value + " 00:00:00";
-            
+
             // 表示終了時刻データ作成
             var lastDate = getElmId('last_date').value + " 23:59:59";
-            
+
             // 指定期間のチェック処理
             if( chkDesignatedPeriod(startDate, lastDate) === true ) {
                 displaySpendingData(startDate,lastDate);
@@ -194,13 +195,13 @@
             }
         }
          // 「指定期間」の入力値チェック
-        function chkDesignatedPeriod(startDate, lastDate) { 
-            var startYmd = getElmId('start_date').value.split('-'); 
-            var lastYmd = getElmId('last_date').value.split('-'); 
+        function chkDesignatedPeriod(startDate, lastDate) {
+            var startYmd = getElmId('start_date').value.split('-');
+            var lastYmd = getElmId('last_date').value.split('-');
 
             startTP = Number(new Date(startYmd[0],startYmd[1] - 1,startYmd[2], 0, 0, 0, 0));
             lastTP = Number(new Date(lastYmd[0],lastYmd[1] - 1,lastYmd[2], 23, 59, 59, 0));
-            
+
             if( startTP < lastTP ){
                 return true;
             } else {
@@ -210,7 +211,7 @@
         //指定月の最終日を取得
         function getLastDay(year, month){
             var end_days = [31,28,31,30,31,30,31,31,30,31,30,31];
-            
+
             // 閏年の確認
             if (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0)) {
                 end_days[1] = 29;
@@ -226,7 +227,7 @@
         function getElmCls(contents){
             return document.getElementsByClassName(contents);
         }
-        /* タイムスタンプから年月日文字列を取得 */       
+        /* タイムスタンプから年月日文字列を取得 */
         function getTSDate(date){
             var dateArray = new Array();
             dateArray.push(zero_pad(date.getFullYear(),4));
@@ -238,7 +239,7 @@
         function zero_pad(val, show_length){
             var str_val = String(val);
             if( str_val.length < show_length ){
-                var zero = ""; 
+                var zero = "";
                 for(var i = 0; i < ( show_length - str_val.length ); i++){
                     zero += "0";
                 }
@@ -248,8 +249,9 @@
         };
         // 「登録」ボタンにイベントリスナーを設定
         getElmId("regist_btn").addEventListener('click', registSpending, false);
-          
+
         // 「指定期間表示」ボタンにイベントリスナーを設定
         getElmId("display_btn").addEventListener('click', onClickDisplayDesignatedPeriodDataBtn, false);
     </script>
+</main>
 {% endblock %}
