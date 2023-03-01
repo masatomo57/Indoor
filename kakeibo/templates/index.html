@@ -82,6 +82,10 @@
             inline: "end"
         });
 
+        var xAxisLabelMinWidth = 30;
+        var data =  {{ price_list|tojson }};
+        var width = data.length*xAxisLabelMinWidth;
+
         const ctx2 = document.getElementById('chart2');
 
         ctx2.style.width = width+"px";
