@@ -3,7 +3,7 @@
 
 {% block main %}
 <main class="chartpage">
-    <div class="chart">
+    <div class="chart grid4">
         <div>
             <canvas id="chart1"></canvas>
         </div>
@@ -41,7 +41,7 @@
         var data =  {{ price_list|tojson }};
         var width = data.length*xAxisLabelMinWidth;
 
-        const ctx1 = document.getElementById('chart_weekly');
+        const ctx1 = document.getElementById('chart1');
 
         ctx1.style.width = width+"px";
         ctx1.style.height = "20vw";
@@ -74,7 +74,7 @@
             inline: "end"
         });
 
-        const ctx2 = document.getElementById('chart_monthly');
+        const ctx2 = document.getElementById('chart2');
 
         ctx2.style.width = width+"px";
         ctx2.style.height = "20vw";
@@ -88,18 +88,6 @@
                     data: data,
                     backgroundColor: 'rgba(201, 203, 207, 0.2)',
                     borderColor: 'rgb(201, 203, 207)',
-                    borderWidth: 1
-                },{
-                    label: "{{ name }}",
-                    data: data,
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderColor: 'rgb(255, 99, 132)',
-                    borderWidth: 1
-                },{
-                    label: "{{ name }}",
-                    data: data,
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgb(54, 162, 235)',
                     borderWidth: 1
                 }],
             },
@@ -118,6 +106,73 @@
             block: "end",
             inline: "end"
         });
+
+        const ctx3 = document.getElementById('chart3');
+
+        ctx3.style.width = width+"px";
+        ctx3.style.height = "20vw";
+
+        var chart = new Chart(ctx3, {
+            type: "bar",
+            data: {
+                labels: {{ label_list|tojson }},
+                datasets: [{
+                    label: "{{ name }}",
+                    data: data,
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    borderWidth: 1
+                }],
+            },
+            options: {
+                responsive: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            },
+        });
+
+        ctx3.scrollIntoView({
+            behavior: "smooth",
+            block: "end",
+            inline: "end"
+        });
+
+        const ctx4 = document.getElementById('chart4');
+
+        ctx4.style.width = width+"px";
+        ctx4.style.height = "20vw";
+
+        var chart = new Chart(ctx4, {
+            type: "bar",
+            data: {
+                labels: {{ label_list|tojson }},
+                datasets: [{
+                    label: "{{ name }}",
+                    data: data,
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgb(54, 162, 235)',
+                    borderWidth: 1
+                }],
+            },
+            options: {
+                responsive: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            },
+        });
+
+        ctx4.scrollIntoView({
+            behavior: "smooth",
+            block: "end",
+            inline: "end"
+        });
+
 
     </script>
 </main>

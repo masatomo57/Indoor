@@ -95,6 +95,12 @@ nav .navbar-brand .green
     position: relative;
 }
 
+.chart.gird4 {
+display: grid;
+grid-template-columns: auto auto;
+grid-template-rows: auto auto;
+}
+
 .chartpage {
     height: 100vh;
     display: flex;/*サイドバーとメインコンテンツを横並びにする指定をした*/
