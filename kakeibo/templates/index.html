@@ -3,18 +3,26 @@
 
 {% block main %}
 <main class="chartpage">
-    <div class="chart grid4">
-        <div>
-            <canvas id="chart1"></canvas>
+    <div class="grid4">
+        <div class="chartmini">
+            <div>
+                <canvas id="chart1"></canvas>
+            </div>
         </div>
-        <div>
-            <canvas id="chart2"></canvas>
+        <div class="chartmini">
+            <div>
+                <canvas id="chart2"></canvas>
+            </div>
         </div>
-        <div>
-            <canvas id="chart3"></canvas>
+        <div class="chartmini">
+            <div>
+                <canvas id="chart3"></canvas>
+            </div>
         </div>
-        <div>
-            <canvas id="chart4"></canvas>
+        <div class="chartmini">
+            <div>
+                <canvas id="chart4"></canvas>
+            </div>
         </div>
     </div>
 
@@ -86,7 +94,7 @@
                 datasets: [{
                     label: "{{ name }}",
                     data: data,
-                    backgroundColor: 'rgba(201, 203, 207, 0.2)',
+                    backgroundColor: 'rgba(201, 203, 207, 0.5)',
                     borderColor: 'rgb(201, 203, 207)',
                     borderWidth: 1
                 }],
