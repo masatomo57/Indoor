@@ -104,6 +104,26 @@ nav .navbar-brand .green
     width: 200px;
     min-width: 200px
     padding: 10px;
+    position: relative;
+    display: inline-block;
+    background: #ff9158;
+    border-radius: 30px;
+    padding: 16px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.speech-balloon::before {
+    content: "";
+    /* borderで三角形を作る */
+    border-width: 10px;
+    border-style: solid;
+    border-color: #ff9158 transparent transparent transparent;
+    /* 配置する */
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .demo_rect{
