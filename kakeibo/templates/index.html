@@ -90,9 +90,6 @@
             inline: "end"
         });
 
-        var xAxisLabelMinWidth = 30;
-        var data =  {{ price_list|tojson }};
-        var width = data.length*xAxisLabelMinWidth;
 
         const ctx2 = document.getElementById('chart2');
 
@@ -127,6 +124,7 @@
             inline: "end"
         });
 
+
         const ctx3 = document.getElementById('chart3');
 
         ctx3.style.width = width+"px";
@@ -159,6 +157,7 @@
             block: "end",
             inline: "end"
         });
+        
 
         const ctx4 = document.getElementById('chart4');
 
