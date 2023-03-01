@@ -7,6 +7,9 @@
         <div>
             <canvas id="chart_weekly"></canvas>
         </div>
+        <div>
+            <canvas id="chart_monthly"></canvas>
+        </div>
     </div>
 
     <div class="bubble orange">
@@ -20,12 +23,12 @@
         var data =  {{ price_list|tojson }};
         var width = data.length*xAxisLabelMinWidth;
 
-        const ctx = document.getElementById('chart_weekly');
+        const ctx1 = document.getElementById('chart_weekly');
 
-        ctx.style.width = width+"px";
-        ctx.style.height = "20vw";
+        ctx1.style.width = width+"px";
+        ctx1.style.height = "20vw";
 
-        var chart = new Chart(ctx, {
+        var chart = new Chart(ctx1, {
             type: "bar",
             data: {
                 labels: {{ label_list|tojson }},
@@ -47,7 +50,40 @@
             },
         });
 
-        ctx.scrollIntoView({
+        ctx1.scrollIntoView({
+            behavior: "smooth",
+            block: "end",
+            inline: "end"
+        });
+
+        const ctx2 = document.getElementById('chart_monthly');
+
+        ctx2.style.width = width+"px";
+        ctx2.style.height = "20vw";
+
+        var chart = new Chart(ctx2, {
+            type: "bar",
+            data: {
+                labels: {{ label_list|tojson }},
+                datasets: [{
+                    label: "{{ name }}",
+                    data: data,
+                    backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                    borderColor: 'rgb(255, 159, 64)',
+                    borderWidth: 1
+                }],
+            },
+            options: {
+                responsive: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            },
+        });
+
+        ctx2.scrollIntoView({
             behavior: "smooth",
             block: "end",
             inline: "end"
