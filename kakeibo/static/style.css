@@ -100,6 +100,12 @@ nav .navbar-brand .green
     display: flex;/*サイドバーとメインコンテンツを横並びにする指定をした*/
 }
 
+.speech_bubble {
+    width: 200px;
+    min-width: 200px
+    padding: 10px;
+}
+
 .demo_rect{
     width: 100px;
     max-height:200px;
