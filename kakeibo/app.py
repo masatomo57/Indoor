@@ -6,7 +6,8 @@ from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
 from helpers import login_required, tax
 import csv
-
+import datetime
+import calendar
 import sqlite3
 
 # Configure application
@@ -391,8 +392,40 @@ def butter():
 @app.route("/kakeibo")
 @login_required
 def kakeibo():
-    return render_template("kakeibo/index.html")
+    if request.method == "POST":
+        if request.form.get("submit") == "test":
+            return redirect("/test")
+        return render_template("kakeibo/index.html",database=[])
+    else:
+        # 今日の1日と今日の日付を取得
+        today = datetime.date.today()
+        start_date = today.replace(day=1)
+        last_date = today
+        # 日付と税込金額を渡してほしい(カレンダー表示のため)
+        conn = sqlite3.connect('kakeibo.db')
+        cur = conn.cursor()
+        cur.execute('SELECT transacted,price FROM buying WHERE user_id = ? AND transacted BETWEEN ? AND ? ORDER BY transacted ASC', (session["user_id"], start_date, last_date))
+        database = cur.fetchall()
+        conn.close()
+        print(database)
+        return render_template("kakeibo/index.html",database=database)
 
+@app.route("/test", methods=["POST"])
+@login_required
+def test():
+    # year = request.form.get("year")
+    # month = request.form.get("month")
+    year = 2023
+    month = 2
+    start_date = datetime.date(year,month,1)
+    last_date = datetime.date(year,month,calendar.monthrange(year,month)[1])
+    conn = sqlite3.connect('kakeibo.db')
+    cur = conn.cursor()
+    cur.execute('SELECT transacted,price FROM buying WHERE user_id = ? AND transacted BETWEEN ? AND ? ORDER BY transacted ASC', (session["user_id"], start_date, last_date))
+    database = cur.fetchall()
+    conn.close()
+    print(database)
+    return render_template("kakeibo/index.html", database=database)
 
 @app.route("/register", methods=["GET", "POST"])
 @login_required
