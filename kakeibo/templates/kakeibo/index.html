@@ -5,86 +5,15 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
-        <style>
-            .container {
-                font-family: 'Noto Sans JP', sans-serif;
-            }
-            a {
-                text-decoration: none;
-            }
-            th {
-                height: 30px;
-                text-align: center;
-            }
-            td {
-                height: 100px;
-            }
-            .today {
-                background: orange !important;
-            }
-            #prev, #month, #next {
-                display: inline-block;
-                vertical-align: middle;
-                margin: 0;
-            }
-            td:not(:empty):hover {
-                background-color: yellow;
-            }
-            #prev:hover {
-                background-color: yellow;
-            }
-            #next:hover {
-                background-color: yellow;
-            }
-            #form-container {
-                display: none;
-            }
-            .col-sm-4 {
-                padding-right: 70px;
-            }
-            #month {
-                padding-left: 20px;
-                padding-right: 20px;
-            }
-            .col-sm-8.offset-sm-2.text-center {
-                padding-bottom: 50px;
-            }
-            .first-table th:first-child, td:nth-child(7n+1) {
-                color: red;
-                border-color: black;
-            }
-            .first-table th:last-child, td:nth-child(7n) {
-                color: blue;
-                border-color: black;
-            }
-            .triangle-right{
-                border-style: solid;
-                border-width: 10px 0 10px 10px;
-                border-color: transparent transparent transparent black;
-                display: inline-block;
-                width: 0;
-                height: 0;
-            }
-            .triangle-left{
-                border-style: solid;
-                border-width: 10px 10px 10px 0;
-                border-color: transparent black transparent transparent;
-                display: inline-block;
-                width: 0;
-                height: 0;
-            }
-            .py-5 {
-                padding-top: 1rem!important;
-                padding-bottom: 3rem!important;
-            }
-        </style>
 {% endblock %}
 
 {% block main %}
-<main class="container-fluid py-5 text-center">
+    <main class="container-fluid py-5 text-center">
     <div class="first-table">
     <div class="container">
-    <botton id="prev" class="triangle-left"></botton><h3 id="month"></h3><botton id="next" class="triangle-right"></botton>
+    <botton id="prev" class="triangle-left" type="botton"></botton>
+    <h3 id="month"></h3>
+    <botton id="next" class="triangle-right" type="botton"></botton>
     <p></p>
     <div id="calendar">
     <table class="table table-bordered">
@@ -103,7 +32,7 @@
     </div>
     </div>
     </div>
-</main>
+    </main>
     <script>
         var today = new Date();
         var currentMonth = today.getMonth();
@@ -116,7 +45,7 @@
         prevButton.addEventListener("click", function() {
             currentYear = (currentMonth == 1) ? currentYear - 1 : currentYear;
             currentMonth = (currentMonth == 1) ? 12 : currentMonth - 1;
-            dataMonth(currentYear,currentMonth + 1);
+            dataMonth(currentYear, currentMonth);
             displayCalendar();
         });
 
@@ -124,16 +53,16 @@
         nextButton.addEventListener("click", function() {
             currentYear = (currentMonth == 12) ? currentYear + 1 : currentYear;
             currentMonth = (currentMonth == 12) ? 1 : currentMonth + 1;
-            dataMonth(currentYear,currentMonth + 1)
+            dataMonth(currentYear, currentMonth);
             displayCalendar();
         });
 
         function displayCalendar() {
-            // app.pyからdatabaseを格納
             var database = {{ database | tojson }};
             for (var i = 0; i < database.length; ++i) {
                 database[i][0] = parseInt(database[i][0].substr(-2));
             }
+            console.log(database[0][1]);
 
             var firstDay = (new Date(currentYear, currentMonth)).getDay();
             var daysInMonth = 32 - new Date(currentYear, currentMonth, 32).getDate();
@@ -144,10 +73,10 @@
             var monthYear = document.getElementById("month");
             var month = currentMonth % 12 + 1;
             monthYear.innerHTML = currentYear + "年" + month + "月";
-
             // dateは日付を表す
             var date = 1;
             // database[][2]の1つ目の要素の順番を表す
+            var k = 0;
             for (var i = 0; i < 6; i++) {
                 var row = document.createElement("tr");
 
@@ -180,34 +109,12 @@
         }
         displayCalendar();
 
-        // 年月情報をdbに渡すための関数(まだ、上手く渡せていない)
+        // 年月情報をdbに渡すための関数
         function dataMonth(currentYear,currentMonth) {
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/test');
+            xhr.open('POST', '/test5');
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.send(JSON.stringify({year: currentYear, month: currentMonth}));
         }
-
-        ///////////////////////////////////////////////////////////
-        // ここは、まだやり方模索中
-        // カレンダーの日付を表示するテーブルを取得
-        var calendarBody = document.getElementById("calendar-body");
-
-        // 日付セルにクリックイベントを追加する
-        calendarBody.addEventListener("click", function(e) {
-            // クリックされた要素がtd要素である場合にのみ処理を実行する
-            if (e.target && e.target.nodeName === "TD") {
-                // フォームを表示する
-                var formContainer = document.getElementById("form-container");
-                formContainer.style.display = "block";
-
-                // フォームを日付セルの上に配置する
-                var cellRect = e.target.getBoundingClientRect();
-                var formHeight = formContainer.offsetHeight;
-                formContainer.style.top = (cellRect.top - formHeight) + "px";
-                formContainer.style.left = cellRect.left + "px";
-            }
-        });
-        //////////////////////////////////////////////////////////
     </script>
 {% endblock %}
