@@ -100,7 +100,7 @@ nav .navbar-brand .green
     display: flex;/*サイドバーとメインコンテンツを横並びにする指定をした*/
 }
 
-.speech_bubble {
+.bubble {
     width: 200px;
     height: 100px;
     min-width: 200px
@@ -112,19 +112,6 @@ nav .navbar-brand .green
     padding: 16px;
     font-weight: bold;
     color: #fff;
-}
-
-.speech-balloon::before {
-    content: "";
-    /* borderで三角形を作る */
-    border-width: 10px;
-    border-style: solid;
-    border-color: #ff9158 transparent transparent transparent;
-    /* 配置する */
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
 }
 
 .demo_rect{
