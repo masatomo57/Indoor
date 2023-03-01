@@ -95,7 +95,7 @@ nav .navbar-brand .green
     position: relative;
 }
 
-.chart.gird4 {
+.chart.grid4 {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto;
