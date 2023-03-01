@@ -3,8 +3,8 @@
 
 {% block main %}
 <main class="chartpage">
-    <div class="chart" style="position: relative; overflow-x: scroll;">
-        <div style="height:500px;">
+    <div class="chart long">
+        <div>
             <canvas id="chart" class="canvas"></canvas>
         </div>
     </div>
@@ -20,7 +20,7 @@
         var data =  {{ price_list|tojson }};
         var width = data.length*xAxisLabelMinWidth;
         document.getElementById('chart').style.width = width+"px";
-        document.getElementById('chart').style.height = "500px";
+        document.getElementById('chart').style.height = "20vw";
 
         const ctx = document.getElementById('chart');
 
