@@ -2,54 +2,194 @@
 {% block title %}ホーム画面{% endblock %}
 
 {% block main %}
-
-<div class="chart" style="position: relative; overflow-x: scroll;">
-    <div style="height:500px;">
-        <canvas id="chart" class="canvas"></canvas>
+<main class="home">
+    <div class="grid4">
+        <div class="chartmini">
+            <div>
+                <canvas id="chart1"></canvas>
+            </div>
+        </div>
+        <div class="chartmini">
+            <div>
+                <canvas id="chart2"></canvas>
+            </div>
+        </div>
+        <div class="chartmini">
+            <div>
+                <canvas id="chart3"></canvas>
+            </div>
+        </div>
+        <div class="chartmini">
+            <div>
+                <canvas id="chart4"></canvas>
+            </div>
+        </div>
     </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <div class="bubble_box">
+        <div class="bubble green">
+            <p>先週は野菜を</p>
+            <p>合計〇〇円</p>
+            <p>お得に購入しました！</p>
+        </div>
+        <div class="bubble gray">
+            <p>先月は加工食品を</p>
+            <p>合計〇〇円</p>
+            <p>お得に購入しました！</p>
+        </div>
+        <div class="bubble red">
+            <p>先月は食肉・鶏卵を</p>
+            <p>合計〇〇円</p>
+            <p>お得に購入しました！</p>
+        </div>
+        <div class="bubble blue">
+            <p>先月は魚介類を</p>
+            <p>合計〇〇円</p>
+            <p>お得に購入しました！</p>
+        </div>
+    </div>
 
-<script>
-    var xAxisLabelMinWidth = 30;
-    var data =  {{ price_list|tojson }};
-    var width = data.length*xAxisLabelMinWidth;
-    document.getElementById('chart').style.width = width+"px";
-    document.getElementById('chart').style.height = "500px";
 
-    const ctx = document.getElementById('chart');
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    var chart = new Chart(ctx, {
-        type: "bar",
-        data: {
-            labels: {{ label_list|tojson }},
-            datasets: [{
-                label: "{{ name }}",
-                data: data,
-                backgroundColor: 'rgba(255, 159, 64, 0.2)',
-                borderColor: 'rgb(255, 159, 64)',
-                borderWidth: 1
-            }],
-        },
-        options: {
-            responsive: false,
-            scales: {
-                y: {
-                    beginAtZero: true
+    <script>
+        var xAxisLabelMinWidth = 30;
+        var data =  {{ price_list|tojson }};
+        var width = data.length*xAxisLabelMinWidth;
+
+        const ctx1 = document.getElementById('chart1');
+
+        ctx1.style.width = width+"px";
+        ctx1.style.height = "20vw";
+
+        var chart = new Chart(ctx1, {
+            type: "bar",
+            data: {
+                labels: {{ label_list|tojson }},
+                datasets: [{
+                    label: "{{ name }}",
+                    data: data,
+                    backgroundColor: 'rgba(204, 255, 102, 0.2)',
+                    borderColor: 'rgb(103, 159, 64)',
+                    borderWidth: 1
+                }],
+            },
+            options: {
+                responsive: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
                 }
-            }
-        },
-    });
+            },
+        });
 
-    const canvas = document.getElementById('chart');
-    canvas.scrollIntoView({
-        behavior: "smooth",
-        block: "end",
-        inline: "end"
-    });
+        ctx1.scrollIntoView({
+            behavior: "smooth",
+            inline: "end"
+        });
 
-</script>
 
+        const ctx2 = document.getElementById('chart2');
+
+        ctx2.style.width = width+"px";
+        ctx2.style.height = "20vw";
+
+        var chart = new Chart(ctx2, {
+            type: "bar",
+            data: {
+                labels: {{ label_list|tojson }},
+                datasets: [{
+                    label: "{{ name }}",
+                    data: data,
+                    backgroundColor: 'rgba(201, 203, 207, 0.5)',
+                    borderColor: 'rgb(101, 103, 107)',
+                    borderWidth: 1
+                }],
+            },
+            options: {
+                responsive: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            },
+        });
+
+        ctx2.scrollIntoView({
+            behavior: "smooth",
+            inline: "end"
+        });
+
+
+        const ctx3 = document.getElementById('chart3');
+
+        ctx3.style.width = width+"px";
+        ctx3.style.height = "20vw";
+
+        var chart = new Chart(ctx3, {
+            type: "bar",
+            data: {
+                labels: {{ label_list|tojson }},
+                datasets: [{
+                    label: "{{ name }}",
+                    data: data,
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    borderWidth: 1
+                }],
+            },
+            options: {
+                responsive: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            },
+        });
+
+        ctx3.scrollIntoView({
+            behavior: "smooth",
+            inline: "end"
+        });
+
+
+        const ctx4 = document.getElementById('chart4');
+
+        ctx4.style.width = width+"px";
+        ctx4.style.height = "20vw";
+
+        var chart = new Chart(ctx4, {
+            type: "bar",
+            data: {
+                labels: {{ label_list|tojson }},
+                datasets: [{
+                    label: "{{ name }}",
+                    data: data,
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgb(54, 162, 235)',
+                    borderWidth: 1
+                }],
+            },
+            options: {
+                responsive: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            },
+        });
+
+        ctx4.scrollIntoView({
+            behavior: "smooth",
+            inline: "end"
+        });
+
+
+    </script>
+</main>
 
 {% endblock %}

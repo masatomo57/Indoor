@@ -23,6 +23,7 @@
 {% endblock %}
 
 {% block main %}
+<main class="container-fluid py-5 text-center">
     <div id="form-register">
         <form action="/test1" method="post">
         <div class="col-md-6 offset-md-3">
@@ -154,7 +155,7 @@
         }
 
         // 登録日付に「本日の年月日」を設定
-        document.getElementById("regist_date").value = dateArray[0] + "-" + dateArray[1] + "-" + dateArray[2]
+        document.getElementById("regist_date").value = dateArray[0] + "-" + dateArray[1] + "-" + dateArray[2];
 
         // 「登録」ボタンにイベントリスナーを設定
          getElmId("regist_btn").addEventListener('click', registSpending, false);
@@ -280,6 +281,7 @@
 
             // 表示終了時刻データ作成
             var lastDate = getElmId('last_date').value + " 23:59:59";
+
             // 指定期間のチェック処理
             if( chkDesignatedPeriod(startDate, lastDate) === true ) {
                 displaySpendingData();
@@ -341,4 +343,6 @@
             return str_val;
         };
     </script>
+</main>
 {% endblock %}
+

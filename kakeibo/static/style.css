@@ -95,35 +95,65 @@ nav .navbar-brand .green
     position: relative;
 }
 
+.chartmini {
+    width: 40vw;
+    text-align: center;
+    margin: 0 auto;
+    overflow-x: scroll;
+    position: relative;
+}
+
+.grid4 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 30px;
+}
+
 .chartpage {
     height: 100vh;
-    display:flex;/*サイドバーとメインコンテンツを横並びにする指定をした*/
+    display: flex;/*サイドバーとメインコンテンツを横並びにする指定をした*/
 }
 
-.demo_rect{
-    width: 100px;
-    max-height:200px;
-    margin:50px auto 50px;
-    background-color:#111188;
-    position: relative;
-    animation: zoom-in-anim 1s forwards;
-}
-.demo_circle1{
-    top:-25px;
-    position: relative;
-    box-sizing: border-box;
-}
-.demo_circle2{
-    bottom:-25px;
-    left: 0;
-    position: absolute;
+.home {
+    height: 85vh;
+    margin: 10px;
+    display: flex;/*サイドバーとメインコンテンツを横並びにする指定をした*/
+
 }
 
-@keyframes zoom-in-anim {
-	0% {
-	height: 0px;
-	}
-	100% {
-	height: 300px
-	}
+.bubble_box {
+    position: relative;
+    min-width: 200px;
+    padding: 10px;
+    width: 200px;
+    margin-right: 20px;
+}
+
+.bubble {
+    width: 200px;
+    height: 150px;
+    margin-bottom: 10px;
+    padding: 10px;
+    display: inline-block;
+    border-radius: 30px;
+    padding: 16px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.bubble.green {
+    background: #008000;
+}
+
+.bubble.gray {
+    background: #999999;
+}
+
+.bubble.red {
+    background: #ef4868;
+}
+
+.bubble.blue {
+    background: #2a5caa;
 }
