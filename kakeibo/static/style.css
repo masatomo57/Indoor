@@ -124,6 +124,14 @@ nav .navbar-brand .green
     background: #008000;
 }
 
+.bubble.gray {
+    background: #999999;
+}
+
 .bubble.orange {
     background: #fd7e00;
+}
+
+.bubble.blue {
+    background: #2a5caa;
 }
