@@ -71,10 +71,11 @@
         var xAxisLabelMinWidth = 10;
         var data = {{ price_list|tojson }};
         var width = data.length*xAxisLabelMinWidth;
-        document.getElementById('chart').style.width = width+"px";
-        document.getElementById('chart').style.height = "40vw";
 
         const ctx = document.getElementById('chart');
+
+        ctx.style.width = width+"px";
+        ctx.style.height = "40vw";
 
         const skipped = (ctx, value) => ctx.p0.skip || ctx.p1.skip ? value : undefined;
         const down = (ctx, value) => ctx.p0.parsed.y > ctx.p1.parsed.y ? value : undefined;
@@ -99,8 +100,7 @@
             }
         });
 
-        const canvas = document.getElementById('chart');
-        canvas.scrollIntoView({
+        ctx.scrollIntoView({
             behavior: "smooth",
             block: "end",
             inline: "end"
