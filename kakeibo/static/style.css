@@ -100,17 +100,28 @@ nav .navbar-brand .green
     display: flex;/*サイドバーとメインコンテンツを横並びにする指定をした*/
 }
 
+.bubble_box {
+    position: relative;
+    min-width: 200px;
+    padding: 10px;
+    width: 200px;
+    margin-right: 20px;
+}
+
 .bubble {
     width: 200px;
     height: 100px;
-    min-width: 200px
+    margin-bottom: 10px;
     padding: 10px;
-    position: relative;
     display: inline-block;
     border-radius: 30px;
     padding: 16px;
     font-weight: bold;
     color: #fff;
+}
+
+.bubble.green {
+    background: #008000;
 }
 
 .bubble.orange {

@@ -12,9 +12,15 @@
         </div>
     </div>
 
-    <div class="bubble orange">
-        <p>先週は野菜を〇〇円お得に購入しました！</p>
+    <div class="bubble_box">
+        <div class="bubble green">
+            <p>先週は野菜を〇〇円お得に購入しました！</p>
+        </div>
+        <div class="bubble orange">
+            <p>先月は加工食品を〇〇円お得に購入しました！</p>
+        </div>
     </div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -35,8 +41,8 @@
                 datasets: [{
                     label: "{{ name }}",
                     data: data,
-                    backgroundColor: 'rgba(255, 159, 64, 0.2)',
-                    borderColor: 'rgb(255, 159, 64)',
+                    backgroundColor: 'rgba(204, 255, 102, 0.2)',
+                    borderColor: 'rgb(103, 159, 64)',
                     borderWidth: 1
                 }],
             },
@@ -68,8 +74,8 @@
                 datasets: [{
                     label: "{{ name }}",
                     data: data,
-                    backgroundColor: 'rgba(255, 159, 64, 0.2)',
-                    borderColor: 'rgb(255, 159, 64)',
+                    backgroundColor: 'rgba(201, 203, 207, 0.2)',
+                    borderColor: 'rgb(201, 203, 207)',
                     borderWidth: 1
                 }],
             },
