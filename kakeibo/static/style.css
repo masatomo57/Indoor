@@ -102,6 +102,7 @@ nav .navbar-brand .green
 
 .speech_bubble {
     width: 200px;
+    height: 100px;
     min-width: 200px
     padding: 10px;
     position: relative;
