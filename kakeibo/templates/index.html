@@ -2,7 +2,7 @@
 {% block title %}ホーム画面{% endblock %}
 
 {% block main %}
-<main class="chartpage">
+<main class="home">
     <div class="grid4">
         <div class="chartmini">
             <div>
@@ -82,104 +82,6 @@
             inline: "end"
         });
 
-        const ctx2 = document.getElementById('chart2');
-
-        ctx2.style.width = width+"px";
-        ctx2.style.height = "20vw";
-
-        var chart = new Chart(ctx2, {
-            type: "bar",
-            data: {
-                labels: {{ label_list|tojson }},
-                datasets: [{
-                    label: "{{ name }}",
-                    data: data,
-                    backgroundColor: 'rgba(201, 203, 207, 0.5)',
-                    borderColor: 'rgb(201, 203, 207)',
-                    borderWidth: 1
-                }],
-            },
-            options: {
-                responsive: false,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            },
-        });
-
-        ctx2.scrollIntoView({
-            behavior: "smooth",
-            block: "end",
-            inline: "end"
-        });
-
-        const ctx3 = document.getElementById('chart3');
-
-        ctx3.style.width = width+"px";
-        ctx3.style.height = "20vw";
-
-        var chart = new Chart(ctx3, {
-            type: "bar",
-            data: {
-                labels: {{ label_list|tojson }},
-                datasets: [{
-                    label: "{{ name }}",
-                    data: data,
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderColor: 'rgb(255, 99, 132)',
-                    borderWidth: 1
-                }],
-            },
-            options: {
-                responsive: false,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            },
-        });
-
-        ctx3.scrollIntoView({
-            behavior: "smooth",
-            block: "end",
-            inline: "end"
-        });
-
-        const ctx4 = document.getElementById('chart4');
-
-        ctx4.style.width = width+"px";
-        ctx4.style.height = "20vw";
-
-        var chart = new Chart(ctx4, {
-            type: "bar",
-            data: {
-                labels: {{ label_list|tojson }},
-                datasets: [{
-                    label: "{{ name }}",
-                    data: data,
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgb(54, 162, 235)',
-                    borderWidth: 1
-                }],
-            },
-            options: {
-                responsive: false,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            },
-        });
-
-        ctx4.scrollIntoView({
-            behavior: "smooth",
-            block: "end",
-            inline: "end"
-        });
 
 
     </script>

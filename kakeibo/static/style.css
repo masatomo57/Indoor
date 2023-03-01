@@ -115,6 +115,12 @@ nav .navbar-brand .green
     display: flex;/*サイドバーとメインコンテンツを横並びにする指定をした*/
 }
 
+.home {
+    height: 90vh;
+    display: flex;/*サイドバーとメインコンテンツを横並びにする指定をした*/
+
+}
+
 .bubble_box {
     position: relative;
     min-width: 200px;
