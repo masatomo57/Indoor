@@ -2,34 +2,50 @@
 {% block title %}ホーム画面{% endblock %}
 
 {% block main %}
-<main class="chartpage">
-    <div class="chart grid4">
-        <div>
-            <canvas id="chart1"></canvas>
+<main class="home">
+    <div class="grid4">
+        <div class="chartmini">
+            <div>
+                <canvas id="chart1"></canvas>
+            </div>
         </div>
-        <div>
-            <canvas id="chart2"></canvas>
+        <div class="chartmini">
+            <div>
+                <canvas id="chart2"></canvas>
+            </div>
         </div>
-        <div>
-            <canvas id="chart3"></canvas>
+        <div class="chartmini">
+            <div>
+                <canvas id="chart3"></canvas>
+            </div>
         </div>
-        <div>
-            <canvas id="chart4"></canvas>
+        <div class="chartmini">
+            <div>
+                <canvas id="chart4"></canvas>
+            </div>
         </div>
     </div>
 
     <div class="bubble_box">
         <div class="bubble green">
-            <p>先週は野菜を〇〇円お得に購入しました！</p>
+            <p>先週は野菜を</p>
+            <p>合計〇〇円</p>
+            <p>お得に購入しました！</p>
         </div>
         <div class="bubble gray">
-            <p>先月は加工食品を〇〇円お得に購入しました！</p>
+            <p>先月は加工食品を</p>
+            <p>合計〇〇円</p>
+            <p>お得に購入しました！</p>
         </div>
         <div class="bubble red">
-            <p>先週は食肉・鶏卵を〇〇円お得に購入しました！</p>
+            <p>先月は食肉・鶏卵を</p>
+            <p>合計〇〇円</p>
+            <p>お得に購入しました！</p>
         </div>
         <div class="bubble blue">
-            <p>先月は魚介類を〇〇円お得に購入しました！</p>
+            <p>先月は魚介類を</p>
+            <p>合計〇〇円</p>
+            <p>お得に購入しました！</p>
         </div>
     </div>
 
@@ -70,9 +86,9 @@
 
         ctx1.scrollIntoView({
             behavior: "smooth",
-            block: "end",
             inline: "end"
         });
+
 
         const ctx2 = document.getElementById('chart2');
 
@@ -86,8 +102,8 @@
                 datasets: [{
                     label: "{{ name }}",
                     data: data,
-                    backgroundColor: 'rgba(201, 203, 207, 0.2)',
-                    borderColor: 'rgb(201, 203, 207)',
+                    backgroundColor: 'rgba(201, 203, 207, 0.5)',
+                    borderColor: 'rgb(101, 103, 107)',
                     borderWidth: 1
                 }],
             },
@@ -103,9 +119,9 @@
 
         ctx2.scrollIntoView({
             behavior: "smooth",
-            block: "end",
             inline: "end"
         });
+
 
         const ctx3 = document.getElementById('chart3');
 
@@ -136,9 +152,9 @@
 
         ctx3.scrollIntoView({
             behavior: "smooth",
-            block: "end",
             inline: "end"
         });
+
 
         const ctx4 = document.getElementById('chart4');
 
@@ -169,7 +185,6 @@
 
         ctx4.scrollIntoView({
             behavior: "smooth",
-            block: "end",
             inline: "end"
         });
 

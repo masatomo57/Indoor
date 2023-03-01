@@ -46,26 +46,26 @@ nav .navbar-brand .green
 #regist_spending_btn {
     margin-top: 8px;
 }
-#Habs_tb {
+#kakei_tb {
     margin-top: 10px;
     border-spacing: 0;
 }
-#Habs_tb tr:nth-child(2n+1) {
+#kakei_tb tr:nth-child(2n+1) {
   background: #d2ead2;
 }
-#Habs_tb th, tr, td {
+#kakei_tb th, tr, td {
     border: 1px solid;
 }
-#Habs_tb th {
+#kakei_tb th {
     background: #a7d4a7;
     border-right: none;
     border-left: none;
 }
-#Habs_tb th:last-child {
+#kakei_tb th:last-child {
     text-align: left;
     padding-left: 20px;
 }
-#Habs_tb td {
+#kakei_tb td {
     padding: 8px 20px;
     border-top: none;
     border-right: none;
@@ -95,15 +95,31 @@ nav .navbar-brand .green
     position: relative;
 }
 
-.chart.gird4 {
-display: grid;
-grid-template-columns: auto auto;
-grid-template-rows: auto auto;
+.chartmini {
+    width: 40vw;
+    text-align: center;
+    margin: 0 auto;
+    overflow-x: scroll;
+    position: relative;
+}
+
+.grid4 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 30px;
 }
 
 .chartpage {
     height: 100vh;
     display: flex;/*サイドバーとメインコンテンツを横並びにする指定をした*/
+}
+
+.home {
+    height: 85vh;
+    margin: 10px;
+    display: flex;/*サイドバーとメインコンテンツを横並びにする指定をした*/
+
 }
 
 .bubble_box {
@@ -116,7 +132,7 @@ grid-template-rows: auto auto;
 
 .bubble {
     width: 200px;
-    height: 100px;
+    height: 150px;
     margin-bottom: 10px;
     padding: 10px;
     display: inline-block;
