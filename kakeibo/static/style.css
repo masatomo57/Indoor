@@ -96,9 +96,9 @@ nav .navbar-brand .green
 }
 
 .chart.gird4 {
-display: grid;
-grid-template-columns: auto auto;
-grid-template-rows: auto auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
 }
 
 .chartpage {
