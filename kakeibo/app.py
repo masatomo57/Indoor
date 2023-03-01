@@ -8,6 +8,7 @@ from helpers import login_required, tax
 import csv
 import datetime
 import calendar
+import json
 import sqlite3
 
 # Configure application
@@ -415,10 +416,9 @@ def kakeibo():
 @app.route("/test", methods=["POST"])
 @login_required
 def test():
-    # year = request.form.get("year")
-    # month = request.form.get("month")
-    year = 2023
-    month = 2
+    data = request.json
+    year = data['year']
+    month = data['month']
     start_date = datetime.date(year,month,1)
     last_date = datetime.date(year,month,calendar.monthrange(year,month)[1])
     conn = sqlite3.connect('kakeibo.db')
