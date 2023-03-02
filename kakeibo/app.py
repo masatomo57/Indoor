@@ -413,13 +413,18 @@ def kakeibo():
 @app.route("/test", methods=["POST"])
 @login_required
 def test():
+    #データを取得して値を返すようにする
     #year = request.form.get("year")
     # month = request.form.get("month")
     data = request.json
     year = data['year']
     month = data['month']
+    print(year)
+    print(month)
     start_date = datetime.date(year,month,1)
     last_date = datetime.date(year,month,calendar.monthrange(year,month)[1])
+    print(start_date)
+    print(last_date)
     conn = sqlite3.connect('kakeibo.db')
     cur = conn.cursor()
     cur.execute('SELECT transacted,price FROM test_buying WHERE user_id = ? AND transacted BETWEEN ? AND ? ORDER BY transacted ASC', (session["user_id"], start_date, last_date))
@@ -427,6 +432,8 @@ def test():
     database = cur.fetchall()
     conn.close()
     print(database)
+    print(jsonify({"database": database}))
+    #return jsonify({"database": database})
     return render_template("kakeibo/index.html", database=database)
 
 @app.route("/register", methods=["GET", "POST"])
