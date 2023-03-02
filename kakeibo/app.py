@@ -69,8 +69,8 @@ def read_csv(csv_file, item):
 def index():
     name = "おトク"
     data = read_csv("yasai.csv", "キャベツ")
-    label_list = data["date"]
-    price_list = data["price"]
+    label_list =    # data["date"]
+    price_list =    # data["price"]
 
     return render_template("index.html", label_list=label_list, price_list=price_list, name=name)
 
