@@ -153,7 +153,7 @@
                 labels: {{ niku_labels|tojson }},
                 datasets: [{
                     label: "食肉・鶏卵",
-                    data: {{ price_list|tojson }},
+                    data: {{ niku_prices|tojson }},
                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
                     borderColor: 'rgb(255, 99, 132)',
                     borderWidth: 1
@@ -193,10 +193,10 @@
         var chart4 = new Chart(ctx4, {
             type: "bar",
             data: {
-                labels: {{ label_list|tojson }},
+                labels: {{ gyokai_labels|tojson }},
                 datasets: [{
                     label: "魚介類",
-                    data: {{ price_list|tojson }},
+                    data: {{ gyokai_prices|tojson }},
                     backgroundColor: 'rgba(54, 162, 235, 0.2)',
                     borderColor: 'rgb(54, 162, 235)',
                     borderWidth: 1
