@@ -388,8 +388,6 @@ def butter():
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
 
-
-
 @app.route("/kakeibo")
 @login_required
 def kakeibo():
@@ -417,8 +415,9 @@ def kakeibo():
 def test():
     #year = request.form.get("year")
     # month = request.form.get("month")
-    year = 2023
-    month = 2
+    data = request.json
+    year = data['year']
+    month = data['month']
     start_date = datetime.date(year,month,1)
     last_date = datetime.date(year,month,calendar.monthrange(year,month)[1])
     conn = sqlite3.connect('kakeibo.db')

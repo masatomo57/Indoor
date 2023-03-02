@@ -5,6 +5,79 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+        <style>
+            .container {
+                font-family: 'Noto Sans JP', sans-serif;
+            }
+            a {
+                text-decoration: none;
+            }
+            th {
+                height: 30px;
+                text-align: center;
+            }
+            td {
+                height: 100px;
+            }
+            .today {
+                background: orange !important;
+            }
+            #prev, #month, #next {
+                display: inline-block;
+                vertical-align: middle;
+                margin: 0;
+            }
+            td:not(:empty):hover {
+                background-color: yellow;
+            }
+            #prev:hover {
+                background-color: yellow;
+            }
+            #next:hover {
+                background-color: yellow;
+            }
+            #form-container {
+                display: none;
+            }
+            .col-sm-4 {
+                padding-right: 70px;
+            }
+            #month {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+            .col-sm-8.offset-sm-2.text-center {
+                padding-bottom: 50px;
+            }
+            .first-table th:first-child, td:nth-child(7n+1) {
+                color: red;
+                border-color: black;
+            }
+            .first-table th:last-child, td:nth-child(7n) {
+                color: blue;
+                border-color: black;
+            }
+            .triangle-right{
+                border-style: solid;
+                border-width: 10px 0 10px 10px;
+                border-color: transparent transparent transparent black;
+                display: inline-block;
+                width: 0;
+                height: 0;
+            }
+            .triangle-left{
+                border-style: solid;
+                border-width: 10px 10px 10px 0;
+                border-color: transparent black transparent transparent;
+                display: inline-block;
+                width: 0;
+                height: 0;
+            }
+            .py-5 {
+                padding-top: 1rem!important;
+                padding-bottom: 3rem!important;
+            }
+        </style>
 {% endblock %}
 
 {% block main %}
@@ -45,7 +118,7 @@
         prevButton.addEventListener("click", function() {
             currentYear = (currentMonth == 1) ? currentYear - 1 : currentYear;
             currentMonth = (currentMonth == 1) ? 12 : currentMonth - 1;
-            dataMonth(currentYear, currentMonth);
+            dataMonth(currentYear, currentMonth + 1);
             displayCalendar();
         });
 
@@ -53,7 +126,7 @@
         nextButton.addEventListener("click", function() {
             currentYear = (currentMonth == 12) ? currentYear + 1 : currentYear;
             currentMonth = (currentMonth == 12) ? 1 : currentMonth + 1;
-            dataMonth(currentYear, currentMonth);
+            dataMonth(currentYear, currentMonth + 1);
             displayCalendar();
         });
 
@@ -119,3 +192,4 @@
         }
     </script>
 {% endblock %}
+
