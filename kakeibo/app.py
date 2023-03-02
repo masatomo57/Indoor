@@ -406,7 +406,7 @@ def kakeibo():
         conn = sqlite3.connect('kakeibo.db')
         cur = conn.cursor()
         #cur.execute('SELECT transacted,price FROM buying WHERE user_id = ? AND transacted BETWEEN ? AND ? ORDER BY transacted ASC', (session["user_id"], start_date, last_date))
-        cur.execute('SELECT transacted,price FROM test_buying WHERE user_id = ? AND transacted BETWEEN ? AND ? ORDER BY transacted ASC', (session["user_id"], start_date, last_date))
+        cur.execute('SELECT transacted,sum FROM test_buying WHERE user_id = ? AND transacted BETWEEN ? AND ? ORDER BY transacted ASC', (session["user_id"], start_date, last_date))
         database = cur.fetchall()
         conn.close()
         print(database)
@@ -415,7 +415,7 @@ def kakeibo():
 @app.route("/test", methods=["POST"])
 @login_required
 def test():
-    # year = request.form.get("year")
+    #year = request.form.get("year")
     # month = request.form.get("month")
     year = 2023
     month = 2
