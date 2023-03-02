@@ -107,10 +107,10 @@
         var chart2 = new Chart(ctx2, {
             type: "bar",
             data: {
-                labels: {{ kakou_labels|tojson or NaN }},
+                labels: {{ kakou_labels|tojson }},
                 datasets: [{
                     label: "加工食品",
-                    data: {{ kakou_prices|tojson or NaN }},
+                    data: {{ kakou_prices|tojson }},
                     backgroundColor: 'rgba(201, 203, 207, 0.5)',
                     borderColor: 'rgb(101, 103, 107)',
                     borderWidth: 1
@@ -150,10 +150,10 @@
         var chart3 = new Chart(ctx3, {
             type: "bar",
             data: {
-                labels: {{ niku_labels|tojson or NaN }},
+                labels: {{ niku_labels|tojson }},
                 datasets: [{
                     label: "食肉・鶏卵",
-                    data: {{ niku_prices|tojson or NaN }},
+                    data: {{ niku_prices|tojson }},
                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
                     borderColor: 'rgb(255, 99, 132)',
                     borderWidth: 1
@@ -193,10 +193,10 @@
         var chart4 = new Chart(ctx4, {
             type: "bar",
             data: {
-                labels: {{ gyokai_labels|tojson or NaN }},
+                labels: {{ gyokai_labels|tojson }},
                 datasets: [{
                     label: "魚介類",
-                    data: {{ gyokai_prices|tojson or NaN }},
+                    data: {{ gyokai_prices|tojson }},
                     backgroundColor: 'rgba(54, 162, 235, 0.2)',
                     borderColor: 'rgb(54, 162, 235)',
                     borderWidth: 1
