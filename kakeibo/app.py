@@ -67,7 +67,8 @@ def read_csv(csv_file, item):
 @app.route("/")
 @login_required
 def index():
-    label_list =    # data["date"]
+    db = get_db()
+    label_list = db.execute(SELECT calculated FROM otoku WHERE )   # data["date"]
     price_list =    # data["price"]
 
     return render_template("index.html", label_list=label_list, price_list=price_list)
