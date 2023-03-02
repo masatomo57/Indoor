@@ -68,8 +68,8 @@ def read_csv(csv_file, item):
 @login_required
 def index():
     db = get_db()
-    label_list = db.execute(SELECT calculated FROM otoku WHERE )   # data["date"]
-    price_list =    # data["price"]
+    label_list = db.execute("SELECT calculated FROM otoku WHERE kind="野菜" AND user_id=?", (session[user_id],)).fetchall()   # data["date"]
+    price_list = db.execute("SELECT price FROM otoku WHERE kind="野菜" AND user_id=?", (session[user_id],)).fetchall()   # data["price"]
 
     return render_template("index.html", label_list=label_list, price_list=price_list)
 
