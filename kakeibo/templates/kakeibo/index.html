@@ -81,10 +81,12 @@
 {% endblock %}
 
 {% block main %}
-<main class="container-fluid py-5 text-center">
+    <main class="container-fluid py-5 text-center">
     <div class="first-table">
     <div class="container">
-    <botton id="prev" class="triangle-left"></botton><h3 id="month"></h3><botton id="next" class="triangle-right"></botton>
+    <botton id="prev" class="triangle-left" type="botton"></botton>
+    <h3 id="month"></h3>
+    <botton id="next" class="triangle-right" type="botton"></botton>
     <p></p>
     <div id="calendar">
     <table class="table table-bordered">
@@ -103,7 +105,7 @@
     </div>
     </div>
     </div>
-</main>
+    </main>
     <script>
         var today = new Date();
         var currentMonth = today.getMonth();
@@ -116,6 +118,7 @@
         prevButton.addEventListener("click", function() {
             currentYear = (currentMonth == 1) ? currentYear - 1 : currentYear;
             currentMonth = (currentMonth == 1) ? 12 : currentMonth - 1;
+            dataMonth(currentYear, currentMonth + 1);
             displayCalendar();
         });
 
@@ -123,10 +126,17 @@
         nextButton.addEventListener("click", function() {
             currentYear = (currentMonth == 12) ? currentYear + 1 : currentYear;
             currentMonth = (currentMonth == 12) ? 1 : currentMonth + 1;
+            dataMonth(currentYear, currentMonth + 1);
             displayCalendar();
         });
 
         function displayCalendar() {
+            var database = {{ database | tojson }};
+            for (var i = 0; i < database.length; ++i) {
+                database[i][0] = parseInt(database[i][0].substr(-2));
+            }
+            console.log(database[0][1]);
+
             var firstDay = (new Date(currentYear, currentMonth)).getDay();
             var daysInMonth = 32 - new Date(currentYear, currentMonth, 32).getDate();
 
@@ -136,29 +146,29 @@
             var monthYear = document.getElementById("month");
             var month = currentMonth % 12 + 1;
             monthYear.innerHTML = currentYear + "年" + month + "月";
-
+            // dateは日付を表す
             var date = 1;
+            // database[][2]の1つ目の要素の順番を表す
+            var k = 0;
             for (var i = 0; i < 6; i++) {
                 var row = document.createElement("tr");
 
                 for (var j = 0; j < 7; j++) {
-                    if (i === 0 && j < firstDay) {
-                        var cell = document.createElement("td");
-                        var cellText = document.createTextNode("");
-                        cell.appendChild(cellText);
-                        row.appendChild(cell);
-                    } else if (date > daysInMonth) {
-                        var cell = document.createElement("td");
+                    var cell = document.createElement("td");
+                    if (i === 0 && j < firstDay || date > daysInMonth) {
                         var cellText = document.createTextNode("");
                         cell.appendChild(cellText);
                         row.appendChild(cell);
                     } else {
-                        var cell = document.createElement("td");
                         var cellText = document.createTextNode(date);
                         if (date === today.getDate() && currentMonth === today.getMonth() && currentYear === today.getFullYear()) {
                             cell.classList.add("today");
                         }
                         cell.appendChild(cellText);
+                        if (database[k] && date === database[k][0]) {
+                            cell.appendChild(document.createTextNode("\n" + database[k][1]));
+                            ++k;
+                        }
                         row.appendChild(cell);
                         date++;
                     }
@@ -172,26 +182,13 @@
         }
         displayCalendar();
 
-        ///////////////////////////////////////////////////////////
-        // ここは、まだやり方模索中
-        // カレンダーの日付を表示するテーブルを取得
-        var calendarBody = document.getElementById("calendar-body");
-
-        // 日付セルにクリックイベントを追加する
-        calendarBody.addEventListener("click", function(e) {
-            // クリックされた要素がtd要素である場合にのみ処理を実行する
-            if (e.target && e.target.nodeName === "TD") {
-                // フォームを表示する
-                var formContainer = document.getElementById("form-container");
-                formContainer.style.display = "block";
-
-                // フォームを日付セルの上に配置する
-                var cellRect = e.target.getBoundingClientRect();
-                var formHeight = formContainer.offsetHeight;
-                formContainer.style.top = (cellRect.top - formHeight) + "px";
-                formContainer.style.left = cellRect.left + "px";
-            }
-        });
-        //////////////////////////////////////////////////////////
+        // 年月情報をdbに渡すための関数
+        function dataMonth(currentYear,currentMonth) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/test5');
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify({year: currentYear, month: currentMonth}));
+        }
     </script>
 {% endblock %}
+
