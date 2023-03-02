@@ -83,7 +83,7 @@ nav .navbar-brand .green
     box-sizing: border-box;
     overflow-y: scroll;
     width: 200px;
-    min-width: 200px
+    min-width: 200px;
     padding: 10px;
 }
 
