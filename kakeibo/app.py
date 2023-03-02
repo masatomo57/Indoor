@@ -82,7 +82,7 @@ def index():
     gyokai_labels = data["date"] #db.execute(label_query, ("魚介類", session["user_id"],)).fetchall()
     gyokai_prices = data["price"] #db.execute(price_query, ("魚介類", session["user_id"],)).fetchall()
     db.close()
-    return render_template("index.html", yasai_labels=yasai_labels, yasai_prices=yasai_prices, kakou_labels=kakou_labels, kakou_prices=kakou_prices, niku_labels=niku_labels, niku_prices=niku_prices, gyokai_lables=gyokai_labels, gyokai_prices=gyokai_prices)
+    return render_template("index.html", yasai_labels=yasai_labels, yasai_prices=yasai_prices, kakou_labels=kakou_labels, kakou_prices=kakou_prices, niku_labels=niku_labels, niku_prices=niku_prices, gyokai_labels=gyokai_labels, gyokai_prices=gyokai_prices)
 
 @app.route("/charts")
 @login_required
