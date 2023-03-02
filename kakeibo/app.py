@@ -73,14 +73,14 @@ def index():
 
     data = read_csv("yasai.csv", "キャベツ")
 
-    yasai_labels = data["date"] #db.execute(label_query, ("野菜", session["user_id"],)).fetchall()
-    yasai_prices = data["price"] #db.execute(price_query, ("野菜", session["user_id"],)).fetchall()
-    kakou_labels = data["date"] #db.execute(label_query, ("加工食品", session["user_id"],)).fetchall()
-    kakou_prices = data["price"] #db.execute(price_query, ("加工食品", session["user_id"],)).fetchall()
-    niku_labels = data["date"] #db.execute(label_query, ("食肉・鶏卵", session["user_id"],)).fetchall()
-    niku_prices = data["price"] #db.execute(price_query, ("食肉・鶏卵", session["user_id"],)).fetchall()
-    gyokai_labels = data["date"] #db.execute(label_query, ("魚介類", session["user_id"],)).fetchall()
-    gyokai_prices = data["price"] #db.execute(price_query, ("魚介類", session["user_id"],)).fetchall()
+    yasai_labels = db.execute(label_query, ("野菜", session["user_id"],)).fetchall()
+    yasai_prices = db.execute(price_query, ("野菜", session["user_id"],)).fetchall()
+    kakou_labels = db.execute(label_query, ("加工食品", session["user_id"],)).fetchall()
+    kakou_prices = db.execute(price_query, ("加工食品", session["user_id"],)).fetchall()
+    niku_labels = db.execute(label_query, ("食肉・鶏卵", session["user_id"],)).fetchall()
+    niku_prices = db.execute(price_query, ("食肉・鶏卵", session["user_id"],)).fetchall()
+    gyokai_labels = db.execute(label_query, ("魚介類", session["user_id"],)).fetchall()
+    gyokai_prices = db.execute(price_query, ("魚介類", session["user_id"],)).fetchall()
     db.close()
     return render_template("index.html", yasai_labels=yasai_labels, yasai_prices=yasai_prices, kakou_labels=kakou_labels, kakou_prices=kakou_prices, niku_labels=niku_labels, niku_prices=niku_prices, gyokai_labels=gyokai_labels, gyokai_prices=gyokai_prices)
 

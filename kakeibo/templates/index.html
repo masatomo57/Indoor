@@ -54,6 +54,7 @@
 
     <script>
         var xAxisLabelMinWidth = 30;
+        var data = {{ yasai_prices|tojson }};
         var width = data.length*xAxisLabelMinWidth;
 
         const ctx1 = document.getElementById('chart1');
@@ -67,7 +68,7 @@
                 labels: {{ yasai_labels|tojson }},
                 datasets: [{
                     label: "野菜",
-                    data: {{ yasai_prices|tojson }},
+                    data: data,
                     backgroundColor: 'rgba(204, 255, 102, 0.2)',
                     borderColor: 'rgb(103, 159, 64)',
                     borderWidth: 1
@@ -99,6 +100,9 @@
         });
 
 
+        data = {{ kakou_prices|tojson }};
+        width = data.length*xAxisLabelMinWidth;
+
         const ctx2 = document.getElementById('chart2');
 
         ctx2.style.width = width+"px";
@@ -110,7 +114,7 @@
                 labels: {{ kakou_labels|tojson }},
                 datasets: [{
                     label: "加工食品",
-                    data: {{ kakou_prices|tojson }},
+                    data: data,
                     backgroundColor: 'rgba(201, 203, 207, 0.5)',
                     borderColor: 'rgb(101, 103, 107)',
                     borderWidth: 1
@@ -142,6 +146,9 @@
         });
 
 
+        data = {{ niku_prices|tojson }};
+        width = data.length*xAxisLabelMinWidth;
+
         const ctx3 = document.getElementById('chart3');
 
         ctx3.style.width = width+"px";
@@ -153,7 +160,7 @@
                 labels: {{ niku_labels|tojson }},
                 datasets: [{
                     label: "食肉・鶏卵",
-                    data: {{ niku_prices|tojson }},
+                    data: data,
                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
                     borderColor: 'rgb(255, 99, 132)',
                     borderWidth: 1
@@ -185,6 +192,9 @@
         });
 
 
+        data = {{ gyokai_prices|tojson }};
+        width = data.length*xAxisLabelMinWidth;
+
         const ctx4 = document.getElementById('chart4');
 
         ctx4.style.width = width+"px";
@@ -196,7 +206,7 @@
                 labels: {{ gyokai_labels|tojson }},
                 datasets: [{
                     label: "魚介類",
-                    data: {{ gyokai_prices|tojson }},
+                    data: data,
                     backgroundColor: 'rgba(54, 162, 235, 0.2)',
                     borderColor: 'rgb(54, 162, 235)',
                     borderWidth: 1
