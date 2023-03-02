@@ -54,7 +54,6 @@
 
     <script>
         var xAxisLabelMinWidth = 30;
-        var data =  {{ price_list|tojson }};
         var width = data.length*xAxisLabelMinWidth;
 
         const ctx1 = document.getElementById('chart1');
@@ -65,10 +64,10 @@
         var chart1 = new Chart(ctx1, {
             type: "bar",
             data: {
-                labels: {{ label_list|tojson }},
+                labels: {{ yasai_labels|tojson }},
                 datasets: [{
                     label: "野菜",
-                    data: data,
+                    data: {{ yasai_prices|tojson }},
                     backgroundColor: 'rgba(204, 255, 102, 0.2)',
                     borderColor: 'rgb(103, 159, 64)',
                     borderWidth: 1
@@ -108,10 +107,10 @@
         var chart2 = new Chart(ctx2, {
             type: "bar",
             data: {
-                labels: {{ label_list|tojson }},
+                labels: {{ kakou_labels|tojson }},
                 datasets: [{
                     label: "加工食品",
-                    data: data,
+                    data: {{ kakou_prices|tojson }},
                     backgroundColor: 'rgba(201, 203, 207, 0.5)',
                     borderColor: 'rgb(101, 103, 107)',
                     borderWidth: 1
@@ -151,10 +150,10 @@
         var chart3 = new Chart(ctx3, {
             type: "bar",
             data: {
-                labels: {{ label_list|tojson }},
+                labels: {{ niku_labels|tojson }},
                 datasets: [{
                     label: "食肉・鶏卵",
-                    data: data,
+                    data: {{ price_list|tojson }},
                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
                     borderColor: 'rgb(255, 99, 132)',
                     borderWidth: 1
@@ -197,7 +196,7 @@
                 labels: {{ label_list|tojson }},
                 datasets: [{
                     label: "魚介類",
-                    data: data,
+                    data: {{ price_list|tojson }},
                     backgroundColor: 'rgba(54, 162, 235, 0.2)',
                     borderColor: 'rgb(54, 162, 235)',
                     borderWidth: 1
