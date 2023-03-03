@@ -68,12 +68,22 @@ def read_csv(csv_file, item):
 @app.route("/")
 @login_required
 def index():
-    name = "おトク"
-    data = read_csv("yasai.csv", "キャベツ")
-    label_list = data["date"]
-    price_list = data["price"]
+    db = get_db()
+    label_query = "SELECT calculated FROM otoku WHERE kind=? AND user_id=?"
+    price_query = "SELECT price FROM otoku WHERE kind=? AND user_id=?"
 
-    return render_template("index.html", label_list=label_list, price_list=price_list, name=name)
+    data = read_csv("yasai.csv", "キャベツ")
+
+    yasai_labels = db.execute(label_query, ("野菜", session["user_id"],)).fetchall()
+    yasai_prices = db.execute(price_query, ("野菜", session["user_id"],)).fetchall()
+    kakou_labels = db.execute(label_query, ("加工食品", session["user_id"],)).fetchall()
+    kakou_prices = db.execute(price_query, ("加工食品", session["user_id"],)).fetchall()
+    niku_labels = db.execute(label_query, ("食肉・鶏卵", session["user_id"],)).fetchall()
+    niku_prices = db.execute(price_query, ("食肉・鶏卵", session["user_id"],)).fetchall()
+    gyokai_labels = db.execute(label_query, ("魚介類", session["user_id"],)).fetchall()
+    gyokai_prices = db.execute(price_query, ("魚介類", session["user_id"],)).fetchall()
+    db.close()
+    return render_template("index.html", yasai_labels=yasai_labels, yasai_prices=yasai_prices, kakou_labels=kakou_labels, kakou_prices=kakou_prices, niku_labels=niku_labels, niku_prices=niku_prices, gyokai_labels=gyokai_labels, gyokai_prices=gyokai_prices)
 
 @app.route("/charts")
 @login_required
@@ -389,8 +399,6 @@ def butter():
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
 
-
-
 @app.route("/kakeibo")
 @login_required
 def kakeibo():
@@ -407,7 +415,7 @@ def kakeibo():
         conn = sqlite3.connect('kakeibo.db')
         cur = conn.cursor()
         #cur.execute('SELECT transacted,price FROM buying WHERE user_id = ? AND transacted BETWEEN ? AND ? ORDER BY transacted ASC', (session["user_id"], start_date, last_date))
-        cur.execute('SELECT transacted,price FROM test_buying WHERE user_id = ? AND transacted BETWEEN ? AND ? ORDER BY transacted ASC', (session["user_id"], start_date, last_date))
+        cur.execute('SELECT transacted,sum FROM test_buying WHERE user_id = ? AND transacted BETWEEN ? AND ? ORDER BY transacted ASC', (session["user_id"], start_date, last_date))
         database = cur.fetchall()
         conn.close()
         print(database)
@@ -421,6 +429,8 @@ def test():
     month = data['month']
     start_date = datetime.date(year,month,1)
     last_date = datetime.date(year,month,calendar.monthrange(year,month)[1])
+    print(start_date)
+    print(last_date)
     conn = sqlite3.connect('kakeibo.db')
     cur = conn.cursor()
     cur.execute('SELECT transacted,price FROM test_buying WHERE user_id = ? AND transacted BETWEEN ? AND ? ORDER BY transacted ASC', (session["user_id"], start_date, last_date))
@@ -428,7 +438,22 @@ def test():
     database = cur.fetchall()
     conn.close()
     print(database)
+    print(jsonify({"database": database}))
+    #return jsonify({"database": database})
     return render_template("kakeibo/index.html", database=database)
+
+
+# 今月のデータを取得するための関数
+def thismonthdata():
+    today = datetime.date.today()
+    start_date = today.replace(day=1)
+    last_date = today
+    conn = sqlite3.connect('kakeibo.db')
+    cur = conn.cursor()
+    cur.execute('SELECT transacted,item,price,shares,gram FROM test_buying WHERE user_id = ? AND transacted BETWEEN ? AND ? ORDER BY transacted ASC', (session["user_id"], start_date, last_date))
+    database = cur.fetchall()
+    conn.close()
+    return database
 
 @app.route("/register", methods=["GET", "POST"])
 @login_required
@@ -443,13 +468,15 @@ def register():
         elif request.form.get("submit") == "test4":
             return redirect("/test4")
     else:
-        # 日付と税込み金額を渡してほしい(カレンダー表示のため)
-        return render_template("register.html")
+        database = thismonthdata()
+        return render_template("register.html",database=database)
+
 
 @app.route("/test1", methods=["POST"])
 @login_required
 def test1():
     if request.method == "POST":
+        database = thismonthdata()
         regist_name = request.form.get("name")
         regist_price = request.form.get("price")
         regist_quantity = request.form.get("quantity")
@@ -457,18 +484,18 @@ def test1():
         regist_gram = request.form.get("gram")
         # Redirect user to home page
         if not regist_name:
-            return redirect("/register")
+            return redirect("/register",database=database)
         if not regist_price:
-            return redirect("/register")
+            return redirect("/register",database=database)
         if not regist_quantity:
-            return redirect("/register")
+            return redirect("/register",database=database)
         if not regist_date:
-            return redirect("/register")
+            return redirect("/register",database=database)
         if not regist_gram:
-            return redirect("/register")
-        # 税込金額のカラムをsum,重さのカラムをgramとする
+            return redirect("/register",database=database)
         db = get_db()
-        regist_sum = int(float(regist_price) * tax)
+        if regist_price:
+            regist_sum = int(float(regist_price) * tax)
         if not regist_gram:
             db.execute("INSERT INTO test_buying (user_id,item,price,shares,transacted,sum) VALUES (?,?,?,?,?,?)",(session["user_id"],regist_name,regist_price,regist_quantity,regist_date,regist_sum))
             #db.execute("INSERT INTO buying (user_id,item,price,shares,transacted,sum) VALUES (?,?,?,?,?,?)",(session["user_id"],regist_name,regist_price,regist_quantity,regist_date,regist_sum))
@@ -477,7 +504,8 @@ def test1():
            #db.execute("INSERT INTO bying (user_id,item,price,shares,gram,transacted,sum) VALUES (?,?,?,?,?,?,?)",(session["user_id"],regist_name,regist_price,regist_quantity,regist_gram,regist_date,regist_sum))
         db.commit()
         db.close()
-        return render_template('register.html', database=[])
+        database = thismonthdata()
+        return render_template('register.html', database=database)
 
 @app.route("/test2", methods=["POST"])
 @login_required
@@ -495,7 +523,6 @@ def test2():
 @app.route("/test3", methods=["POST"])
 @login_required
 def test3():
-    # test3の処理を実装
     # 削除ボタン(テーブルの削除)
     data = request.json
     date = data['date']
