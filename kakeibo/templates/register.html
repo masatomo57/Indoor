@@ -3,9 +3,6 @@
 
 {% block head %}
         <style>
-            #form-container {
-                display: none;
-            }
             .col-sm-4 {
                 padding-right: 70px;
             }
@@ -82,11 +79,11 @@
                 </div>
                 <label for="date" class="col-sm-2 col-form-label">数量</label>
                 <div class="col-sm-4">
-                    <input type="number" class="form-control" id="regist_quantity" name="quantity" min="0.01" step="0.01" list="divided" placeholder="(必須)">
+                    <input type="number" class="form-control" id="regist_quantity" name="quantity" min="0.001" step="0.001" list="divided" placeholder="(必須)">
                     <datalist id="divided">
-                        <option value="0.5">
-                        <option value="0.25">
-                        <option value="0.125">
+                        <option value="0.5" label="(1/2)">
+                        <option value="0.25" label="(1/4)">
+                        <option value="0.125" label="(1/8)">
                     </datalist>
                 </div>
                 <p></p>
@@ -166,6 +163,8 @@
         function registSpending(){
             // 入力データのチェック
             if( chkRegistData('regist_date','regist_name', 'regist_price', 'regist_quantity') ) {
+                // regist_gramのチェックも必要
+                alert('データが登録されました。');
             }
         }
         /* 登録データのチェック1 */
@@ -197,7 +196,7 @@
                 alert('数量を入力してください。');
                 correctFlg = false;
             } else {
-                // 個数の書式チェック
+                // 数量の書式チェック
                 if ( getElmId(quantity_id).value.match(/^\d+(\.\d+)?$/g) === null ){
                     alert('数量が正しくありません。');
                     correctFlg = false;
@@ -261,8 +260,9 @@
             xhr.onreadystatechange = function() {
             if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                 console.log(xhr.responseText);
-            //テーブルから該当行を削除して、更新されたデータを表示する
+                //テーブルから該当行を削除して、更新されたデータを表示する
                 tr.remove();
+                alert('データが編集されました。');
             }
             };
             xhr.send(JSON.stringify({date: newDate, name: newItem, price: newPrice, quantity: newQuantity, gram: newGram}));
@@ -346,8 +346,3 @@
     </script>
 </main>
 {% endblock %}
-
-<<<<<<< HEAD
-=======
-
->>>>>>> 0e9f1e3482a1bda6cb07dacb1e1d549120c8389e

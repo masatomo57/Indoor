@@ -54,7 +54,7 @@
 
     <script>
         var xAxisLabelMinWidth = 30;
-        var data =  {{ price_list|tojson }};
+        var data = {{ yasai_prices|tojson }};
         var width = data.length*xAxisLabelMinWidth;
 
         const ctx1 = document.getElementById('chart1');
@@ -62,12 +62,12 @@
         ctx1.style.width = width+"px";
         ctx1.style.height = "20vw";
 
-        var chart = new Chart(ctx1, {
+        var chart1 = new Chart(ctx1, {
             type: "bar",
             data: {
-                labels: {{ label_list|tojson }},
+                labels: {{ yasai_labels|tojson }},
                 datasets: [{
-                    label: "{{ name }}",
+                    label: "野菜",
                     data: data,
                     backgroundColor: 'rgba(204, 255, 102, 0.2)',
                     borderColor: 'rgb(103, 159, 64)',
@@ -80,27 +80,40 @@
                     y: {
                         beginAtZero: true
                     }
-                }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        align: "end",
+                        font: {size: 20},
+                        text: "野菜",
+                    },
+                    legend: {
+                        display: false,
+                    }
+                },
             },
         });
 
         ctx1.scrollIntoView({
-            behavior: "smooth",
             inline: "end"
         });
 
+
+        data = {{ kakou_prices|tojson }};
+        width = data.length*xAxisLabelMinWidth;
 
         const ctx2 = document.getElementById('chart2');
 
         ctx2.style.width = width+"px";
         ctx2.style.height = "20vw";
 
-        var chart = new Chart(ctx2, {
+        var chart2 = new Chart(ctx2, {
             type: "bar",
             data: {
-                labels: {{ label_list|tojson }},
+                labels: {{ kakou_labels|tojson }},
                 datasets: [{
-                    label: "{{ name }}",
+                    label: "加工食品",
                     data: data,
                     backgroundColor: 'rgba(201, 203, 207, 0.5)',
                     borderColor: 'rgb(101, 103, 107)',
@@ -113,27 +126,40 @@
                     y: {
                         beginAtZero: true
                     }
-                }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        align: "end",
+                        font: {size: 20},
+                        text: "加工食品",
+                    },
+                    legend: {
+                        display: false,
+                    }
+                },
             },
         });
 
         ctx2.scrollIntoView({
-            behavior: "smooth",
             inline: "end"
         });
 
+
+        data = {{ niku_prices|tojson }};
+        width = data.length*xAxisLabelMinWidth;
 
         const ctx3 = document.getElementById('chart3');
 
         ctx3.style.width = width+"px";
         ctx3.style.height = "20vw";
 
-        var chart = new Chart(ctx3, {
+        var chart3 = new Chart(ctx3, {
             type: "bar",
             data: {
-                labels: {{ label_list|tojson }},
+                labels: {{ niku_labels|tojson }},
                 datasets: [{
-                    label: "{{ name }}",
+                    label: "食肉・鶏卵",
                     data: data,
                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
                     borderColor: 'rgb(255, 99, 132)',
@@ -146,27 +172,40 @@
                     y: {
                         beginAtZero: true
                     }
-                }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        align: "end",
+                        font: {size: 20},
+                        text: "食肉・鶏卵",
+                    },
+                    legend: {
+                        display: false,
+                    }
+                },
             },
         });
 
         ctx3.scrollIntoView({
-            behavior: "smooth",
             inline: "end"
         });
 
+
+        data = {{ gyokai_prices|tojson }};
+        width = data.length*xAxisLabelMinWidth;
 
         const ctx4 = document.getElementById('chart4');
 
         ctx4.style.width = width+"px";
         ctx4.style.height = "20vw";
 
-        var chart = new Chart(ctx4, {
+        var chart4 = new Chart(ctx4, {
             type: "bar",
             data: {
-                labels: {{ label_list|tojson }},
+                labels: {{ gyokai_labels|tojson }},
                 datasets: [{
-                    label: "{{ name }}",
+                    label: "魚介類",
                     data: data,
                     backgroundColor: 'rgba(54, 162, 235, 0.2)',
                     borderColor: 'rgb(54, 162, 235)',
@@ -179,12 +218,22 @@
                     y: {
                         beginAtZero: true
                     }
-                }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        align: "end",
+                        font: {size: 20},
+                        text: "魚介類",
+                    },
+                    legend: {
+                        display: false,
+                    }
+                },
             },
         });
 
         ctx4.scrollIntoView({
-            behavior: "smooth",
             inline: "end"
         });
 

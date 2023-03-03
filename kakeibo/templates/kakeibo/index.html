@@ -12,12 +12,16 @@
             a {
                 text-decoration: none;
             }
+            .table table-bordered {
+                table-layout: fixed;
+            }
             th {
                 height: 30px;
                 text-align: center;
             }
             td {
                 height: 100px;
+                width: 100px;
             }
             .today {
                 background: orange !important;
@@ -166,7 +170,9 @@
                         }
                         cell.appendChild(cellText);
                         if (database[k] && date === database[k][0]) {
-                            cell.appendChild(document.createTextNode(database[k][1]));//ノードとしてbrノードを作って入れるテキストからノードにする？brタグを入れる
+                            cell.appendChild(document.createElement("br"));
+                            cell.appendChild(document.createElement("br"));
+                            cell.appendChild(document.createTextNode("\n" + database[k][1]));//\nしても改行できない.ノードとしてbrノードを作って入れるテキストからノードにする？brタグを入れる
                             ++k;
                         }
                         row.appendChild(cell);
