@@ -439,6 +439,19 @@ def test():
     print(database)
     return render_template("kakeibo/index.html", database=database)
 
+
+# 今月のデータを取得するための関数
+def thismonthdata():
+    today = datetime.date.today()
+    start_date = today.replace(day=1)
+    last_date = today
+    conn = sqlite3.connect('kakeibo.db')
+    cur = conn.cursor()
+    cur.execute('SELECT transacted,item,price,shares,gram FROM test_buying WHERE user_id = ? AND transacted BETWEEN ? AND ? ORDER BY transacted ASC', (session["user_id"], start_date, last_date))
+    database = cur.fetchall()
+    conn.close()
+    return database
+
 @app.route("/register", methods=["GET", "POST"])
 @login_required
 def register():
@@ -452,13 +465,15 @@ def register():
         elif request.form.get("submit") == "test4":
             return redirect("/test4")
     else:
-        # 日付と税込み金額を渡してほしい(カレンダー表示のため)
-        return render_template("register.html")
+        database = thismonthdata()
+        return render_template("register.html",database=database)
+
 
 @app.route("/test1", methods=["POST"])
 @login_required
 def test1():
     if request.method == "POST":
+        database = thismonthdata()
         regist_name = request.form.get("name")
         regist_price = request.form.get("price")
         regist_quantity = request.form.get("quantity")
@@ -466,18 +481,18 @@ def test1():
         regist_gram = request.form.get("gram")
         # Redirect user to home page
         if not regist_name:
-            return redirect("/register")
+            return redirect("/register",database=database)
         if not regist_price:
-            return redirect("/register")
+            return redirect("/register",database=database)
         if not regist_quantity:
-            return redirect("/register")
+            return redirect("/register",database=database)
         if not regist_date:
-            return redirect("/register")
+            return redirect("/register",database=database)
         if not regist_gram:
-            return redirect("/register")
-        # 税込金額のカラムをsum,重さのカラムをgramとする
+            return redirect("/register",database=database)
         db = get_db()
-        regist_sum = int(float(regist_price) * tax)
+        if regist_price:
+            regist_sum = int(float(regist_price) * tax)
         if not regist_gram:
             db.execute("INSERT INTO test_buying (user_id,item,price,shares,transacted,sum) VALUES (?,?,?,?,?,?)",(session["user_id"],regist_name,regist_price,regist_quantity,regist_date,regist_sum))
             #db.execute("INSERT INTO buying (user_id,item,price,shares,transacted,sum) VALUES (?,?,?,?,?,?)",(session["user_id"],regist_name,regist_price,regist_quantity,regist_date,regist_sum))
@@ -486,7 +501,8 @@ def test1():
            #db.execute("INSERT INTO bying (user_id,item,price,shares,gram,transacted,sum) VALUES (?,?,?,?,?,?,?)",(session["user_id"],regist_name,regist_price,regist_quantity,regist_gram,regist_date,regist_sum))
         db.commit()
         db.close()
-        return render_template('register.html', database=[])
+        database = thismonthdata()
+        return render_template('register.html', database=database)
 
 @app.route("/test2", methods=["POST"])
 @login_required
@@ -504,7 +520,6 @@ def test2():
 @app.route("/test3", methods=["POST"])
 @login_required
 def test3():
-    # test3の処理を実装
     # 削除ボタン(テーブルの削除)
     data = request.json
     date = data['date']
