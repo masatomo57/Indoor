@@ -75,6 +75,13 @@ nav .navbar-brand .green
     padding: 3px 8px;
     border-radius: 4px;
 }
+.col-md-6.offset-md-3 {
+    background-color: #fff; /* 背景色を設定 */
+    background-image: url('/static/kakeibo.png'); /* 背景画像を追加 */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
 /* -- css for register -- */
 /* ---------------------- */
 

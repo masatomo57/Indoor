@@ -223,6 +223,7 @@
                 if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                     console.log(xhr.responseText);
                     tr.remove(); // テーブルから該当行を削除
+                    // location.reload();
                 }
                 };
                 xhr.send(JSON.stringify({date: date, name: item, price: price, quantity: quantity, gram: gram}));
