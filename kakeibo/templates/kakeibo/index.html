@@ -140,6 +140,7 @@
             var database = {{ database | tojson }};//先月のところを渡そうとすると再利用できない＋データをサムしてない
             for (var i = 0; i < database.length; ++i) {
                 database[i][0] = parseInt(database[i][0].substr(-2));//intで日付を格納する
+                // 赤川追記。上の書き方だと、
             }
             console.clear()
             console.log(database[0][1]);
