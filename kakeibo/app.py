@@ -465,10 +465,10 @@ def shrimp():
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
-@app.route("/charts/tuna")
+@app.route("/charts/yellowtail")
 @login_required
-def tuna():
-    name = "まぐろ"
+def yellowtail():
+    name = "ぶり"
     data = read_csv("sakana", name)
     label_list = data["date"]
     price_list = data["price"]
@@ -476,10 +476,10 @@ def tuna():
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
-@app.route("/charts/tuna")
+@app.route("/charts/salmon")
 @login_required
-def tuna():
-    name = "まぐろ"
+def salmon():
+    name = "さけ"
     data = read_csv("sakana", name)
     label_list = data["date"]
     price_list = data["price"]
