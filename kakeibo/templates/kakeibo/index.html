@@ -113,7 +113,9 @@
     <script>
         var today = new Date();//現在時刻取得
         var currentMonth = today.getMonth();
+        console.log(currentMonth)
         var currentYear = today.getFullYear();
+        console.log(currentYear)
         //var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         var prevButton = document.getElementById("prev");
         var nextButton = document.getElementById("next");
@@ -137,9 +139,11 @@
         function displayCalendar() {
             var database = {{ database | tojson }};//先月のところを渡そうとすると再利用できない＋データをサムしてない
             for (var i = 0; i < database.length; ++i) {
-                database[i][0] = parseInt(database[i][0].substr(-2));
+                database[i][0] = parseInt(database[i][0].substr(-2));//intで日付を格納する
             }
+            console.clear()
             console.log(database[0][1]);
+            console.log(database[0][0]);
 
             var firstDay = (new Date(currentYear, currentMonth)).getDay();
             var daysInMonth = 32 - new Date(currentYear, currentMonth, 32).getDate();
@@ -148,7 +152,9 @@
             calendarBody.innerHTML = "";
 
             var monthYear = document.getElementById("month");
+            console.log(currentMonth)
             var month = currentMonth % 12 + 1;
+            //var month = currentMonth + 1;
             monthYear.innerHTML = currentYear + "年" + month + "月";
             // dateは日付を表す
             var date = 1;
@@ -191,7 +197,8 @@
         // 年月情報をdbに渡すための関数
         function dataMonth(currentYear,currentMonth) {
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/test');
+            xhr.open('GET', '/test');
+            //xhr.open('POST', '/test');
             xhr.setRequestHeader('Content-Type', 'application/json');
             //console.log(database[0][1]);
             xhr.send(JSON.stringify({year: currentYear, month: currentMonth}));
