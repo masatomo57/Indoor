@@ -75,8 +75,8 @@ def index():
 
     data = read_csv("yasai", "キャベツ")
 
-    yasai_labels = db.execute(label_query, ("野菜", session["user_id"],)).fetchall()
-    yasai_prices = db.execute(price_query, ("野菜", session["user_id"],)).fetchall()
+    yasai_labels = [1,2,3,4]  # db.execute(label_query, ("野菜", session["user_id"],)).fetchall()
+    yasai_prices = [100,200, 300, 400] # db.execute(price_query, ("野菜", session["user_id"],)).fetchall()
     kakou_labels = db.execute(label_query, ("加工食品", session["user_id"],)).fetchall()
     kakou_prices = db.execute(price_query, ("加工食品", session["user_id"],)).fetchall()
     niku_labels = db.execute(label_query, ("食肉・鶏卵", session["user_id"],)).fetchall()
