@@ -446,7 +446,6 @@ def test():
     conn = sqlite3.connect('kakeibo.db')
     cur = conn.cursor()
     cur.execute('SELECT transacted,price FROM test_buying WHERE user_id = ? AND transacted BETWEEN ? AND ? ORDER BY transacted ASC', (session["user_id"], start_date, last_date))
-    #cur.execute('SELECT transacted,price FROM buying WHERE user_id = ? AND transacted BETWEEN ? AND ? ORDER BY transacted ASC', (session["user_id"], start_date, last_date))
     database = cur.fetchall()
     conn.close()
     print(database)
@@ -514,10 +513,8 @@ def test1():
         db.execute("INSERT INTO test_buying (user_id,item,price,shares,gram,transacted,sum) VALUES (?,?,?,?,?,?,?)",(session["user_id"],regist_name,regist_price,regist_quantity,regist_gram,regist_date,regist_sum))
     db.commit()
     db.close()
-    # 更新された新しい今月のデータを取得
     database = thismonthdata()
-    print(database)
-    return render_template("register.html", database=database)
+    return render_template('register.html', database=database)
 
 @app.route("/test2", methods=["POST"])
 @login_required
@@ -534,8 +531,6 @@ def test2():
 @app.route("/test3", methods=["POST"])
 @login_required
 def test3():
-    start_date = '2023-03-02'
-    last_date = '2023-03-03'
     # 削除ボタン(テーブルの削除)
     data = request.json
     date = data['date']
@@ -543,29 +538,23 @@ def test3():
     price = data['price']
     quantity = data['quantity']
     gram = data['gram']
-
-    # start_date = request.form.get("start_date")
-    # last_date = request.form.get("last_date")
-    # print(start_date)
-    # print(last_date)
     conn = sqlite3.connect('kakeibo.db')
     cur = conn.cursor()
     if gram != 'None':
         cur.execute("DELETE FROM test_buying WHERE user_id = ? AND transacted = ? AND item = ? AND price = ? AND shares = ? AND gram = ?", (session["user_id"], date, item, price, quantity, gram))
-    else :
+    else:
         cur.execute("DELETE FROM test_buying WHERE user_id = ? AND transacted = ? AND item = ? AND price = ? AND shares = ?", (session["user_id"], date, item, price, quantity))
     conn.commit()
-    cur.execute('SELECT transacted,item,price,shares,gram FROM test_buying WHERE user_id = ? AND transacted BETWEEN ? AND ? ORDER BY transacted ASC', (session["user_id"], start_date, last_date))
     database = cur.fetchall()
     conn.close()
-    print(database)
     return jsonify(database)
-
 
 @app.route("/test4", methods=["POST"])
 @login_required
 def test4():
      # 編集実行ボタンが押されたときの処理
+    start_date = '2023-03-02'
+    last_date = '2023-03-03'
     data = request.json
     date = data['date']
     item = data['name']
@@ -576,7 +565,7 @@ def test4():
     cur = conn.cursor()
     cur.execute("UPDATE test_buying SET price=?,shares=?,gram=? WHERE user_id=? AND item=? AND transacted=?", (price, quantity, gram, session["user_id"], item, date))
     conn.commit()
-    cur.execute("SELECT * FROM test_buying WHERE user_id = ? ORDER BY transacted ASC", (session["user_id"],))
+    cur.execute('SELECT transacted,item,price,shares,gram FROM test_buying WHERE user_id = ? AND transacted BETWEEN ? AND ? ORDER BY transacted ASC', (session["user_id"], start_date, last_date))
     database = cur.fetchall()
     conn.close()
     return render_template('register.html', database=database)
@@ -653,45 +642,5 @@ def signup():
     else:
         return render_template("signup.html")
 
-# CS50モジュールのSQLを使いたくないため上のget_dbを定義しています。以下はCS50のbirthdayにおけるCS50のSQLを使わなかった場合の例です。これを参考にfinanceの移植、書き換えをお願いします。
-'''
-import os
-import sqlite3
-from flask import Flask, flash, jsonify, redirect, render_template, request, session, g
-# Configure application
-app = Flask(__name__)
-# Ensure templates are auto-reloaded
-app.config["TEMPLATES_AUTO_RELOAD"] = True
-# Configure CS50 Library to use SQLite database
-def get_db():
-    if 'db' not in g:
-        g.db = sqlite3.connect('birthdays.db')
-    return g.db
-@app.after_request
-def after_request(response):
-    """Ensure responses aren't cached"""
-    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    response.headers["Expires"] = 0
-    response.headers["Pragma"] = "no-cache"
-    return response
-@app.route("/", methods=["GET", "POST"])
-def index():
-    db = get_db()
-    if request.method == "POST":
-        name=request.form.get("name")
-        month=request.form.get("month")
-        day=request.form.get("day")
-        db.execute("INSERT INTO birthdays (name, month, day) VALUES(?, ?, ?)", (name, month, day))
-        db.commit()
-        return redirect("/")
-    else:
-        birthdays = db.execute("SELECT name, month, day FROM birthdays")
-        birthdays = birthdays.fetchall()
-        birthdays_col = ["name", "month", "day"]
-        birthdays_list = []
-        for birthday in birthdays:
-            item = dict(zip(birthdays_col, birthday))
-            birthdays_list.append(item)
-        return render_template("index.html", birthdays=birthdays_list)
-    db.close()
-'''
+
+

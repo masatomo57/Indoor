@@ -240,6 +240,7 @@
             tr.children[3].contentEditable = true;
             tr.children[4].contentEditable = true;
 
+
             //編集ボタンを編集実行ボタンに変更
             var editBtn = tr.children[6].children[0];
             editBtn.textContent = "編集実行";
@@ -252,21 +253,31 @@
             var newGram = tr.children[4].textContent;
             if(newDate === date && newItem === item && newPrice === price && newQuantity == quantity && newGram == gram){
             //何も変更されていない場合は何もしない
+                alert('何も変更されませんでした。')
+            // test2の処理を実装する
                 return;
             }
-            //データベースの更新処理を行う
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/test4');
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.onreadystatechange = function() {
-            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                console.log(xhr.responseText);
-                //テーブルから該当行を削除して、更新されたデータを表示する
-                tr.remove();
-                alert('データが編集されました。');
-            }
-            };
-            xhr.send(JSON.stringify({date: newDate, name: newItem, price: newPrice, quantity: newQuantity, gram: newGram}));
+            console.log("ここまで来た1")
+            //if( chkRegistData(newDate,newItem, newPrice, newQuantity) ) {
+                //データベースの更新処理を行う
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/test4');
+                console.log("ここまで来た2")
+                // xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                        console.log(xhr.responseText);
+                        //テーブルから該当行を削除して、更新されたデータを表示する
+                        tr.remove();
+                        alert('データが編集されました。');
+                    }
+                };
+                xhr.send(JSON.stringify({date: newDate, name: newItem, price: newPrice, quantity: newQuantity, gram: newGram}));
+            //} else {
+                //alert('不適切な値が入力されました。')
+                //test2の処理を実装する?
+            //}
             };
         }
 
