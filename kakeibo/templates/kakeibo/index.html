@@ -198,7 +198,7 @@
         function dataMonth(currentYear,currentMonth) {
             var xhr = new XMLHttpRequest();
             //xhr.open('GET', '/test',true);
-            xhr.open('POST', '/test',false);
+            xhr.open('POST', '/test');
             xhr.setRequestHeader('Content-Type', 'application/json');
             //console.log(database[0][1]);
             xhr.send(JSON.stringify({year: currentYear, month: currentMonth}));
