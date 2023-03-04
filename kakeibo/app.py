@@ -399,10 +399,10 @@ def importedbeef():
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
-@app.route("/charts/butter")
+@app.route("/charts/domesticbeef")
 @login_required
-def butter():
-    name = "バター"
+def domesticbeef():
+    name = "国産牛肉（冷蔵ロース）"
     data = read_csv("niku", name)
     label_list = data["date"]
     price_list = data["price"]
@@ -410,10 +410,10 @@ def butter():
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
-@app.route("/charts/butter")
+@app.route("/charts/pork")
 @login_required
-def butter():
-    name = "バター"
+def pork():
+    name = "豚肉（ロース）"
     data = read_csv("niku", name)
     label_list = data["date"]
     price_list = data["price"]
@@ -421,10 +421,10 @@ def butter():
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
-@app.route("/charts/butter")
+@app.route("/charts/chicken")
 @login_required
-def butter():
-    name = "バター"
+def chicken():
+    name = "鶏肉（もも肉）"
     data = read_csv("niku", name)
     label_list = data["date"]
     price_list = data["price"]
@@ -432,10 +432,10 @@ def butter():
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
-@app.route("/charts/butter")
+@app.route("/charts/egg")
 @login_required
-def butter():
-    name = "バター"
+def egg():
+    name = "鶏卵 サイズ混合・10個入り）"
     data = read_csv("niku", name)
     label_list = data["date"]
     price_list = data["price"]
