@@ -125,7 +125,7 @@
             currentYear = (currentMonth == 1) ? currentYear - 1 : currentYear;
             currentMonth = (currentMonth == 1) ? 12 : currentMonth - 1;
             dataMonth(currentYear, currentMonth + 1);
-            //displayCalendar();
+            displayCalendar();
         });
 
         //次の月へ進む
@@ -133,7 +133,7 @@
             currentYear = (currentMonth == 12) ? currentYear + 1 : currentYear;
             currentMonth = (currentMonth == 12) ? 1 : currentMonth + 1;
             dataMonth(currentYear, currentMonth + 1);
-            //displayCalendar();
+            displayCalendar();
         });
 
         function displayCalendar() {
