@@ -414,23 +414,25 @@ def butter():
 @app.route("/kakeibo")
 @login_required
 def kakeibo():
+    '''
     if request.method == "POST":
         if request.form.get("submit") == "test":
             return redirect("/test")
         return render_template("kakeibo/index.html",database=[])
     else:
-        # 今日の1日と今日の日付を取得
-        today = datetime.date.today()
-        start_date = today.replace(day=1)
-        last_date = today
-        # 日付と税込金額を渡してほしい(カレンダー表示のため)
-        conn = sqlite3.connect('kakeibo.db')
-        cur = conn.cursor()
-        cur.execute('SELECT transacted,sum FROM test_buying WHERE user_id = ? AND transacted BETWEEN ? AND ? ORDER BY transacted ASC', (session["user_id"], start_date, last_date))
-        database = cur.fetchall()
-        conn.close()
-        print(database)
-        return render_template("kakeibo/index.html",database=database)
+    '''
+    # 今日の1日と今日の日付を取得
+    today = datetime.date.today()
+    start_date = today.replace(day=1)
+    last_date = today
+    # 日付と税込金額を渡してほしい(カレンダー表示のため)
+    conn = sqlite3.connect('kakeibo.db')
+    cur = conn.cursor()
+    cur.execute('SELECT transacted,sum FROM test_buying WHERE user_id = ? AND transacted BETWEEN ? AND ? ORDER BY transacted ASC', (session["user_id"], start_date, last_date))
+    database = cur.fetchall()
+    conn.close()
+    print(database)
+    return render_template("kakeibo/index.html",database=database)
 
 @app.route("/test", methods=["POST"])
 #@app.route("/test", methods=["GET"])
