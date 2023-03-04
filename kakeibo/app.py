@@ -422,6 +422,7 @@ def kakeibo():
         return render_template("kakeibo/index.html",database=database)
 
 @app.route("/test", methods=["POST"])
+#@app.route("/test", methods=["GET"])
 @login_required
 def test():
     data = request.json
@@ -438,9 +439,10 @@ def test():
     database = cur.fetchall()
     conn.close()
     print(database)
-    print(jsonify({"database": database}))
+    #print(jsonify({"database": database}))
     #return jsonify({"database": database})
     return render_template("kakeibo/index.html", database=database)
+    #return render_template("kakeibo/index.html", database=database)
 
 
 # 今月のデータを取得するための関数
