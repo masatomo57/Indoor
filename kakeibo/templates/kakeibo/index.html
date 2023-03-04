@@ -12,22 +12,16 @@
             a {
                 text-decoration: none;
             }
-<<<<<<< HEAD
-=======
             .table table-bordered {
                 table-layout: fixed;
             }
->>>>>>> fb79d11b0479b877597c0da75d8d0669a957a778
             th {
                 height: 30px;
                 text-align: center;
             }
             td {
                 height: 100px;
-<<<<<<< HEAD
-=======
                 width: 100px;
->>>>>>> fb79d11b0479b877597c0da75d8d0669a957a778
             }
             .today {
                 background: orange !important;
@@ -203,7 +197,8 @@
         // 年月情報をdbに渡すための関数
         function dataMonth(currentYear,currentMonth) {
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/test');
+            xhr.open('GET', '/test');
+            //xhr.open('POST', '/test');
             xhr.setRequestHeader('Content-Type', 'application/json');
             //console.log(database[0][1]);
             xhr.send(JSON.stringify({year: currentYear, month: currentMonth}));

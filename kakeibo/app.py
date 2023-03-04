@@ -47,18 +47,19 @@ def get_db():
 
 
 # yasai.csvを読み込む関数の定義
-def read_csv(csv_file, item):
+def read_csv(filename, item):
     price = []
     date = []
     data = {}
+    csv_file = filename + ".csv"
     with open(csv_file, "r") as f:
         reader = csv.DictReader(f)
         for row in reader:
-            date.append(row["DATE"])
             if row[item] == '':
                 price.append(None)
             else:
                 price.append(row[item])
+            date.append(row["DATE"])
     data["price"] = price
     data["date"] = date
     data["lastprice"] = price[len(price)-1]
@@ -72,16 +73,16 @@ def index():
     label_query = "SELECT calculated FROM otoku WHERE kind=? AND user_id=?"
     price_query = "SELECT price FROM otoku WHERE kind=? AND user_id=?"
 
-    data = read_csv("yasai.csv", "キャベツ")
+    data = read_csv("yasai", "キャベツ")
 
-    yasai_labels = db.execute(label_query, ("野菜", session["user_id"],)).fetchall()
-    yasai_prices = db.execute(price_query, ("野菜", session["user_id"],)).fetchall()
-    kakou_labels = db.execute(label_query, ("加工食品", session["user_id"],)).fetchall()
-    kakou_prices = db.execute(price_query, ("加工食品", session["user_id"],)).fetchall()
-    niku_labels = db.execute(label_query, ("食肉・鶏卵", session["user_id"],)).fetchall()
-    niku_prices = db.execute(price_query, ("食肉・鶏卵", session["user_id"],)).fetchall()
-    gyokai_labels = db.execute(label_query, ("魚介類", session["user_id"],)).fetchall()
-    gyokai_prices = db.execute(price_query, ("魚介類", session["user_id"],)).fetchall()
+    yasai_labels = [1,2,3,4]  # db.execute(label_query, ("野菜", session["user_id"],)).fetchall()
+    yasai_prices = [100,200, 300, 400] # db.execute(price_query, ("野菜", session["user_id"],)).fetchall()
+    kakou_labels = [1,2,3,4] # db.execute(label_query, ("加工食品", session["user_id"],)).fetchall()
+    kakou_prices = [100,200, 300, 400] # db.execute(price_query, ("加工食品", session["user_id"],)).fetchall()
+    niku_labels = [1,2,3,4] # db.execute(label_query, ("食肉・鶏卵", session["user_id"],)).fetchall()
+    niku_prices = [100,200, 300, 400] # db.execute(price_query, ("食肉・鶏卵", session["user_id"],)).fetchall()
+    gyokai_labels = [1,2,3,4] # db.execute(label_query, ("魚介類", session["user_id"],)).fetchall()
+    gyokai_prices = [100,200, 300, 400] # db.execute(price_query, ("魚介類", session["user_id"],)).fetchall()
     db.close()
     return render_template("index.html", yasai_labels=yasai_labels, yasai_prices=yasai_prices, kakou_labels=kakou_labels, kakou_prices=kakou_prices, niku_labels=niku_labels, niku_prices=niku_prices, gyokai_labels=gyokai_labels, gyokai_prices=gyokai_prices)
 
@@ -94,7 +95,7 @@ def charts():
 @login_required
 def cabbage():
     name = "キャベツ"
-    data = read_csv("yasai.csv", name)
+    data = read_csv("yasai", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
@@ -105,7 +106,7 @@ def cabbage():
 @login_required
 def greenonion():
     name = "ねぎ"
-    data = read_csv("yasai.csv", name)
+    data = read_csv("yasai", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
@@ -116,7 +117,7 @@ def greenonion():
 @login_required
 def lettuce():
     name = "レタス"
-    data = read_csv("yasai.csv", name)
+    data = read_csv("yasai", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
@@ -127,7 +128,7 @@ def lettuce():
 @login_required
 def potato():
     name = "ばれいしょ"
-    data = read_csv("yasai.csv", name)
+    data = read_csv("yasai", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
@@ -138,7 +139,7 @@ def potato():
 @login_required
 def onion():
     name = "たまねぎ"
-    data = read_csv("yasai.csv", name)
+    data = read_csv("yasai", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
@@ -149,7 +150,7 @@ def onion():
 @login_required
 def cucumber():
     name = "きゅうり"
-    data = read_csv("yasai.csv", name)
+    data = read_csv("yasai", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
@@ -160,7 +161,7 @@ def cucumber():
 @login_required
 def tomato():
     name = "トマト"
-    data = read_csv("yasai.csv", name)
+    data = read_csv("yasai", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
@@ -171,7 +172,7 @@ def tomato():
 @login_required
 def spinach():
     name = "ほうれんそう"
-    data = read_csv("yasai.csv", name)
+    data = read_csv("yasai", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
@@ -182,7 +183,7 @@ def spinach():
 @login_required
 def carrot():
     name = "にんじん"
-    data = read_csv("yasai.csv", name)
+    data = read_csv("yasai", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
@@ -193,7 +194,7 @@ def carrot():
 @login_required
 def chinesecabbage():
     name = "はくさい"
-    data = read_csv("yasai.csv", name)
+    data = read_csv("yasai", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
@@ -204,7 +205,7 @@ def chinesecabbage():
 @login_required
 def raddish():
     name = "だいこん"
-    data = read_csv("yasai.csv", name)
+    data = read_csv("yasai", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
@@ -215,7 +216,7 @@ def raddish():
 @login_required
 def eggplant():
     name = "なす"
-    data = read_csv("yasai.csv", name)
+    data = read_csv("yasai", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
@@ -226,7 +227,7 @@ def eggplant():
 @login_required
 def bread():
     name = "食パン"
-    data = read_csv("kakou.csv", name)
+    data = read_csv("kakou", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
@@ -237,7 +238,7 @@ def bread():
 @login_required
 def instantnoodle():
     name = "即席めん"
-    data = read_csv("kakou.csv", name)
+    data = read_csv("kakou", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
@@ -248,7 +249,7 @@ def instantnoodle():
 @login_required
 def udon():
     name = "ゆでうどん"
-    data = read_csv("kakou.csv", name)
+    data = read_csv("kakou", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
@@ -259,7 +260,7 @@ def udon():
 @login_required
 def flour():
     name = "小麦粉"
-    data = read_csv("kakou.csv", name)
+    data = read_csv("kakou", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
@@ -270,7 +271,7 @@ def flour():
 @login_required
 def milk():
     name = "牛乳"
-    data = read_csv("kakou.csv", name)
+    data = read_csv("kakou", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
@@ -281,7 +282,7 @@ def milk():
 @login_required
 def cheese():
     name = "チーズ"
-    data = read_csv("kakou.csv", name)
+    data = read_csv("kakou", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
@@ -292,7 +293,7 @@ def cheese():
 @login_required
 def tofu():
     name = "豆腐"
-    data = read_csv("kakou.csv", name)
+    data = read_csv("kakou", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
@@ -303,7 +304,7 @@ def tofu():
 @login_required
 def canolaoil():
     name = "食用油（キャノーラ油）"
-    data = read_csv("kakou.csv", name)
+    data = read_csv("kakou", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
@@ -314,7 +315,7 @@ def canolaoil():
 @login_required
 def saladoil():
     name = "食用油（サラダ油）"
-    data = read_csv("kakou.csv", name)
+    data = read_csv("kakou", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
@@ -325,7 +326,7 @@ def saladoil():
 @login_required
 def margarine():
     name = "マーガリン"
-    data = read_csv("kakou.csv", name)
+    data = read_csv("kakou", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
@@ -336,7 +337,7 @@ def margarine():
 @login_required
 def mayonnaise():
     name = "マヨネーズ"
-    data = read_csv("kakou.csv", name)
+    data = read_csv("kakou", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
@@ -347,7 +348,7 @@ def mayonnaise():
 @login_required
 def soysauce():
     name = "しょう油"
-    data = read_csv("kakou.csv", name)
+    data = read_csv("kakou", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
@@ -358,7 +359,7 @@ def soysauce():
 @login_required
 def miso():
     name = "みそ"
-    data = read_csv("kakou.csv", name)
+    data = read_csv("kakou", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
@@ -369,7 +370,7 @@ def miso():
 @login_required
 def fishcake():
     name = "かまぼこ"
-    data = read_csv("kakou.csv", name)
+    data = read_csv("kakou", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
@@ -380,7 +381,18 @@ def fishcake():
 @login_required
 def cannedtuna():
     name = "まぐろ缶詰"
-    data = read_csv("kakou.csv", name)
+    data = read_csv("kakou", name)
+    label_list = data["date"]
+    price_list = data["price"]
+    last_price = data["lastprice"]
+
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+
+@app.route("/charts/importedbeef")
+@login_required
+def importedbeef():
+    name = "輸入牛肉（冷蔵ロース）"
+    data = read_csv("niku", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
@@ -391,7 +403,7 @@ def cannedtuna():
 @login_required
 def butter():
     name = "バター"
-    data = read_csv("kakou.csv", name)
+    data = read_csv("kakou", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
