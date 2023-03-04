@@ -51,7 +51,7 @@ def read_csv(filename, item):
     price = []
     date = []
     data = {}
-    csv_file = filename + ".csv"
+    csv_file = filename + "_converted.csv"
     with open(csv_file, "r") as f:
         reader = csv.DictReader(f)
         for row in reader:
