@@ -120,12 +120,24 @@
         var prevButton = document.getElementById("prev");
         var nextButton = document.getElementById("next");
 
+        var database = {{ database | tojson }};
+            for (var i = 0; i < database.length; ++i) {
+                database[i][0] = parseInt(database[i][0].substr(-2));//intで日付を格納する
+        }
+
+        // POSTリクエストでデータを受け取る関数
+        function receiveData(data) {
+            database = JSON.parse(data);
+            for (var i = 0; i < database.length; ++i) {
+                database[i][0] = parseInt(database[i][0].substr(-2)); // intで日付を格納する
+            }
+        }
+
         //前の月へ戻る
         prevButton.addEventListener("click", function() {
             currentYear = (currentMonth == 1) ? currentYear - 1 : currentYear;
             currentMonth = (currentMonth == 1) ? 12 : currentMonth - 1;
             dataMonth(currentYear, currentMonth + 1);
-            displayCalendar();
         });
 
         //次の月へ進む
@@ -133,17 +145,9 @@
             currentYear = (currentMonth == 12) ? currentYear + 1 : currentYear;
             currentMonth = (currentMonth == 12) ? 1 : currentMonth + 1;
             dataMonth(currentYear, currentMonth + 1);
-            displayCalendar();
         });
 
         function displayCalendar() {
-            var database = {{ database | tojson }};//先月のところを渡そうとすると再利用できない＋データをサムしてない
-            for (var i = 0; i < database.length; ++i) {
-                database[i][0] = parseInt(database[i][0].substr(-2));//intで日付を格納する
-            }
-            console.clear()
-            console.log(database[0][1]);
-            console.log(database[0][0]);
 
             var firstDay = (new Date(currentYear, currentMonth)).getDay();
             var daysInMonth = 32 - new Date(currentYear, currentMonth, 32).getDate();
@@ -152,7 +156,6 @@
             calendarBody.innerHTML = "";
 
             var monthYear = document.getElementById("month");
-            console.log(currentMonth)
             var month = currentMonth % 12 + 1;
             //var month = currentMonth + 1;
             monthYear.innerHTML = currentYear + "年" + month + "月";
@@ -195,17 +198,32 @@
         displayCalendar();
 
         // 年月情報をdbに渡すための関数
-        function dataMonth(currentYear,currentMonth) {
+        function dataMonth(currentYear, currentMonth) {
             var xhr = new XMLHttpRequest();
-<<<<<<< HEAD
-=======
-            //xhr.open('GET', '/test',true);
->>>>>>> bfb7442187d14f6d73b4e35e221084c322372f0b
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    receiveData(this.responseText);
+                    displayCalendar();
+                }
+            };
             xhr.open('POST', '/test');
             xhr.setRequestHeader('Content-Type', 'application/json');
-            //console.log(database[0][1]);
             xhr.send(JSON.stringify({year: currentYear, month: currentMonth}));
         }
+
+        // 年月情報をdbに渡すための関数
+        /*
+        function dataMonth(currentYear,currentMonth) {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById('message').innerText = this.responseText;
+                }
+            };
+            xhr.open('GET', `http://127.0.0.1:5000/?year=${currentYear}&month=${currentMonth}`);
+            xhr.send();
+        }*/
+
     </script>
 {% endblock %}
 

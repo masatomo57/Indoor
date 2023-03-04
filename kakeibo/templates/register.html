@@ -68,6 +68,15 @@
                         <option value="かまぼこ">
                         <option value="まぐろ缶詰">
                         <option value="バター">
+                        <option value="まぐろ">
+                        <option value="えび">
+                        <option value="ぶり">
+                        <option value="さけ">
+                        <option value="輸入牛肉(冷蔵ロース)">
+                        <option value="国産牛肉(冷蔵ロース)">
+                        <option value="豚肉(ロース)">
+                        <option value="鶏肉(もも肉)">
+                        <option value="鶏卵">
                     </datalist>
                 </div>
                 <p></p>
@@ -109,7 +118,7 @@
     </div>
     <form action="/test2" method="post">
         <input type="date" id="start_date" name="start_date"></div>&nbsp;〜&nbsp;<input type="date" id="last_date" name="last_date">
-        &nbsp;&nbsp;<button id="display_btn" type="submit">指定期間表示</button>
+        &nbsp;&nbsp;<button id="display_btn" type="button">指定期間表示</button>
     </form>
     <table id="kakei_tb" class="container" style="width: 50%;">
         <tr>
@@ -204,6 +213,8 @@
             }
             return correctFlg;
         }
+
+
        /*「削除ボタン」クリック時の処理 */
         function deleteData(date, item, price, quantity, gram){
             // データ削除の確認ダイアログ表示
@@ -257,12 +268,10 @@
             // test2の処理を実装する
                 return;
             }
-            console.log("ここまで来た1")
             //if( chkRegistData(newDate,newItem, newPrice, newQuantity) ) {
                 //データベースの更新処理を行う
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', '/test4');
-                console.log("ここまで来た2")
                 // xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
                 xhr.setRequestHeader('Content-Type', 'application/json');
                 xhr.onreadystatechange = function() {
@@ -297,7 +306,6 @@
 
             // 指定期間のチェック処理
             if( chkDesignatedPeriod(startDate, lastDate) === true ) {
-                displaySpendingData();
             } else {
                 alert("開始日付は終了日付より前の日付を選択してください。");
             }

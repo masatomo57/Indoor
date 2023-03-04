@@ -410,6 +410,25 @@ def butter():
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
+"""
+@app.route("/kakeibo", methods=["GET"])
+@login_required
+def kakeibo():
+    # 今日の1日と今日の日付を取得
+    today = datetime.date.today()
+    year = request.args.get('year', today.year)
+    month = request.args.get('month', today.month)
+    start_date = datetime.date(year,month,1)
+    last_date = datetime.date(year,month,calendar.monthrange(year, month)[1])
+    # 日付と税込金額を渡してほしい(カレンダー表示のため)
+    conn = sqlite3.connect('kakeibo.db')
+    cur = conn.cursor()
+    cur.execute('SELECT transacted,sum FROM test_buying WHERE user_id = ? AND transacted BETWEEN ? AND ? ORDER BY transacted ASC', (session["user_id"], start_date, last_date))
+    database = cur.fetchall()
+    conn.close()
+    print(database)
+    return render_template("kakeibo/index.html",database=database)
+"""
 
 @app.route("/kakeibo")
 @login_required
@@ -433,7 +452,6 @@ def kakeibo():
         return render_template("kakeibo/index.html",database=database)
 
 @app.route("/test", methods=["POST"])
-#@app.route("/test", methods=["GET"])
 @login_required
 def test():
     data = request.json
@@ -449,10 +467,9 @@ def test():
     database = cur.fetchall()
     conn.close()
     print(database)
-    #print(jsonify({"database": database}))
-    #return jsonify({"database": database})
-    return render_template("kakeibo/index.html", database=database)
-    #return render_template("kakeibo/index.html", database=database)
+    return jsonify(database)
+    # return render_template("kakeibo/index.html", database=database)
+
 
 
 # 今月のデータを取得するための関数
@@ -520,8 +537,13 @@ def test1():
 @app.route("/test2", methods=["POST"])
 @login_required
 def test2():
-    start_date = request.form.get("start_date")
-    last_date = request.form.get("last_date")
+    data = request.json
+    start_date = data['start']
+    last_date = data['last']
+    # start_date = request.form.get("start_date")
+    # last_date = request.form.get("last_date")
+    print(start_date)
+    print(last_date)
     conn = sqlite3.connect('kakeibo.db')
     cur = conn.cursor()
     cur.execute('SELECT transacted,item,price,shares,gram FROM test_buying WHERE user_id = ? AND transacted BETWEEN ? AND ? ORDER BY transacted ASC', (session["user_id"], start_date, last_date))
