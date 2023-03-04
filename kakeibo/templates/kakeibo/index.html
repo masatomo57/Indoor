@@ -125,7 +125,7 @@
             currentYear = (currentMonth == 1) ? currentYear - 1 : currentYear;
             currentMonth = (currentMonth == 1) ? 12 : currentMonth - 1;
             dataMonth(currentYear, currentMonth + 1);
-            //displayCalendar();
+            displayCalendar();
         });
 
         //次の月へ進む
@@ -133,7 +133,7 @@
             currentYear = (currentMonth == 12) ? currentYear + 1 : currentYear;
             currentMonth = (currentMonth == 12) ? 1 : currentMonth + 1;
             dataMonth(currentYear, currentMonth + 1);
-            //displayCalendar();
+            displayCalendar();
         });
 
         function displayCalendar() {
@@ -197,8 +197,7 @@
         // 年月情報をdbに渡すための関数
         function dataMonth(currentYear,currentMonth) {
             var xhr = new XMLHttpRequest();
-            //xhr.open('GET', '/test',true);
-            xhr.open('POST', '/test',false);
+            xhr.open('POST', '/test');
             xhr.setRequestHeader('Content-Type', 'application/json');
             //console.log(database[0][1]);
             xhr.send(JSON.stringify({year: currentYear, month: currentMonth}));
