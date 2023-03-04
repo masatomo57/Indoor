@@ -443,7 +443,49 @@ def egg():
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
+@app.route("/charts/tuna")
+@login_required
+def tuna():
+    name = "まぐろ"
+    data = read_csv("sakana", name)
+    label_list = data["date"]
+    price_list = data["price"]
+    last_price = data["lastprice"]
 
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+
+@app.route("/charts/shrimp")
+@login_required
+def shrimp():
+    name = "えび"
+    data = read_csv("sakana", name)
+    label_list = data["date"]
+    price_list = data["price"]
+    last_price = data["lastprice"]
+
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+
+@app.route("/charts/tuna")
+@login_required
+def tuna():
+    name = "まぐろ"
+    data = read_csv("sakana", name)
+    label_list = data["date"]
+    price_list = data["price"]
+    last_price = data["lastprice"]
+
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+
+@app.route("/charts/tuna")
+@login_required
+def tuna():
+    name = "まぐろ"
+    data = read_csv("sakana", name)
+    label_list = data["date"]
+    price_list = data["price"]
+    last_price = data["lastprice"]
+
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
 
 @app.route("/kakeibo")
