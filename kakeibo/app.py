@@ -542,7 +542,7 @@ def test():
     print(last_date)
     conn = sqlite3.connect('kakeibo.db')
     cur = conn.cursor()
-    cur.execute('SELECT transacted,price FROM test_buying WHERE user_id = ? AND transacted BETWEEN ? AND ? ORDER BY transacted ASC', (session["user_id"], start_date, last_date))
+    cur.execute('SELECT transacted,sum FROM test_buying WHERE user_id = ? AND transacted BETWEEN ? AND ? ORDER BY transacted ASC', (session["user_id"], start_date, last_date))
     database = cur.fetchall()
     conn.close()
     print(database)
