@@ -1,4 +1,3 @@
-import csv
 import sqlite3
 from pandas import read_csv
 
