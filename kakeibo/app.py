@@ -51,7 +51,7 @@ def read_csv(filename, item):
     price = []
     date = []
     data = {}
-    csv_file = filename + ".csv"
+    csv_file = filename + "_converted.csv"
     with open(csv_file, "r") as f:
         reader = csv.DictReader(f)
         for row in reader:
@@ -399,11 +399,88 @@ def importedbeef():
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
-@app.route("/charts/butter")
+@app.route("/charts/domesticbeef")
 @login_required
-def butter():
-    name = "バター"
-    data = read_csv("kakou", name)
+def domesticbeef():
+    name = "国産牛肉（冷蔵ロース）"
+    data = read_csv("niku", name)
+    label_list = data["date"]
+    price_list = data["price"]
+    last_price = data["lastprice"]
+
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+
+@app.route("/charts/pork")
+@login_required
+def pork():
+    name = "豚肉（ロース）"
+    data = read_csv("niku", name)
+    label_list = data["date"]
+    price_list = data["price"]
+    last_price = data["lastprice"]
+
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+
+@app.route("/charts/chicken")
+@login_required
+def chicken():
+    name = "鶏肉（もも肉）"
+    data = read_csv("niku", name)
+    label_list = data["date"]
+    price_list = data["price"]
+    last_price = data["lastprice"]
+
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+
+@app.route("/charts/egg")
+@login_required
+def egg():
+    name = "鶏卵 サイズ混合・10個入り）"
+    data = read_csv("niku", name)
+    label_list = data["date"]
+    price_list = data["price"]
+    last_price = data["lastprice"]
+
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+
+@app.route("/charts/tuna")
+@login_required
+def tuna():
+    name = "まぐろ"
+    data = read_csv("sakana", name)
+    label_list = data["date"]
+    price_list = data["price"]
+    last_price = data["lastprice"]
+
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+
+@app.route("/charts/shrimp")
+@login_required
+def shrimp():
+    name = "えび"
+    data = read_csv("sakana", name)
+    label_list = data["date"]
+    price_list = data["price"]
+    last_price = data["lastprice"]
+
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+
+@app.route("/charts/yellowtail")
+@login_required
+def yellowtail():
+    name = "ぶり"
+    data = read_csv("sakana", name)
+    label_list = data["date"]
+    price_list = data["price"]
+    last_price = data["lastprice"]
+
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+
+@app.route("/charts/salmon")
+@login_required
+def salmon():
+    name = "さけ"
+    data = read_csv("sakana", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
@@ -433,23 +510,25 @@ def kakeibo():
 @app.route("/kakeibo")
 @login_required
 def kakeibo():
+    '''
     if request.method == "POST":
         if request.form.get("submit") == "test":
             return redirect("/test")
         return render_template("kakeibo/index.html",database=[])
     else:
-        # 今日の1日と今日の日付を取得
-        today = datetime.date.today()
-        start_date = today.replace(day=1)
-        last_date = today
-        # 日付と税込金額を渡してほしい(カレンダー表示のため)
-        conn = sqlite3.connect('kakeibo.db')
-        cur = conn.cursor()
-        cur.execute('SELECT transacted,sum FROM test_buying WHERE user_id = ? AND transacted BETWEEN ? AND ? ORDER BY transacted ASC', (session["user_id"], start_date, last_date))
-        database = cur.fetchall()
-        conn.close()
-        print(database)
-        return render_template("kakeibo/index.html",database=database)
+    '''
+    # 今日の1日と今日の日付を取得
+    today = datetime.date.today()
+    start_date = today.replace(day=1)
+    last_date = today
+    # 日付と税込金額を渡してほしい(カレンダー表示のため)
+    conn = sqlite3.connect('kakeibo.db')
+    cur = conn.cursor()
+    cur.execute('SELECT transacted,sum FROM test_buying WHERE user_id = ? AND transacted BETWEEN ? AND ? ORDER BY transacted ASC', (session["user_id"], start_date, last_date))
+    database = cur.fetchall()
+    conn.close()
+    print(database)
+    return render_template("kakeibo/index.html",database=database)
 
 @app.route("/test", methods=["POST"])
 @login_required

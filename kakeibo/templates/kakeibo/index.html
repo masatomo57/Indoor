@@ -200,12 +200,16 @@
         // 年月情報をdbに渡すための関数
         function dataMonth(currentYear, currentMonth) {
             var xhr = new XMLHttpRequest();
+<<<<<<< HEAD
             xhr.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     receiveData(this.responseText);
                     displayCalendar();
                 }
             };
+=======
+            //xhr.open('GET', '/test',true);
+>>>>>>> 85337246fe47f3d69986cb737f614f4e2c188968
             xhr.open('POST', '/test');
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.send(JSON.stringify({year: currentYear, month: currentMonth}));
