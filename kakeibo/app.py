@@ -75,14 +75,14 @@ def index():
 
     data = read_csv("yasai", "キャベツ")
 
-    yasai_labels = db.execute(label_query, ("野菜", session["user_id"],)).fetchall()
-    yasai_prices = db.execute(price_query, ("野菜", session["user_id"],)).fetchall()
-    kakou_labels = db.execute(label_query, ("加工食品", session["user_id"],)).fetchall()
-    kakou_prices = db.execute(price_query, ("加工食品", session["user_id"],)).fetchall()
-    niku_labels = db.execute(label_query, ("食肉・鶏卵", session["user_id"],)).fetchall()
-    niku_prices = db.execute(price_query, ("食肉・鶏卵", session["user_id"],)).fetchall()
-    gyokai_labels = db.execute(label_query, ("魚介類", session["user_id"],)).fetchall()
-    gyokai_prices = db.execute(price_query, ("魚介類", session["user_id"],)).fetchall()
+    yasai_labels = [1,2,3,4]  # db.execute(label_query, ("野菜", session["user_id"],)).fetchall()
+    yasai_prices = [100,200, 300, 400] # db.execute(price_query, ("野菜", session["user_id"],)).fetchall()
+    kakou_labels = [1,2,3,4] # db.execute(label_query, ("加工食品", session["user_id"],)).fetchall()
+    kakou_prices = [100,200, 300, 400] # db.execute(price_query, ("加工食品", session["user_id"],)).fetchall()
+    niku_labels = [1,2,3,4] # db.execute(label_query, ("食肉・鶏卵", session["user_id"],)).fetchall()
+    niku_prices = [100,200, 300, 400] # db.execute(price_query, ("食肉・鶏卵", session["user_id"],)).fetchall()
+    gyokai_labels = [1,2,3,4] # db.execute(label_query, ("魚介類", session["user_id"],)).fetchall()
+    gyokai_prices = [100,200, 300, 400] # db.execute(price_query, ("魚介類", session["user_id"],)).fetchall()
     db.close()
     return render_template("index.html", yasai_labels=yasai_labels, yasai_prices=yasai_prices, kakou_labels=kakou_labels, kakou_prices=kakou_prices, niku_labels=niku_labels, niku_prices=niku_prices, gyokai_labels=gyokai_labels, gyokai_prices=gyokai_prices)
 
@@ -434,6 +434,7 @@ def kakeibo():
         return render_template("kakeibo/index.html",database=database)
 
 @app.route("/test", methods=["POST"])
+#@app.route("/test", methods=["GET"])
 @login_required
 def test():
     data = request.json
@@ -449,9 +450,10 @@ def test():
     database = cur.fetchall()
     conn.close()
     print(database)
-    print(jsonify({"database": database}))
+    #print(jsonify({"database": database}))
     #return jsonify({"database": database})
     return render_template("kakeibo/index.html", database=database)
+    #return render_template("kakeibo/index.html", database=database)
 
 
 # 今月のデータを取得するための関数
