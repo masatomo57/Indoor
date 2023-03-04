@@ -167,5 +167,7 @@ nav .navbar-brand .green
 
 .home_header {
     text-align: center;
-    background-color: 
+    font-size: 2em;
+    color: white;
+    background-color: #ffbb2f;
 }
