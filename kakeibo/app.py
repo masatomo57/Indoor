@@ -403,12 +403,47 @@ def importedbeef():
 @login_required
 def butter():
     name = "バター"
-    data = read_csv("kakou", name)
+    data = read_csv("niku", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+
+@app.route("/charts/butter")
+@login_required
+def butter():
+    name = "バター"
+    data = read_csv("niku", name)
+    label_list = data["date"]
+    price_list = data["price"]
+    last_price = data["lastprice"]
+
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+
+@app.route("/charts/butter")
+@login_required
+def butter():
+    name = "バター"
+    data = read_csv("niku", name)
+    label_list = data["date"]
+    price_list = data["price"]
+    last_price = data["lastprice"]
+
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+
+@app.route("/charts/butter")
+@login_required
+def butter():
+    name = "バター"
+    data = read_csv("niku", name)
+    label_list = data["date"]
+    price_list = data["price"]
+    last_price = data["lastprice"]
+
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+
+
 
 
 @app.route("/kakeibo")
