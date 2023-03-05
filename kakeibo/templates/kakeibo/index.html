@@ -119,20 +119,21 @@
     </div>
     </main>
     <script>
-        var MonthSpend = 0
+        var MonthSpend = 0;
         var today = new Date();//現在時刻取得
         var currentMonth = today.getMonth();
         console.log(currentMonth)
         var currentYear = today.getFullYear();
         console.log(currentYear)
-        var month = 0
+        var month = 0;
         //var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         var prevButton = document.getElementById("prev");
         var nextButton = document.getElementById("next");
 
         var database = {{ database | tojson }};
-            for (var i = 0; i < database.length; ++i) {
-                database[i][0] = parseInt(database[i][0].substr(-2));//intで日付を格納する
+        for (var i = 0; i < database.length; ++i) {
+            database[i][0] = parseInt(database[i][0].substr(-2));//intで日付を格納する
+            console.log(database)
         }
 
         // POSTリクエストでデータを受け取る関数
@@ -176,6 +177,8 @@
             var date = 1;
             // database[][2]の1つ目の要素の順番を表す
             var k = 0;
+            var IsSpend = false;
+            var SpendSum = 0;
             for (var i = 0; i < 6; i++) {
                 var row = document.createElement("tr");
 
@@ -183,9 +186,7 @@
                     var cell = document.createElement("td");
                     if (i === 0 && j < firstDay || date > daysInMonth) {
                         var cellText = document.createTextNode("");
-                        //cellText.style.color = 'blue'
                         cell.appendChild(cellText);
-                        //cell.style.color = 'blue'
                         row.appendChild(cell);
                     } else {
                         var cellText = document.createTextNode(date);
@@ -193,22 +194,32 @@
                             cell.classList.add("today");
                         }
                         cell.appendChild(cellText);
-                        if (database[k] && date === database[k][0]) {
+
+                        //その日に支出が発生しているか確認，支出合計の計算
+                        for (var k = 0; k < database.length; k++){
+                            if (date === database[k][0]){
+                                IsSpend = true;
+                                SpendSum += database[k][1];
+                            }
+                        }
+                        if (IsSpend) {
                             cell.appendChild(document.createElement("br"));
                             cell.appendChild(document.createElement("br"));
                             var texts = document.createElement("texts");
-                            texts.appendChild(document.createTextNode(database[k][1] + "円"))
-                            //texts.style.color = "blue"
-                            texts.style.fontSize = "22px"
-                            texts.style.fontWeight = "bold"
+                            texts.appendChild(document.createTextNode(SpendSum + "円"));
+                            texts.style.color = "black";
+                            texts.style.fontSize = "22px";
+                            texts.style.fontWeight = "bold";
                             cell.appendChild(texts);
                             //cell.appendChild(document.createTextNode(database[k][1] + "円"));
-                            MonthSpend+=database[k][1];
-                            //console.logt(MonthSpend)
-                            ++k;
+                            MonthSpend += SpendSum;
+                            //console.log(MonthSpend)
+                            //++k;
                         }
                         row.appendChild(cell);
                         date++;
+                        IsSpend = false;
+                        SpendSum = 0;
                     }
                 }
                 calendarBody.appendChild(row);
