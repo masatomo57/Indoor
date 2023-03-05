@@ -83,7 +83,7 @@
             }
             .kakeibo-header {
             text-align: center;
-            font-size: 2em;
+            font-size: 3em;
             color: white;
             background-color: #ffbb2f;
             }
@@ -92,6 +92,7 @@
 
 {% block main %}
     <header class="kakeibo-header" id="kakeibo-header"></header>
+    <br>
     <main class="container-fluid py-5 text-center">
     <div class="first-table">
     <div class="container">
@@ -182,7 +183,9 @@
                     var cell = document.createElement("td");
                     if (i === 0 && j < firstDay || date > daysInMonth) {
                         var cellText = document.createTextNode("");
+                        //cellText.style.color = 'blue'
                         cell.appendChild(cellText);
+                        //cell.style.color = 'blue'
                         row.appendChild(cell);
                     } else {
                         var cellText = document.createTextNode(date);
@@ -193,7 +196,13 @@
                         if (database[k] && date === database[k][0]) {
                             cell.appendChild(document.createElement("br"));
                             cell.appendChild(document.createElement("br"));
-                            cell.appendChild(document.createTextNode(database[k][1] + "円"));
+                            var texts = document.createElement("texts");
+                            texts.appendChild(document.createTextNode(database[k][1] + "円"))
+                            //texts.style.color = "blue"
+                            texts.style.fontSize = "22px"
+                            texts.style.fontWeight = "bold"
+                            cell.appendChild(texts);
+                            //cell.appendChild(document.createTextNode(database[k][1] + "円"));
                             MonthSpend+=database[k][1];
                             //console.logt(MonthSpend)
                             ++k;
@@ -214,7 +223,7 @@
 
         function displayHeader(){
             console.log(MonthSpend)
-            document.getElementById("kakeibo-header").innerHTML = currentYear + "年" + month + "月の支出は" + MonthSpend + "円です"
+            document.getElementById("kakeibo-header").innerHTML = currentYear + "年" + month + "月の支出は " + MonthSpend + " 円です"
         }
         displayHeader();
         //console.log(MonthSpend)
