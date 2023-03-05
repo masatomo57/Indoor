@@ -81,10 +81,17 @@
                 padding-top: 1rem!important;
                 padding-bottom: 3rem!important;
             }
+            .kakeibo-header {
+            text-align: center;
+            font-size: 2em;
+            color: white;
+            background-color: #ffbb2f;
+            }
         </style>
 {% endblock %}
 
 {% block main %}
+    <header class="kakeibo-header" id="kakeibo-header"></header>
     <main class="container-fluid py-5 text-center">
     <div class="first-table">
     <div class="container">
@@ -111,11 +118,13 @@
     </div>
     </main>
     <script>
+        var MonthSpend = 0
         var today = new Date();//現在時刻取得
         var currentMonth = today.getMonth();
         console.log(currentMonth)
         var currentYear = today.getFullYear();
         console.log(currentYear)
+        var month = 0
         //var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         var prevButton = document.getElementById("prev");
         var nextButton = document.getElementById("next");
@@ -148,6 +157,7 @@
         });
 
         function displayCalendar() {
+            MonthSpend = 0;
 
             var firstDay = (new Date(currentYear, currentMonth)).getDay();
             var daysInMonth = 32 - new Date(currentYear, currentMonth, 32).getDate();
@@ -156,7 +166,9 @@
             calendarBody.innerHTML = "";
 
             var monthYear = document.getElementById("month");
-            var month = currentMonth % 12 + 1;
+            month = currentMonth % 12 + 1;
+            //var monthYear = document.getElementById("month");
+            //var month = currentMonth % 12 + 1;
             //var month = currentMonth + 1;
             monthYear.innerHTML = currentYear + "年" + month + "月";
             // dateは日付を表す
@@ -182,6 +194,8 @@
                             cell.appendChild(document.createElement("br"));
                             cell.appendChild(document.createElement("br"));
                             cell.appendChild(document.createTextNode(database[k][1] + "円"));
+                            MonthSpend+=database[k][1];
+                            //console.logt(MonthSpend)
                             ++k;
                         }
                         row.appendChild(cell);
@@ -194,8 +208,19 @@
                     break;
                 }
             }
+            console.log(MonthSpend)
         }
         displayCalendar();
+
+        function displayHeader(){
+            console.log(MonthSpend)
+            document.getElementById("kakeibo-header").innerHTML = currentYear + "年" + month + "月の支出は" + MonthSpend + "円です"
+        }
+        displayHeader();
+        //console.log(MonthSpend)
+        //var kakeibo_h = document.getElementById("kakeibo-header");
+        //kakeibo_h.innerHTML = "今月の支出は" + MonthSpend + "円です"
+        //document.getElementById("kakeibo-header").innerHTML = "今月の支出は" + MonthSpend + "円です"
 
         // 年月情報をdbに渡すための関数
         function dataMonth(currentYear, currentMonth) {
@@ -204,6 +229,7 @@
                 if (this.readyState == 4 && this.status == 200) {
                     receiveData(this.responseText);
                     displayCalendar();
+                    displayHeader();
                 }
             };
             xhr.open('POST', '/test');
