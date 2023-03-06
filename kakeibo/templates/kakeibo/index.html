@@ -81,10 +81,18 @@
                 padding-top: 1rem!important;
                 padding-bottom: 3rem!important;
             }
+            .kakeibo-header {
+            text-align: center;
+            font-size: 3em;
+            color: white;
+            background-color: #ffbb2f;
+            }
         </style>
 {% endblock %}
 
 {% block main %}
+    <header class="kakeibo-header" id="kakeibo-header"></header>
+    <br>
     <main class="container-fluid py-5 text-center">
     <div class="first-table">
     <div class="container">
@@ -111,16 +119,23 @@
     </div>
     </main>
     <script>
+        var MonthSpend = 0;
         var today = new Date();//現在時刻取得
         var currentMonth = today.getMonth();
         var currentYear = today.getFullYear();
+<<<<<<< HEAD
+=======
+        console.log(currentYear)
+        var month = 0;
+>>>>>>> e2e3f49e7a6229dfeefae530958bf2991bb3828d
         //var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         var prevButton = document.getElementById("prev");
         var nextButton = document.getElementById("next");
 
         var database = {{ database | tojson }};
-            for (var i = 0; i < database.length; ++i) {
-                database[i][0] = parseInt(database[i][0].substr(-2));//intで日付を格納する
+        for (var i = 0; i < database.length; ++i) {
+            database[i][0] = parseInt(database[i][0].substr(-2));//intで日付を格納する
+            console.log(database)
         }
 
         // POSTリクエストでデータを受け取る関数
@@ -146,6 +161,7 @@
         });
 
         function displayCalendar() {
+            MonthSpend = 0;
 
             var firstDay = (new Date(currentYear, currentMonth)).getDay();
             var daysInMonth = 32 - new Date(currentYear, currentMonth, 32).getDate();
@@ -154,13 +170,17 @@
             calendarBody.innerHTML = "";
 
             var monthYear = document.getElementById("month");
-            var month = currentMonth % 12 + 1;
+            month = currentMonth % 12 + 1;
+            //var monthYear = document.getElementById("month");
+            //var month = currentMonth % 12 + 1;
             //var month = currentMonth + 1;
             monthYear.innerHTML = currentYear + "年" + month + "月";
             // dateは日付を表す
             var date = 1;
             // database[][2]の1つ目の要素の順番を表す
             var k = 0;
+            var IsSpend = false;
+            var SpendSum = 0;
             for (var i = 0; i < 6; i++) {
                 var row = document.createElement("tr");
 
@@ -176,14 +196,32 @@
                             cell.classList.add("today");
                         }
                         cell.appendChild(cellText);
-                        if (database[k] && date === database[k][0]) {
+
+                        //その日に支出が発生しているか確認，支出合計の計算
+                        for (var k = 0; k < database.length; k++){
+                            if (date === database[k][0]){
+                                IsSpend = true;
+                                SpendSum += database[k][1];
+                            }
+                        }
+                        if (IsSpend) {
                             cell.appendChild(document.createElement("br"));
                             cell.appendChild(document.createElement("br"));
-                            cell.appendChild(document.createTextNode(database[k][1] + "円"));
-                            ++k;
+                            var texts = document.createElement("texts");
+                            texts.appendChild(document.createTextNode(SpendSum + "円"));
+                            texts.style.color = "black";
+                            texts.style.fontSize = "22px";
+                            texts.style.fontWeight = "bold";
+                            cell.appendChild(texts);
+                            //cell.appendChild(document.createTextNode(database[k][1] + "円"));
+                            MonthSpend += SpendSum;
+                            //console.log(MonthSpend)
+                            //++k;
                         }
                         row.appendChild(cell);
                         date++;
+                        IsSpend = false;
+                        SpendSum = 0;
                     }
                 }
                 calendarBody.appendChild(row);
@@ -192,8 +230,19 @@
                     break;
                 }
             }
+            console.log(MonthSpend)
         }
         displayCalendar();
+
+        function displayHeader(){
+            console.log(MonthSpend)
+            document.getElementById("kakeibo-header").innerHTML = currentYear + "年" + month + "月の支出は " + MonthSpend + " 円です"
+        }
+        displayHeader();
+        //console.log(MonthSpend)
+        //var kakeibo_h = document.getElementById("kakeibo-header");
+        //kakeibo_h.innerHTML = "今月の支出は" + MonthSpend + "円です"
+        //document.getElementById("kakeibo-header").innerHTML = "今月の支出は" + MonthSpend + "円です"
 
         // 年月情報をdbに渡すための関数
         function dataMonth(currentYear, currentMonth) {
@@ -202,6 +251,7 @@
                 if (this.readyState == 4 && this.status == 200) {
                     receiveData(this.responseText);
                     displayCalendar();
+                    displayHeader();
                 }
             };
             xhr.open('POST', '/test');
