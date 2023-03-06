@@ -6,8 +6,12 @@
 
 import sqlite3
 from pandas import read_csv
+import item_lists as il
+import numpy as np
+import datetime
 
 
+'''
 def weekly_otoku_calculate(filename, kind, database):
     conn = sqlite3.connect(database)
     db = conn.cursor()
@@ -18,23 +22,15 @@ def weekly_otoku_calculate(filename, kind, database):
     otoku_price = 0
 
     data=read_csv(filename, header=0)
+    print('doko')
+    print(data)
     items=data.columns[2:]
     print(items)
-
-    for username in users:
-        for item in items:
-            last_week_consumptions = db.execute("SELECT sum(price*shares) FROM buying WHERE user_id=? AND item=? AND transacted BETWEEN DATE('now', 'localtime', '-9 day') AND DATE('now', 'localtime', '-3 day')", (username[0],item)).fetchall()[0][0]
-            if last_week_consumptions == None:
-                continue
-            last_week_consumptions = float(last_week_consumptions)
-            otoku_price += float(yasai_data[item][len(yasai_data)-1]) - last_week_consumptions
-
-        db.execute("INSERT INTO otoku (user_id, kind, price, calculated) VALUES(?, ?, ?, DATE('now', 'localtime', '-9 day'))", (username[0], kind, otoku_price))
-        conn.commit()
 
     conn.close()
 
 def monthly_otoku_calculate(filename, kind, database):
+    user_id = 'kk'
     conn = sqlite3.connect(database)
     db = conn.cursor()
 
@@ -43,46 +39,173 @@ def monthly_otoku_calculate(filename, kind, database):
 
     otoku_price = 0
 
-    data=read_csv(filename, header=0)
-    items=data.columns[2:]
+    #data=read_csv(filename, header=0,index_col='DATE')
+    data=read_csv(filename, header=0,index_col='DATE',parse_dates=True)
+    print(data)
+    print('check1')
+    print(data.index)
+    print(data.at[data.index[0],'食パン'])
+    print(type(data.at[data.index[0],'食パン']))
+    #print(data.)
+    if data.index[0]>data.index[1]:
+        print('a')
+    else:
+        print('b')
+    #data2=read_csv(filename, header=0,index_col='食パン')
+    #print(data2)
+
+    #items2=data.columns[:1]
+    #print(items2)
+
+    items=data.columns[0:]
     print(items)#touple
     print(items[0])
     if items[0] == "食パン":
         print("ok")
+    for i in range(len(items)):
+        if items[i] in il.yasai:
+            print(f'{items[i]}はyasaiです')
+        elif items[i] in il.kakou:
+            print(f'{items[i]}はkakouです')
+        elif items[i] in il.sakana:
+            print(f'{items[i]}はsakanaです')
+        elif items[i] in il.niku:
+            print(f'{items[i]}はnikuです')
+        else:
+            print(f'{items[i]}はお得を比較できません')
 
-    for username in users:
-        for item in items:
-            last_week_consumptions = db.execute("SELECT sum(price*shares) FROM buying WHERE user_id=? AND item=? AND transacted BETWEEN DATE('now', 'localtime', '-1 month') AND DATE('now', 'localtime', '-1 day')", (username[0],item)).fetchall()[0][0]
-            if last_week_consumptions == None:
-                continue
-            last_week_consumptions = float(last_week_consumptions)
-            otoku_price += float(yasai_data[item][len(yasai_data)-1]) - last_week_consumptions
+    kakei_data = db.execute('SELECT item,transacted,sum FROM test_buying WHERE user_id = ?', (user_id,)).fetchall()
+    print('check2')
+    #print(type(datetime.datetime.strptime(kakei_data[0][1])))
 
-        db.execute("INSERT INTO otoku (user_id, kind, price, calculated) VALUES(?, ?, ?, DATE('now', 'localtime', '-1 month'))", (username[0], kind, otoku_price))
-        conn.commit()
+    dt = datetime.datetime.strptime(kakei_data[0][1],'%Y-%m-%d')
+    print(dt)
+    print('check3')
+    print(kakei_data[0][2])
+    print(type(kakei_data[0][2]))
+    if data.at[data.index[0],'食パン'] > kakei_data[0][2]:
+        print('買ったトマトはデータの食パンより安い')
+    else:
+        print('損してる')
+
+    if dt >data.index[0]:
+        print(f'{data.index[0]}の方が前')
+    else:
+        print(f'{data.index[0]}の方が後')
+
+    for i in range(len(kakei_data)):
+        if kakei_data[i][0] in il.yasai:
+            print(f'{kakei_data[i][0]}はyasaiです')
+        elif kakei_data[i][0] in il.kakou:
+            print(f'{kakei_data[i][0]}はkakouです')
+        elif kakei_data[i][0] in il.sakana:
+            print(f'{kakei_data[i][0]}はsakanaです')
+        elif kakei_data[i][0] in il.niku:
+            print(f'{kakei_data[i][0]}はnikuです')
+        else:
+            print(f'{kakei_data[i][0]}はお得を比較できません')
+    print(kakei_data[0][1])
+    hi = kakei_data[0][1]
+    print(hi[0])
+    #if hi[2] ==
 
     conn.close()
+'''
+
+def otoku(username):
+    user_id = username
+    conn = sqlite3.connect("kakeibo.db")
+    db = conn.cursor()
+    userskakeibo = db.execute('SELECT item,transacted,sum,shares FROM test_buying WHERE user_id = ?', (user_id,)).fetchall()
+
+    yasai_data=read_csv("yasai_converted.csv", header=0,index_col='DATE',parse_dates=True)
+    kakou_data=read_csv("kakou_converted.csv", header=0,index_col='DATE',parse_dates=True)
+    sakana_data=read_csv("sakana_converted.csv", header=0,index_col='DATE',parse_dates=True)
+    niku_data=read_csv("niku_converted.csv", header=0,index_col='DATE',parse_dates=True)
+
+    yasai_otoku_price = 0
+    kakou_otoku_price = 0
+    sakana_otoku_price = 0
+    niku_otoku_price = 0
+    total_otoku_price = 0
+
+    otoku_price = 0
+
+    for i in range(len(userskakeibo)):
+        #家計簿の品目
+        item_name = userskakeibo[i][0]
+        #品目を買った日付
+        db_times = datetime.datetime.strptime(userskakeibo[i][1],'%Y-%m-%d')
+
+        #商品が野菜なら野菜データと比較
+        if item_name in il.yasai:
+            #野菜csvのどの時間と比較すべきか探す
+            for j in range(len(yasai_data)):
+                #csvが古い年代から新しい年代にソートされている前提
+                if db_times < yasai_data.index[j] and np.isnan(yasai_data.at[yasai_data.index[j],item_name]) != True:
+                    otoku_price = yasai_data.at[yasai_data.index[j],item_name] - (userskakeibo[i][2] / userskakeibo[i][3])
+                    '''
+                    print(f'yasai_name:{item_name}')
+                    print(f'kakeibo_price:{userskakeibo[i][2]}')
+                    print(f'shares:{userskakeibo[i][3]}')
+                    print(f'yasai_data_price:{yasai_data.at[yasai_data.index[j],item_name]}')
+                    print(f'otoku_price:{otoku_price}')
+                    '''
+                    yasai_otoku_price += otoku_price
+                    #otoku_price = 0
+        #商品が加工食品なら加工食品データと比較
+        elif item_name in il.kakou:
+            #加工csvのどの時間と比較すべきか探す
+            for j in range(len(kakou_data)):
+                #csvが古い年代から新しい年代にソートされている前提
+                if db_times < kakou_data.index[j] and np.isnan(kakou_data.at[kakou_data.index[j],item_name]) != True:
+                    otoku_price = kakou_data.at[kakou_data.index[j],item_name] - (userskakeibo[i][2] / userskakeibo[i][3])
+                    kakou_otoku_price += otoku_price
+                    #otoku_price = 0
+        #商品が魚なら魚データと比較
+        elif item_name in il.sakana:
+            #加工csvのどの時間と比較すべきか探す
+            for j in range(len(sakana_data)):
+                #csvが古い年代から新しい年代にソートされている前提
+                if db_times < sakana_data.index[j] and np.isnan(sakana_data.at[sakana_data.index[j],item_name]) != True:
+                    otoku_price = sakana_data.at[sakana_data.index[j],item_name] - (userskakeibo[i][2] / userskakeibo[i][3])
+                    sakana_otoku_price += otoku_price
+                    #otoku_price = 0
+        #商品が肉なら肉データと比較
+        elif item_name in il.niku:
+            #加工csvのどの時間と比較すべきか探す
+            for j in range(len(niku_data)):
+                #csvが古い年代から新しい年代にソートされている前提
+                if db_times < niku_data.index[j] and np.isnan(niku_data.at[niku_data.index[j],item_name]) != True:
+                    otoku_price = niku_data.at[niku_data.index[j],item_name] - (userskakeibo[i][2] / userskakeibo[i][3])
+                    niku_otoku_price += otoku_price
+                    #otoku_price = 0
+    #データベースを閉じる
+    conn.close()
+
+    #お得の総計を計算
+    total_otoku_price = yasai_otoku_price + kakou_otoku_price + sakana_otoku_price + niku_otoku_price
+    total_otoku_price = np.trunc(total_otoku_price)
+    yasai_otoku_price = np.trunc(yasai_otoku_price)
+    kakou_otoku_price = np.trunc(kakou_otoku_price)
+    sakana_otoku_price = np.trunc(sakana_otoku_price)
+    niku_otoku_price = np.trunc(niku_otoku_price)
+    '''
+    print(f'yasai:{yasai_otoku_price}')
+    print(f'kakou:{kakou_otoku_price}')
+    print(f'sakana:{sakana_otoku_price}')
+    print(f'niku:{niku_otoku_price}')
+    print(f'total:{total_otoku_price}')
+    '''
+    return yasai_otoku_price, kakou_otoku_price, sakana_otoku_price, niku_otoku_price, total_otoku_price
 
 
-def otoku(username,item):
-    if item == "yasai":
-        # 毎週水曜日0時に実行する。前週月曜日から日曜日までのお得を計算する。
-        weekly_otoku_calculate("yasai.csv", "野菜", "kakeibo.db")
-    elif item == "kakou":
-        # 毎月1日0時に実行する。先月1日から末日までのお得を計算する。
-        monthly_otoku_calculate("kakou.csv", "加工食品", "kakeibo.db")
-    elif item == "sakana":
-        # 毎月1日0時に実行する。先月1日から末日までのお得を計算する。
-        monthly_otoku_calculate("sakana.csv", "加工食品", "kakeibo.db")
-    elif item == "niku":
-        # 毎月1日0時に実行する。先月1日から末日までのお得を計算する。
-        monthly_otoku_calculate("niku.csv", "加工食品", "kakeibo.db")
-    else:
-        print("error")
-        exit()
 
 # 毎週水曜日0時に実行する。前週月曜日から日曜日までのお得を計算する。
-weekly_otoku_calculate("yasai.csv", "野菜", "kakeibo.db")
+#weekly_otoku_calculate("yasai.csv", "野菜", "kakeibo.db")
 # 毎月1日0時に実行する。先月1日から末日までのお得を計算する。
-monthly_otoku_calculate("kakou.csv", "加工食品", "kakeibo.db")
+#monthly_otoku_calculate("kakou_converted.csv", "加工食品", "kakeibo.db")
+
+#user_name = 'kk'
+#otoku(user_name)
 
