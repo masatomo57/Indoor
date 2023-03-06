@@ -24,6 +24,9 @@
 
 {% block main %}
 <main class="container-fluid py-5 text-center">
+    {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
     <div id="form-register">
         <form action="/test1" method="post">
         <div class="col-md-6 offset-md-3">
@@ -38,7 +41,7 @@
                 </div>
                 <label for="name" class="col-sm-2 col-form-label">品目</label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control" id="regist_name" name="name" list="item" placeholder="(必須)">
+                    <input type="text" class="form-control" id="regist_name" name="name" list="item" placeholder="(必須)" oninput="checkItem()">
                     <datalist id="item">
                         <option value="トマト">
                         <option value="キャベツ">
@@ -88,7 +91,7 @@
                 </div>
                 <label for="date" class="col-sm-2 col-form-label">数量</label>
                 <div class="col-sm-4">
-                    <input type="number" class="form-control" id="regist_quantity" name="quantity" min="0.001" step="0.001" list="divided" placeholder="(必須)">
+                    <input type="number" class="form-control" id="regist_quantity" name="quantity" min="0" step="1" list="divided" placeholder="(必須)">
                     <datalist id="divided">
                         <option value="0.5" label="(1/2)">
                         <option value="0.25" label="(1/4)">
@@ -97,10 +100,46 @@
                 </div>
                 <p></p>
             </div>
+
+            <!-- 野菜は緑、加工食品はオレンジ、肉は赤、魚は青 -->
+            <script>
+                function checkItem() {
+                  var itemInput = document.getElementById("regist_name");
+                  if ( itemInput.value == "まぐろ"|| itemInput.value == "えび" || itemInput.value == "ぶり" || itemInput.value == "さけ") {
+                    itemInput.style.borderColor = "blue";
+                    itemInput.style.borderWidth = "3px";
+                  } else if (itemInput.value == "輸入牛肉(冷蔵ロース)" || itemInput.value == "国産牛肉(冷蔵ロース)" || itemInput.value == "豚肉(ロース)" || itemInput.value == "鶏卵" || itemInput.value == "鶏肉(もも肉)"){
+                    itemInput.style.borderColor = "red";
+                    itemInput.style.borderWidth = "3px";
+                  } else if (itemInput.value == "トマト" || itemInput.value == "キャベツ" || itemInput.value == "レタス" || itemInput.value == "はくさい" || itemInput.value == "だいこん" || itemInput.value == "ねぎ" || itemInput.value == "ばれいしょ" || itemInput.value == "たまねぎ" || itemInput.value == "きゅうり" || itemInput.value == "ほうれんそう" || itemInput.value == "なす" || itemInput.value == "にんじん"){
+                    itemInput.style.borderColor = "green";
+                    itemInput.style.borderWidth = "3px";
+                  } else if (itemInput.value == "食パン" || itemInput.value == "即席めん" || itemInput.value == "ゆでうどん" || itemInput.value == "小麦粉" || itemInput.value == "牛乳" || itemInput.value == "チーズ" || itemInput.value == "豆腐" || itemInput.value == "バター" || itemInput.value == "食用油(キャノーラ油)" || itemInput.value == "食用油(サラダ油)" || itemInput.value == "マーガリン" || itemInput.value == "マヨネーズ" || itemInput.value == "しょう油" || itemInput.value == "みそ" || itemInput.value == "かまぼこ" || itemInput.value == "まぐろ缶詰"){
+                    itemInput.style.borderColor = "yellow";
+                    itemInput.style.borderWidth = "3px";
+                  } else {
+                    itemInput.style.borderColor = "white";
+                  }
+                }
+            </script>
+
+            <!-- 特定の品目が入力された時に表示を変える (推奨) → (必須) -->
+            <script>
+                document.querySelector('#regist_name').addEventListener('input', function() {
+                  var itemName = document.querySelector('#regist_name').value;
+                  var gramInput = document.querySelector('#regist_gram');
+                  if (['まぐろ', 'えび', 'ぶり', 'さけ', '輸入牛肉(冷蔵ロース)', '国産牛肉(冷蔵ロース)', '豚肉(ロース)', '鶏肉(もも肉)', '鶏卵'].includes(itemName)) {
+                    gramInput.placeholder = '(必須)';
+                  } else {
+                    gramInput.placeholder = '(推奨)';
+                  }
+                });
+            </script>
+
             <div class="form-group row">
                 <label for="gram" class="col-sm-2 col-form-label">総重量</label>
                 <div class="col-sm-4 d-flex align-items-center">
-                    <input type="number" class="form-control" id="regist_gram" name="gram" min="1" placeholder="(推奨)">
+                    <input type="number" class="form-control" id="regist_gram" name="gram" min="0" placeholder="(推奨)">
                     <span class="ml-2 text-muted">&nbsp;&nbsp;(g)</span>
                 </div>
                 <p></p><br>
@@ -117,8 +156,11 @@
     <h3>支出一覧</h3>
     </div>
     <form action="/test2" method="post">
-        <input type="date" id="start_date" name="start_date"></div>&nbsp;〜&nbsp;<input type="date" id="last_date" name="last_date">
-        &nbsp;&nbsp;<button id="display_btn" type="button">指定期間表示</button>
+        <input type="date" id="start_date" name="start_date">
+        &nbsp;〜&nbsp;
+        <input type="date" id="last_date" name="last_date">
+        &nbsp;&nbsp;
+        <button id="display_btn" type="submit">指定期間表示</button>
     </form>
     <table id="kakei_tb" class="container" style="width: 50%;">
         <tr>
@@ -173,7 +215,7 @@
             // 入力データのチェック
             if( chkRegistData('regist_date','regist_name', 'regist_price', 'regist_quantity') ) {
                 // regist_gramのチェックも必要
-                alert('データが登録されました。');
+                alert('データを登録しました。');
             }
         }
         /* 登録データのチェック1 */
@@ -214,6 +256,20 @@
             return correctFlg;
         }
 
+        function display_data(){
+            var start_date = document.getElementById("start_date").value;
+            var last_date = document.getElementById("last_date").value;
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/test2');
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    database = JSON.parse(this.responseText);
+                    console.log(xhr.responseText);
+                }
+            };
+            xhr.send(JSON.stringify({ start_date: start_date, last_date: last_date }));
+        }
 
        /*「削除ボタン」クリック時の処理 */
         function deleteData(date, item, price, quantity, gram){

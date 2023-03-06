@@ -16,6 +16,7 @@ app = Flask(__name__)
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
+app.config["JSON_AS_ASCII"] = False
 
 # Custom filter
 app.jinja_env.filters["tax"] = tax
@@ -538,8 +539,6 @@ def test():
     month = data['month']
     start_date = datetime.date(year,month,1)
     last_date = datetime.date(year,month,calendar.monthrange(year,month)[1])
-    print(start_date)
-    print(last_date)
     conn = sqlite3.connect('kakeibo.db')
     cur = conn.cursor()
     cur.execute('SELECT transacted,sum FROM test_buying WHERE user_id = ? AND transacted BETWEEN ? AND ? ORDER BY transacted ASC', (session["user_id"], start_date, last_date))
@@ -558,7 +557,7 @@ def thismonthdata():
     last_date = today
     conn = sqlite3.connect('kakeibo.db')
     cur = conn.cursor()
-    cur.execute('SELECT transacted,item,price,shares,gram FROM test_buying WHERE user_id = ? AND transacted BETWEEN ? AND ? ORDER BY transacted ASC', (session["user_id"], start_date, last_date))
+    cur.execute('SELECT transacted,item,price,shares,gram FROM test_buying WHERE user_id = ? AND transacted BETWEEN ? AND ? ORDER BY transacted ASC, item ASC', (session["user_id"], start_date, last_date))
     database = cur.fetchall()
     conn.close()
     return database
@@ -591,19 +590,19 @@ def test1():
     regist_date = request.form.get("date")
     regist_gram = request.form.get("gram")
 
-    # 可読性と保守性のために分けている
-    if not regist_name:
-        return render_template("register.html",database=database)
-    if not regist_price:
-        return render_template("register.html",database=database)
-    if not regist_quantity:
-        return render_template("register.html",database=database)
-    if not regist_date:
+    if not regist_name or not regist_price or not regist_quantity or not regist_date:
         return render_template("register.html",database=database)
 
     db = get_db()
+    error = None
+    # 日付と品目のペアがすでに存在する場合はエラーを返す
+    result = db.execute("SELECT * FROM test_buying WHERE user_id = ? AND item = ? AND transacted = ?", (session["user_id"], regist_name, regist_date)).fetchone()
+
+    if result:
+        error="すでにデータが登録されている可能性があります。"
     if regist_price:
         regist_sum = int(float(regist_price) * tax)
+
     if not regist_gram:
         db.execute("INSERT INTO test_buying (user_id,item,price,shares,transacted,sum) VALUES (?,?,?,?,?,?)",(session["user_id"],regist_name,regist_price,regist_quantity,regist_date,regist_sum))
     else:
@@ -611,24 +610,21 @@ def test1():
     db.commit()
     db.close()
     database = thismonthdata()
-    return render_template('register.html', database=database)
+    return render_template('register.html', database=database, error=error)
+
 
 @app.route("/test2", methods=["POST"])
 @login_required
 def test2():
-    data = request.json
-    start_date = data['start']
-    last_date = data['last']
-    # start_date = request.form.get("start_date")
-    # last_date = request.form.get("last_date")
-    print(start_date)
-    print(last_date)
+    start_date = request.form.get("start_date")
+    last_date = request.form.get("last_date")
     conn = sqlite3.connect('kakeibo.db')
     cur = conn.cursor()
-    cur.execute('SELECT transacted,item,price,shares,gram FROM test_buying WHERE user_id = ? AND transacted BETWEEN ? AND ? ORDER BY transacted ASC', (session["user_id"], start_date, last_date))
+    cur.execute('SELECT transacted,item,price,shares,gram FROM test_buying WHERE user_id = ? AND transacted BETWEEN ? AND ? ORDER BY transacted ASC, item ASC', (session["user_id"], start_date, last_date))
     database = cur.fetchall()
     conn.close()
     return render_template('register.html', database=database)
+
 
 @app.route("/test3", methods=["POST"])
 @login_required
@@ -667,7 +663,7 @@ def test4():
     cur = conn.cursor()
     cur.execute("UPDATE test_buying SET price=?,shares=?,gram=? WHERE user_id=? AND item=? AND transacted=?", (price, quantity, gram, session["user_id"], item, date))
     conn.commit()
-    cur.execute('SELECT transacted,item,price,shares,gram FROM test_buying WHERE user_id = ? AND transacted BETWEEN ? AND ? ORDER BY transacted ASC', (session["user_id"], start_date, last_date))
+    cur.execute('SELECT transacted,item,price,shares,gram FROM test_buying WHERE user_id = ? AND transacted BETWEEN ? AND ? ORDER BY transacted ASC, item ASC', (session["user_id"], start_date, last_date))
     database = cur.fetchall()
     conn.close()
     return render_template('register.html', database=database)
