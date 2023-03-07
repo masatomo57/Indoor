@@ -2,7 +2,7 @@
 {% block title %}ホーム画面{% endblock %}
 
 {% block main %}
-<header class="home_header">あなたは今までで〇〇円お得に買い物をしました！！</header>
+<header class="home_header">あなたは今までで{{ otoku[4] }}円お得に買い物をしました！！</header>
 <main class="home">
     <div class="grid4">
         <div class="chartmini">
@@ -29,23 +29,23 @@
 
     <div class="bubble_box">
         <div class="bubble green">
-            <p>先週は野菜を</p>
-            <p>合計〇〇円</p>
+            <p>野菜を</p>
+            <p>合計{{ otoku[0] }}円</p>
             <p>お得に購入しました！</p>
         </div>
         <div class="bubble gray">
-            <p>先月は加工食品を</p>
-            <p>合計〇〇円</p>
+            <p>加工食品を</p>
+            <p>合計{{ otoku[1] }}円</p>
             <p>お得に購入しました！</p>
         </div>
         <div class="bubble red">
-            <p>先月は食肉・鶏卵を</p>
-            <p>合計〇〇円</p>
+            <p>食肉・鶏卵を</p>
+            <p>合計{{ otoku[3] }}円</p>
             <p>お得に購入しました！</p>
         </div>
         <div class="bubble blue">
-            <p>先月は魚介類を</p>
-            <p>合計〇〇円</p>
+            <p>魚介類を</p>
+            <p>合計{{ otoku[2] }}円</p>
             <p>お得に購入しました！</p>
         </div>
     </div>

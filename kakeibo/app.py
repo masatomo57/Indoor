@@ -10,6 +10,7 @@ import datetime
 import calendar
 import json
 import sqlite3
+import otoku_test
 
 # Configure application
 app = Flask(__name__)
@@ -85,7 +86,9 @@ def index():
     gyokai_labels = [1,2,3,4] # db.execute(label_query, ("魚介類", session["user_id"],)).fetchall()
     gyokai_prices = [100,200, 300, 400] # db.execute(price_query, ("魚介類", session["user_id"],)).fetchall()
     db.close()
-    return render_template("index.html", yasai_labels=yasai_labels, yasai_prices=yasai_prices, kakou_labels=kakou_labels, kakou_prices=kakou_prices, niku_labels=niku_labels, niku_prices=niku_prices, gyokai_labels=gyokai_labels, gyokai_prices=gyokai_prices)
+    otoku = otoku_test.otoku(session["user_id"])
+    return render_template("index.html", yasai_labels=yasai_labels, yasai_prices=yasai_prices, kakou_labels=kakou_labels, kakou_prices=kakou_prices, niku_labels=niku_labels, niku_prices=niku_prices, gyokai_labels=gyokai_labels, gyokai_prices=gyokai_prices, otoku=otoku)
+    #return render_template("index.html", yasai_labels=yasai_labels, yasai_prices=yasai_prices, kakou_labels=kakou_labels, kakou_prices=kakou_prices, niku_labels=niku_labels, niku_prices=niku_prices, gyokai_labels=gyokai_labels, gyokai_prices=gyokai_prices)
 
 @app.route("/charts")
 @login_required
