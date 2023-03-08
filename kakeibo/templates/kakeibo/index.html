@@ -145,15 +145,15 @@
 
         //前の月へ戻る
         prevButton.addEventListener("click", function() {
-            currentYear = (currentMonth == 1) ? currentYear - 1 : currentYear;
-            currentMonth = (currentMonth == 1) ? 12 : currentMonth - 1;
+            currentYear = (currentMonth == 0) ? currentYear - 1 : currentYear;
+            currentMonth = (currentMonth == 0) ? 11 : currentMonth - 1;
             dataMonth(currentYear, currentMonth + 1);
         });
 
         //次の月へ進む
         nextButton.addEventListener("click", function() {
-            currentYear = (currentMonth == 12) ? currentYear + 1 : currentYear;
-            currentMonth = (currentMonth == 12) ? 1 : currentMonth + 1;
+            currentYear = (currentMonth == 11) ? currentYear + 1 : currentYear;
+            currentMonth = (currentMonth + 1 ) % 12;
             dataMonth(currentYear, currentMonth + 1);
         });
 
@@ -167,7 +167,7 @@
             calendarBody.innerHTML = "";
 
             var monthYear = document.getElementById("month");
-            month = currentMonth % 12 + 1;
+            month = currentMonth + 1;
             //var monthYear = document.getElementById("month");
             //var month = currentMonth % 12 + 1;
             //var month = currentMonth + 1;
