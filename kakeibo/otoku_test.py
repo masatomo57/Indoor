@@ -132,10 +132,13 @@ def otoku(username):
     otoku_price = 0
 
     for i in range(len(userskakeibo)):
+        print(f'i:{i}')
         #家計簿の品目
         item_name = userskakeibo[i][0]
+        print(f'item_name:{item_name}')
         #品目を買った日付
         db_times = datetime.datetime.strptime(userskakeibo[i][1],'%Y-%m-%d')
+        print(f'db_times:{db_times}')
 
         #商品が野菜なら野菜データと比較
         if item_name in il.yasai:
@@ -152,6 +155,7 @@ def otoku(username):
                     print(f'otoku_price:{otoku_price}')
                     '''
                     yasai_otoku_price += otoku_price
+                    break
                     #otoku_price = 0
         #商品が加工食品なら加工食品データと比較
         elif item_name in il.kakou:
@@ -161,6 +165,7 @@ def otoku(username):
                 if db_times < kakou_data.index[j] and np.isnan(kakou_data.at[kakou_data.index[j],item_name]) != True:
                     otoku_price = kakou_data.at[kakou_data.index[j],item_name] - (userskakeibo[i][2] / userskakeibo[i][3])
                     kakou_otoku_price += otoku_price
+                    break
                     #otoku_price = 0
         #商品が魚なら魚データと比較
         elif item_name in il.sakana:
@@ -170,6 +175,7 @@ def otoku(username):
                 if db_times < sakana_data.index[j] and np.isnan(sakana_data.at[sakana_data.index[j],item_name]) != True:
                     otoku_price = sakana_data.at[sakana_data.index[j],item_name] - (userskakeibo[i][2] / userskakeibo[i][3])
                     sakana_otoku_price += otoku_price
+                    break
                     #otoku_price = 0
         #商品が肉なら肉データと比較
         elif item_name in il.niku:
@@ -179,6 +185,7 @@ def otoku(username):
                 if db_times < niku_data.index[j] and np.isnan(niku_data.at[niku_data.index[j],item_name]) != True:
                     otoku_price = niku_data.at[niku_data.index[j],item_name] - (userskakeibo[i][2] / userskakeibo[i][3])
                     niku_otoku_price += otoku_price
+                    break
                     #otoku_price = 0
     #データベースを閉じる
     conn.close()
