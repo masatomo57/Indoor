@@ -67,12 +67,21 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
-
+        var labelcount = 120;
         var xAxisLabelMinWidth = 10;
         var data = {{ price_list|tojson }};
-        var width = data.length*xAxisLabelMinWidth;
+        var labels = {{ label_list|tojson }};
+
+        if (data.length < labelcount) {
+            for (let i=1; i < labelcount-data.length; i++) {
+                data.push(NaN);
+                labels.push("");
+            }
+        }
 
         const ctx = document.getElementById('chart');
+
+        var width = data.length*xAxisLabelMinWidth;
 
         ctx.style.width = width+"px";
         ctx.style.height = "40vw";
@@ -83,7 +92,7 @@
         var chart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: {{ label_list|tojson }},
+                labels: labels,
                 datasets: [{
                 label: "{{ name }}",
                 data: data,
