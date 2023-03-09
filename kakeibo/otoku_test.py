@@ -145,16 +145,19 @@ def otoku(username):
             #野菜csvのどの時間と比較すべきか探す
             for j in range(len(yasai_data)):
                 #csvが古い年代から新しい年代にソートされている前提
-                if db_times < yasai_data.index[j] and np.isnan(yasai_data.at[yasai_data.index[j],item_name]) != True:
-                    otoku_price = yasai_data.at[yasai_data.index[j],item_name] - (userskakeibo[i][2] / userskakeibo[i][3])
-                    '''
-                    print(f'yasai_name:{item_name}')
-                    print(f'kakeibo_price:{userskakeibo[i][2]}')
-                    print(f'shares:{userskakeibo[i][3]}')
-                    print(f'yasai_data_price:{yasai_data.at[yasai_data.index[j],item_name]}')
-                    print(f'otoku_price:{otoku_price}')
-                    '''
-                    yasai_otoku_price += otoku_price
+                if db_times < yasai_data.index[j]:
+                    if np.isnan(yasai_data.at[yasai_data.index[j],item_name]) == True:
+                        break
+                    else:
+                        otoku_price = yasai_data.at[yasai_data.index[j],item_name] - (userskakeibo[i][2] / userskakeibo[i][3])
+                        '''
+                        print(f'yasai_name:{item_name}')
+                        print(f'kakeibo_price:{userskakeibo[i][2]}')
+                        print(f'shares:{userskakeibo[i][3]}')
+                        print(f'yasai_data_price:{yasai_data.at[yasai_data.index[j],item_name]}')
+                        print(f'otoku_price:{otoku_price}')
+                        '''
+                        yasai_otoku_price += otoku_price
                     break
                     #otoku_price = 0
         #商品が加工食品なら加工食品データと比較
@@ -162,9 +165,12 @@ def otoku(username):
             #加工csvのどの時間と比較すべきか探す
             for j in range(len(kakou_data)):
                 #csvが古い年代から新しい年代にソートされている前提
-                if db_times < kakou_data.index[j] and np.isnan(kakou_data.at[kakou_data.index[j],item_name]) != True:
-                    otoku_price = kakou_data.at[kakou_data.index[j],item_name] - (userskakeibo[i][2] / userskakeibo[i][3])
-                    kakou_otoku_price += otoku_price
+                if db_times < kakou_data.index[j]:
+                    if np.isnan(kakou_data.at[kakou_data.index[j],item_name]) == True:
+                        break
+                    else:
+                        otoku_price = kakou_data.at[kakou_data.index[j],item_name] - (userskakeibo[i][2] / userskakeibo[i][3])
+                        kakou_otoku_price += otoku_price
                     break
                     #otoku_price = 0
         #商品が魚なら魚データと比較
@@ -172,9 +178,12 @@ def otoku(username):
             #加工csvのどの時間と比較すべきか探す
             for j in range(len(sakana_data)):
                 #csvが古い年代から新しい年代にソートされている前提
-                if db_times < sakana_data.index[j] and np.isnan(sakana_data.at[sakana_data.index[j],item_name]) != True:
-                    otoku_price = sakana_data.at[sakana_data.index[j],item_name] - (userskakeibo[i][2] / userskakeibo[i][3])
-                    sakana_otoku_price += otoku_price
+                if db_times < sakana_data.index[j]:
+                    if np.isnan(sakana_data.at[sakana_data.index[j],item_name]) == True:
+                        break
+                    else:
+                        otoku_price = sakana_data.at[sakana_data.index[j],item_name] - (userskakeibo[i][2] / userskakeibo[i][3])
+                        sakana_otoku_price += otoku_price
                     break
                     #otoku_price = 0
         #商品が肉なら肉データと比較
@@ -182,9 +191,12 @@ def otoku(username):
             #加工csvのどの時間と比較すべきか探す
             for j in range(len(niku_data)):
                 #csvが古い年代から新しい年代にソートされている前提
-                if db_times < niku_data.index[j] and np.isnan(niku_data.at[niku_data.index[j],item_name]) != True:
-                    otoku_price = niku_data.at[niku_data.index[j],item_name] - (userskakeibo[i][2] / userskakeibo[i][3])
-                    niku_otoku_price += otoku_price
+                if db_times < niku_data.index[j]:
+                    if np.isnan(niku_data.at[niku_data.index[j],item_name]) == True:
+                        break
+                    else:
+                        otoku_price = niku_data.at[niku_data.index[j],item_name] - (userskakeibo[i][2] / userskakeibo[i][3])
+                        niku_otoku_price += otoku_price
                     break
                     #otoku_price = 0
     #データベースを閉じる
