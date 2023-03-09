@@ -4,7 +4,7 @@ from flask import Flask, render_template, flash, redirect, request, url_for, ses
 from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
-from helpers import login_required, tax
+from helpers import login_required
 import csv
 import datetime
 import calendar
@@ -19,8 +19,7 @@ app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config["JSON_AS_ASCII"] = False
 
-# Custom filter
-app.jinja_env.filters["tax"] = tax
+# 税率宣言
 tax = 1.1
 
 app.config.from_object('config')
@@ -78,13 +77,13 @@ def index():
     data = read_csv("yasai", "キャベツ")
 
     yasai_labels = [1,2,3,4]  # db.execute(label_query, ("野菜", session["user_id"],)).fetchall()
-    yasai_prices = [100,200, 300, 400] # db.execute(price_query, ("野菜", session["user_id"],)).fetchall()
+    yasai_prices = [100, 200, 300, 400] # db.execute(price_query, ("野菜", session["user_id"],)).fetchall()
     kakou_labels = [1,2,3,4] # db.execute(label_query, ("加工食品", session["user_id"],)).fetchall()
-    kakou_prices = [100,200, 300, 400] # db.execute(price_query, ("加工食品", session["user_id"],)).fetchall()
+    kakou_prices = [100, 200, 300, 400] # db.execute(price_query, ("加工食品", session["user_id"],)).fetchall()
     niku_labels = [1,2,3,4] # db.execute(label_query, ("食肉・鶏卵", session["user_id"],)).fetchall()
-    niku_prices = [100,200, 300, 400] # db.execute(price_query, ("食肉・鶏卵", session["user_id"],)).fetchall()
+    niku_prices = [100, 200, 300, 400] # db.execute(price_query, ("食肉・鶏卵", session["user_id"],)).fetchall()
     gyokai_labels = [1,2,3,4] # db.execute(label_query, ("魚介類", session["user_id"],)).fetchall()
-    gyokai_prices = [100,200, 300, 400] # db.execute(price_query, ("魚介類", session["user_id"],)).fetchall()
+    gyokai_prices = [100, 200, 300, 400] # db.execute(price_query, ("魚介類", session["user_id"],)).fetchall()
     db.close()
     otoku = otoku_test.otoku(session["user_id"])
     return render_template("index.html", yasai_labels=yasai_labels, yasai_prices=yasai_prices, kakou_labels=kakou_labels, kakou_prices=kakou_prices, niku_labels=niku_labels, niku_prices=niku_prices, gyokai_labels=gyokai_labels, gyokai_prices=gyokai_prices, otoku=otoku)
@@ -544,7 +543,7 @@ def test():
     last_date = datetime.date(year,month,calendar.monthrange(year,month)[1])
     conn = sqlite3.connect('kakeibo.db')
     cur = conn.cursor()
-    cur.execute('SELECT transacted,sum FROM test_buying WHERE user_id = ? AND transacted BETWEEN ? AND ? ORDER BY transacted ASC', (session["user_id"], start_date, last_date))
+    cur.execute('SELECT transacted,SUM(sum) FROM test_buying WHERE user_id = ? AND transacted BETWEEN ? AND ? GROUP BY transacted ORDER BY transacted ASC', (session["user_id"], start_date, last_date))
     database = cur.fetchall()
     conn.close()
     print(database)

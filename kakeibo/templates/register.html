@@ -101,7 +101,7 @@
                 <p></p>
             </div>
 
-            <!-- 野菜は緑、加工食品はオレンジ、肉は赤、魚は青 -->
+            <!-- 野菜は緑、加工食品は黄色、肉は赤、魚は青 -->
             <script>
                 function checkItem() {
                   var itemInput = document.getElementById("regist_name");
@@ -139,7 +139,7 @@
             <div class="form-group row">
                 <label for="gram" class="col-sm-2 col-form-label">総重量</label>
                 <div class="col-sm-4 d-flex align-items-center">
-                    <input type="number" class="form-control" id="regist_gram" name="gram" min="0" placeholder="(推奨)">
+                    <input type="number" class="form-control" id="regist_gram" name="gram" min="1" placeholder="(推奨)">
                     <span class="ml-2 text-muted">&nbsp;&nbsp;(g)</span>
                 </div>
                 <p></p><br>
@@ -214,20 +214,35 @@
         function registSpending(){
             // 入力データのチェック
             if( chkRegistData('regist_date','regist_name', 'regist_price', 'regist_quantity') ) {
-                // regist_gramのチェックも必要
+                var gramInput = document.querySelector('#regist_gram');
+                var gramValue = gramInput.value;
+                if (gramInput.placeholder === '(必須)') {
+                    if (gramValue === '') {
+                        alert('総重量を入力してください。');
+                        return;
+                    } else if (!Number.isInteger(+gramValue) || +gramValue <= 0) {
+                        alert('正しい総重量を入力してください。');
+                        return;
+                    }
+                } else if (gramValue !== '' && (!Number.isInteger(+gramValue) || +gramValue <= 0)) {
+                    alert('総重量は正の整数を入力してください。');
+                    return;
+                }
+                // ここでデータを登録する
                 alert('データを登録しました。');
             }
         }
+
         /* 登録データのチェック1 */
         function chkRegistData(date_id, name_id, price_id, quantity_id){
             var correctFlg = true;
             // 日付の書式チェック
-            if ( getElmId(date_id).value.match(/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/g) === null){
+            if (getElmId(date_id).value.match(/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/g) === null){
                 alert('登録日付が正しくありません。');
                 correctFlg = false;
             }
             // 品目のチェック
-            if ( getElmId(name_id).value.length === 0 ){
+            if (getElmId(name_id).value.length === 0 ){
                 alert('品目を入力してください。');
                 correctFlg = false;
             }
@@ -251,6 +266,48 @@
                 if ( getElmId(quantity_id).value.match(/^\d+(\.\d+)?$/g) === null ){
                     alert('数量が正しくありません。');
                     correctFlg = false;
+                }
+            }
+            return correctFlg;
+        }
+
+        /* 登録データのチェック2 */
+        function chkRegistData2(newPrice, newQuantity, newGram){
+            var correctFlg = true;
+            // 総額(税抜)のチェック
+            if ( newPrice === null ){
+                alert('総額(税抜)を入力してください。');
+                correctFlg = false;
+            } else {
+                // 総額(税抜)の書式チェック
+                if ( isNaN(newPrice)  || newPrice < 1 || !Number.isInteger(Number(newPrice))){
+                    alert('総額(税抜)が正しくありません。');
+                    correctFlg = false;
+                }
+            }
+            // 数量のチェック
+            if ( newQuantity === null ){
+                alert('数量を入力してください。');
+                correctFlg = false;
+            } else {
+                // 数量の書式チェック
+                if ( isNaN(newQuantity) || newQuantity < 0){
+                    alert('数量が正しくありません。');
+                    correctFlg = false;
+                }
+            }
+            // グラムのチェック
+            if ( newGram === null ) {
+                alert('総重量を入力してください。');
+                correctFlg = false;
+            } else {
+                console.log(newGram);
+                // グラムの書式チェック
+                if (newGram !== 'None') {
+                    if ( isNaN(newGram) || newGram < 0 || !Number.isInteger(Number(newGram))) {
+                        alert('総重量が正しくありません。');
+                        correctFlg = false;
+                    }
                 }
             }
             return correctFlg;
@@ -290,7 +347,6 @@
                 if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                     console.log(xhr.responseText);
                     tr.remove(); // テーブルから該当行を削除
-                    // location.reload();
                 }
                 };
                 xhr.send(JSON.stringify({date: date, name: item, price: price, quantity: quantity, gram: gram}));
@@ -299,7 +355,7 @@
 
         //「編集ボタン」クリック時の処理
         function editData(date, item, price, quantity, gram){
-        //テーブルから該当行を取得し、各セルを編集可能にする
+            //テーブルから該当行を取得し、各セルを編集可能にする
             var tr = event.target.closest('tr');
             tr.children[0].contentEditable = false;
             tr.children[1].contentEditable = false;
@@ -311,47 +367,45 @@
             //編集ボタンを編集実行ボタンに変更
             var editBtn = tr.children[6].children[0];
             editBtn.textContent = "編集実行";
-            editBtn.onclick = function(){
+            editBtn.onclick = function(event){
             //編集実行ボタンが押された場合の処理
             var newDate = tr.children[0].textContent;
             var newItem = tr.children[1].textContent;
             var newPrice = tr.children[2].textContent;
             var newQuantity = tr.children[3].textContent;
             var newGram = tr.children[4].textContent;
+
             if(newDate === date && newItem === item && newPrice === price && newQuantity == quantity && newGram == gram){
             //何も変更されていない場合は何もしない
-                alert('何も変更されませんでした。')
-            // test2の処理を実装する
+                alert('何も変更されませんでした。');
+                location.reload();
                 return;
             }
-            //if( chkRegistData(newDate,newItem, newPrice, newQuantity) ) {
+            if( chkRegistData2(newPrice, newQuantity, newGram) ) {
                 //データベースの更新処理を行う
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', '/test4');
-                // xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
                 xhr.setRequestHeader('Content-Type', 'application/json');
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                         console.log(xhr.responseText);
                         //テーブルから該当行を削除して、更新されたデータを表示する
                         tr.remove();
+                        location.reload();
                         alert('データが編集されました。');
                     }
                 };
                 xhr.send(JSON.stringify({date: newDate, name: newItem, price: newPrice, quantity: newQuantity, gram: newGram}));
-            //} else {
-                //alert('不適切な値が入力されました。')
-                //test2の処理を実装する?
-            //}
+            } else {
+                alert('不適切な値が入力されました。');
+                location.reload();
+                return;
+            }
             };
         }
 
         // 「指定期間表示」ボタンにイベントリスナーを設定
-        getElmId("display_btn").addEventListener('click', onClickDisplayDesignatedPeriodDataBtn, false);
-        // 指定期間の「表示」ボタンクリック時の処理
-        function onClickDisplayDesignatedPeriodDataBtn(){
-            execDisplayDesignatedPeriodData();
-        }
+        getElmId("display_btn").addEventListener('click', execDisplayDesignatedPeriodData, false);
         // 指定期間のデータを表示
         function execDisplayDesignatedPeriodData(){
             // 表示開始時刻データ作成
