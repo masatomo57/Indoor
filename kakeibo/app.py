@@ -4,7 +4,7 @@ from flask import Flask, render_template, flash, redirect, request, url_for, ses
 from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
-from helpers import login_required, tax
+from helpers import login_required
 import csv
 import datetime
 import calendar
@@ -19,8 +19,7 @@ app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config["JSON_AS_ASCII"] = False
 
-# Custom filter
-app.jinja_env.filters["tax"] = tax
+# 税率宣言
 tax = 1.1
 
 app.config.from_object('config')
@@ -544,7 +543,7 @@ def test():
     last_date = datetime.date(year,month,calendar.monthrange(year,month)[1])
     conn = sqlite3.connect('kakeibo.db')
     cur = conn.cursor()
-    cur.execute('SELECT transacted,sum FROM test_buying WHERE user_id = ? AND transacted BETWEEN ? AND ? ORDER BY transacted ASC', (session["user_id"], start_date, last_date))
+    cur.execute('SELECT transacted,SUM(sum) FROM test_buying WHERE user_id = ? AND transacted BETWEEN ? AND ? GROUP BY transacted ORDER BY transacted ASC', (session["user_id"], start_date, last_date))
     database = cur.fetchall()
     conn.close()
     print(database)
