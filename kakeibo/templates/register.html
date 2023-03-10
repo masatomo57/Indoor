@@ -275,7 +275,7 @@
         function chkRegistData2(newPrice, newQuantity, newGram){
             var correctFlg = true;
             // 総額(税抜)のチェック
-            if ( newPrice === null ){
+            if ( newPrice === null  || newPrice === ''){
                 alert('総額(税抜)を入力してください。');
                 correctFlg = false;
             } else {
@@ -286,7 +286,7 @@
                 }
             }
             // 数量のチェック
-            if ( newQuantity === null ){
+            if ( newQuantity === null || newQuantity === ''){
                 alert('数量を入力してください。');
                 correctFlg = false;
             } else {
@@ -297,7 +297,8 @@
                 }
             }
             // グラムのチェック
-            if ( newGram === null ) {
+            console.log(newGram)
+            if ( newGram === null || newGram === '') {
                 alert('総重量を入力してください。');
                 correctFlg = false;
             } else {
@@ -363,6 +364,9 @@
             tr.children[3].contentEditable = true;
             tr.children[4].contentEditable = true;
 
+            tr.children[2].style.border = '3px solid green';
+            tr.children[3].style.border = '3px solid green';
+            tr.children[4].style.border = '3px solid green';
 
             //編集ボタンを編集実行ボタンに変更
             var editBtn = tr.children[6].children[0];

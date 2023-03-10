@@ -612,13 +612,16 @@ def test1():
 
     if result:
         error="すでにデータが登録されている可能性があります。"
+        db.execute("UPDATE test_buying SET price = price + ?, shares = shares + ?, gram = ? WHERE user_id = ? AND item = ? AND transacted = ?", (regist_price,regist_quantity,regist_gram,session["user_id"],regist_name,regist_date))
     if regist_price:
         regist_sum = int(float(regist_price) * tax)
 
-    if not regist_gram:
-        db.execute("INSERT INTO test_buying (user_id,item,price,shares,transacted,sum) VALUES (?,?,?,?,?,?)",(session["user_id"],regist_name,regist_price,regist_quantity,regist_date,regist_sum))
-    else:
-        db.execute("INSERT INTO test_buying (user_id,item,price,shares,gram,transacted,sum) VALUES (?,?,?,?,?,?,?)",(session["user_id"],regist_name,regist_price,regist_quantity,regist_gram,regist_date,regist_sum))
+    if not result:
+        if not regist_gram:
+            db.execute("INSERT INTO test_buying (user_id,item,price,shares,transacted,sum) VALUES (?,?,?,?,?,?)",(session["user_id"],regist_name,regist_price,regist_quantity,regist_date,regist_sum))
+        else:
+            db.execute("INSERT INTO test_buying (user_id,item,price,shares,gram,transacted,sum) VALUES (?,?,?,?,?,?,?)",(session["user_id"],regist_name,regist_price,regist_quantity,regist_gram,regist_date,regist_sum))
+
     db.commit()
     db.close()
     database = thismonthdata()
@@ -671,6 +674,8 @@ def test4():
     price = data['price']
     quantity = data['quantity']
     gram = data['gram']
+    if gram == 'None':
+        gram = None
     conn = sqlite3.connect('kakeibo.db')
     cur = conn.cursor()
     cur.execute("UPDATE test_buying SET price=?,shares=?,gram=? WHERE user_id=? AND item=? AND transacted=?", (price, quantity, gram, session["user_id"], item, date))
