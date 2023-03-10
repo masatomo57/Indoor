@@ -523,25 +523,23 @@ def kakeibo():
 @app.route("/kakeibo")
 @login_required
 def kakeibo():
-    '''
     if request.method == "POST":
         if request.form.get("submit") == "test":
             return redirect("/test")
         return render_template("kakeibo/index.html",database=[])
     else:
-    '''
-    # 今日の1日と今日の日付を取得
-    today = datetime.date.today()
-    start_date = today.replace(day=1)
-    last_date = today
-    # 日付と税込金額を渡してほしい(カレンダー表示のため)
-    conn = sqlite3.connect('kakeibo.db')
-    cur = conn.cursor()
-    cur.execute('SELECT transacted,SUM(sum) FROM test_buying WHERE user_id = ? AND transacted BETWEEN ? AND ? GROUP BY transacted ORDER BY transacted ASC', (session["user_id"], start_date, last_date))
-    database = cur.fetchall()
-    conn.close()
-    print(database)
-    return render_template("kakeibo/index.html",database=database)
+        # 今日の1日と今日の日付を取得
+        today = datetime.date.today()
+        start_date = today.replace(day=1)
+        last_date = today
+        # 日付と税込金額を渡してほしい(カレンダー表示のため)
+        conn = sqlite3.connect('kakeibo.db')
+        cur = conn.cursor()
+        cur.execute('SELECT transacted,SUM(price) FROM test_buying WHERE user_id = ? AND transacted BETWEEN ? AND ? GROUP BY transacted ORDER BY transacted ASC', (session["user_id"], start_date, last_date))
+        database = cur.fetchall()
+        conn.close()
+        print(database)
+        return render_template("kakeibo/index.html",database=database)
 
 @app.route("/test", methods=["POST"])
 @login_required
@@ -553,7 +551,7 @@ def test():
     last_date = datetime.date(year,month,calendar.monthrange(year,month)[1])
     conn = sqlite3.connect('kakeibo.db')
     cur = conn.cursor()
-    cur.execute('SELECT transacted,SUM(sum) FROM test_buying WHERE user_id = ? AND transacted BETWEEN ? AND ? GROUP BY transacted ORDER BY transacted ASC', (session["user_id"], start_date, last_date))
+    cur.execute('SELECT transacted,SUM(price) FROM test_buying WHERE user_id = ? AND transacted BETWEEN ? AND ? GROUP BY transacted ORDER BY transacted ASC', (session["user_id"], start_date, last_date))
     database = cur.fetchall()
     conn.close()
     print(database)
@@ -612,13 +610,15 @@ def test1():
 
     if result:
         error="すでにデータが登録されている可能性があります。"
+        if not regist_gram:
+            regist_gram = None
         db.execute("UPDATE test_buying SET price = price + ?, shares = shares + ?, gram = ? WHERE user_id = ? AND item = ? AND transacted = ?", (regist_price,regist_quantity,regist_gram,session["user_id"],regist_name,regist_date))
     if regist_price:
         regist_sum = int(float(regist_price) * tax)
 
     if not result:
         if not regist_gram:
-            db.execute("INSERT INTO test_buying (user_id,item,price,shares,transacted,sum) VALUES (?,?,?,?,?,?)",(session["user_id"],regist_name,regist_price,regist_quantity,regist_date,regist_sum))
+            db.execute("INSERT INTO test_buying (user_id,item,price,shares,transacted,sum) VALUES (?,?,?,?,?,?)",(session["user_id"],regist_name,regist_price,regist_quantity,regist_date.regist_sum))
         else:
             db.execute("INSERT INTO test_buying (user_id,item,price,shares,gram,transacted,sum) VALUES (?,?,?,?,?,?,?)",(session["user_id"],regist_name,regist_price,regist_quantity,regist_gram,regist_date,regist_sum))
 

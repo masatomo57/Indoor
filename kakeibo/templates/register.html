@@ -85,7 +85,7 @@
                 <p></p>
             </div>
             <div class="form-group row">
-                <label for="price" class="col-sm-2 col-form-label">総額(税抜)</label>
+                <label for="price" class="col-sm-2 col-form-label">総額(税込)</label>
                 <div class="col-sm-4">
                     <input type="number" class="form-control" id="regist_price" name="price" min="1" placeholder="(必須)">
                 </div>
@@ -166,7 +166,7 @@
         <tr>
             <th>日付</th>
             <th>品目</th>
-            <th>総額(税抜)</th>
+            <th>総額(税込)</th>
             <th>数量</th>
             <th>総重量</th>
             <th></th>
@@ -246,14 +246,14 @@
                 alert('品目を入力してください。');
                 correctFlg = false;
             }
-            // 総額(税抜)のチェック
+            // 総額(税込)のチェック
             if ( getElmId(price_id).value.length === 0 ){
-                alert('総額(税抜)を入力してください。');
+                alert('総額(税込)を入力してください。');
                 correctFlg = false;
             } else {
-                // 総額(税抜)の書式チェック
+                // 総額(税込)の書式チェック
                 if ( getElmId(price_id).value.match(/^[0-9]*$/g) === null ){
-                    alert('総額(税抜)が正しくありません。');
+                    alert('総額(税込)が正しくありません。');
                     correctFlg = false;
                 }
             }
@@ -274,14 +274,14 @@
         /* 登録データのチェック2 */
         function chkRegistData2(newPrice, newQuantity, newGram){
             var correctFlg = true;
-            // 総額(税抜)のチェック
+            // 総額(税込)のチェック
             if ( newPrice === null  || newPrice === ''){
-                alert('総額(税抜)を入力してください。');
+                alert('総額(税込)を入力してください。');
                 correctFlg = false;
             } else {
-                // 総額(税抜)の書式チェック
+                // 総額(税込)の書式チェック
                 if ( isNaN(newPrice)  || newPrice < 1 || !Number.isInteger(Number(newPrice))){
-                    alert('総額(税抜)が正しくありません。');
+                    alert('総額(税込)が正しくありません。');
                     correctFlg = false;
                 }
             }
