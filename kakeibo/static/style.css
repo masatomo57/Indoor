@@ -108,8 +108,40 @@ nav .navbar-brand .green
     margin: 0 auto;
     overflow-x: scroll;
     position: relative;
+    background-color: rgba(50, 190, 57, 0.5);
 }
-
+.hanabatake {
+    width: 40vw;
+    text-align: center;
+    margin: 0 auto;
+    overflow-x: scroll;
+    position: relative;
+    background-color: rgba(150, 100, 57, 0.5);
+}
+.kakoujou {
+    width: 40vw;
+    text-align: center;
+    margin: 0 auto;
+    overflow-x: scroll;
+    position: relative;
+    background-color: rgba(150, 190, 157, 0.5);
+}
+.suizokukan {
+    width: 40vw;
+    text-align: center;
+    margin: 0 auto;
+    overflow-x: scroll;
+    position: relative;
+    background-color: rgba(50, 60, 157, 0.5);
+}
+.zoo {
+    width: 40vw;
+    text-align: center;
+    margin: 0 auto;
+    overflow-x: scroll;
+    position: relative;
+    background-color: rgba(50, 190, 57, 0.5);
+}
 .grid4 {
     display: grid;
     grid-template-columns: 1fr 1fr;

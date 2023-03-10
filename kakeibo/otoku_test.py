@@ -132,13 +132,13 @@ def otoku(username):
     otoku_price = 0
 
     for i in range(len(userskakeibo)):
-        print(f'i:{i}')
+        #print(f'i:{i}')
         #家計簿の品目
         item_name = userskakeibo[i][0]
-        print(f'item_name:{item_name}')
+        #print(f'item_name:{item_name}')
         #品目を買った日付
         db_times = datetime.datetime.strptime(userskakeibo[i][1],'%Y-%m-%d')
-        print(f'db_times:{db_times}')
+        #print(f'db_times:{db_times}')
 
         #商品が野菜なら野菜データと比較
         if item_name in il.yasai:

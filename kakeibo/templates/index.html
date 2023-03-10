@@ -5,24 +5,24 @@
 <header class="home_header">あなたは今までで{{ otoku[4] }}円お得に買い物をしました！！</header>
 <main class="home">
     <div class="grid4">
-        <div class="chartmini">
+        <div id="area1" class="hanabatake">
             <div>
-                <canvas id="chart1"></canvas>
+                お得！花畑
             </div>
         </div>
-        <div class="chartmini">
+        <div id="area2" class="kakoujou">
             <div>
-                <canvas id="chart2"></canvas>
+                お得！加工場
             </div>
         </div>
-        <div class="chartmini">
+        <div id="area3" class="zoo">
             <div>
-                <canvas id="chart3"></canvas>
+                お得！動物園
             </div>
         </div>
-        <div class="chartmini">
+        <div id="area4" class="suizokukan">
             <div>
-                <canvas id="chart4"></canvas>
+                お得！水族館
             </div>
         </div>
     </div>
@@ -51,230 +51,25 @@
     </div>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!--script src="https://cdn.jsdelivr.net/npm/chart.js"></script-->
 
     <script>
-        var xAxisLabelMinWidth = 30;
-        var labelcount = 30
-
-        var data1 = {{ yasai_prices|tojson }};
-        var labels1 = {{ yasai_labels|tojson }};
-
-        const ctx1 = document.getElementById('chart1');
-
-        if (data1.length < labelcount) {
-            for (let i=1; i < labelcount-data1.length; i++) {
-                data1.push(NaN);
-                labels1.push("");
-            }
+        function setRandomLeft(imageWidth) {
+            return (Math.random() * (document.getElementById("area1").clientWidth - imageWidth)) + "px";
         }
 
-        var width = data1.length*xAxisLabelMinWidth;
-        ctx1.style.width = width+"px";
-
-        ctx1.style.height = "20vw";
-
-        var chart1 = new Chart(ctx1, {
-            type: "bar",
-            data: {
-                labels: labels1,
-                datasets: [{
-                    label: "野菜",
-                    data: data1,
-                    backgroundColor: 'rgba(204, 255, 102, 0.2)',
-                    borderColor: 'rgb(103, 159, 64)',
-                    borderWidth: 1
-                }],
-            },
-            options: {
-                responsive: false,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                },
-                plugins: {
-                    title: {
-                        display: true,
-                        align: "end",
-                        font: {size: 15},
-                        text: "野菜",
-                    },
-                    legend: {
-                        display: false,
-                    }
-                },
-            },
-        });
-
-        ctx1.scrollIntoView({
-            inline: "end"
-        });
-
-
-        var data2 = {{ kakou_prices|tojson }};
-        var labels2 = {{ kakou_labels|tojson }};
-
-        const ctx2 = document.getElementById('chart2');
-
-        if (data2.length < labelcount) {
-            for (let i=1; i < labelcount-data2.length; i++) {
-                data2.push(NaN);
-                labels2.push("");
-            }
+        function setRandomTop(imageHeight) {
+            return (Math.random() * (document.getElementById("area1").clientHeight - imageHeight)) + "px";
         }
-
-        width = data2.length*xAxisLabelMinWidth;
-        ctx2.style.width = width+"px";
-
-        ctx2.style.height = "20vw";
-
-        var chart2 = new Chart(ctx2, {
-            type: "bar",
-            data: {
-                labels: labels2,
-                datasets: [{
-                    label: "加工食品",
-                    data: data2,
-                    backgroundColor: 'rgba(201, 203, 207, 0.5)',
-                    borderColor: 'rgb(101, 103, 107)',
-                    borderWidth: 1
-                }],
-            },
-            options: {
-                responsive: false,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                },
-                plugins: {
-                    title: {
-                        display: true,
-                        align: "end",
-                        font: {size: 15},
-                        text: "加工食品",
-                    },
-                    legend: {
-                        display: false,
-                    }
-                },
-            },
-        });
-
-        ctx2.scrollIntoView({
-            inline: "end"
-        });
-
-
-        var data3 = {{ niku_prices|tojson }};
-        var labels3 = {{ niku_labels|tojson }};
-
-        const ctx3 = document.getElementById('chart3');
-
-        if (data3.length < labelcount) {
-            for (let i=1; i < labelcount-data3.length; i++) {
-                data3.push(NaN);
-                labels3.push("");
-            }
+        for (let i = 0; i < 3; i++) {
+            //document.getElementById("area1").innerHTML = "";
+            var image = document.createElement("img");
+            image.src = "/static/flower2_samp.png";
+            image.style.position = "absolute";
+            image.style.top = setRandomTop("111");//画像の横の長さをsetRandomTopに。
+            image.style.left = setRandomLeft("143");//画像の縦の長さをsetRandomLeftに。
+            document.getElementById("area1").appendChild(image);
         }
-
-        width = data3.length*xAxisLabelMinWidth;
-        ctx3.style.width = width+"px";
-        ctx3.style.height = "20vw";
-
-        var chart3 = new Chart(ctx3, {
-            type: "bar",
-            data: {
-                labels: labels3,
-                datasets: [{
-                    label: "食肉・鶏卵",
-                    data: data3,
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderColor: 'rgb(255, 99, 132)',
-                    borderWidth: 1
-                }],
-            },
-            options: {
-                responsive: false,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                },
-                plugins: {
-                    title: {
-                        display: true,
-                        align: "end",
-                        font: {size: 15},
-                        text: "食肉・鶏卵",
-                    },
-                    legend: {
-                        display: false,
-                    }
-                },
-            },
-        });
-
-        ctx3.scrollIntoView({
-            inline: "end"
-        });
-
-
-        var data4 = {{ gyokai_prices|tojson }};
-        var labels4 = {{ gyokai_labels|tojson }};
-
-        const ctx4 = document.getElementById('chart4');
-
-        if (data4.length < labelcount) {
-            for (let i=1; i < labelcount-data4.length; i++) {
-                data4.push(NaN);
-                labels4.push("");
-            }
-        }
-
-        width = data4.length*xAxisLabelMinWidth;
-        ctx4.style.width = width+"px";
-        ctx4.style.height = "20vw";
-
-        var chart4 = new Chart(ctx4, {
-            type: "bar",
-            data: {
-                labels: labels4,
-                datasets: [{
-                    label: "魚介類",
-                    data: data4,
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgb(54, 162, 235)',
-                    borderWidth: 1
-                }],
-            },
-            options: {
-                responsive: false,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                },
-                plugins: {
-                    title: {
-                        display: true,
-                        align: "end",
-                        font: {size: 15},
-                        text: "魚介類",
-                    },
-                    legend: {
-                        display: false,
-                    }
-                },
-            },
-        });
-
-        ctx4.scrollIntoView({
-            inline: "end"
-        });
-
-
     </script>
 </main>
 
