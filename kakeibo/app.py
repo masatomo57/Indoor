@@ -87,7 +87,6 @@ def index():
     db.close()
     otoku = otoku_test.otoku(session["user_id"])
     return render_template("index.html", yasai_labels=yasai_labels, yasai_prices=yasai_prices, kakou_labels=kakou_labels, kakou_prices=kakou_prices, niku_labels=niku_labels, niku_prices=niku_prices, gyokai_labels=gyokai_labels, gyokai_prices=gyokai_prices, otoku=otoku)
-    #return render_template("index.html", yasai_labels=yasai_labels, yasai_prices=yasai_prices, kakou_labels=kakou_labels, kakou_prices=kakou_prices, niku_labels=niku_labels, niku_prices=niku_prices, gyokai_labels=gyokai_labels, gyokai_prices=gyokai_prices)
 
 @app.route("/charts")
 @login_required
@@ -384,6 +383,17 @@ def fishcake():
 @login_required
 def cannedtuna():
     name = "まぐろ缶詰"
+    data = read_csv("kakou", name)
+    label_list = data["date"]
+    price_list = data["price"]
+    last_price = data["lastprice"]
+
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+
+@app.route("/charts/butter")
+@login_required
+def butter():
+    name = "バター"
     data = read_csv("kakou", name)
     label_list = data["date"]
     price_list = data["price"]
