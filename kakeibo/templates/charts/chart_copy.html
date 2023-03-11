@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% block title %}{{ name }}{% endblock %}
+
+{% block main %}
+<div class="chartpage">
+    <div class="chartsidebar">
+        <nav class="chartnav">
+            <h2>野菜</h2>
+            <ul>
+                <li><a href="/charts/cabbage">キャベツ</a></li>
+                <li><a href="/charts/greenonion">ねぎ</a></li>
+                <li><a href="/charts/lettuce">レタス</a></li>
+                <li><a href="/charts/potato">ばれいしょ</a></li>
+                <li><a href="/charts/onion">たまねぎ</a></li>
+                <li><a href="/charts/cucumber">きゅうり</a></li>
+                <li><a href="/charts/tomato">トマト</a></li>
+                <li><a href="/charts/spinach">ほうれんそう</a></li>
+                <li><a href="/charts/carrot">にんじん</a></li>
+                <li><a href="/charts/chinesecabbage">はくさい</a></li>
+                <li><a href="/charts/raddish">だいこん</a></li>
+                <li><a href="/charts/eggplant">なす</a></li>
+            </ul>
+            <h2>加工食品</h2>
+            <ul>
+                <li><a href="/charts/bread">食パン</a></li>
+                <li><a href="/charts/instantnoodle">即席めん</a></li>
+                <li><a href="/charts/udon">ゆでうどん</a></li>
+                <li><a href="/charts/flour">小麦粉</a></li>
+                <li><a href="/charts/milk">牛乳</a></li>
+                <li><a href="/charts/cheese">チーズ</a></li>
+                <li><a href="/charts/tofu">豆腐</a></li>
+                <li><a href="/charts/canolaoil">食用油（キャノーラ油）</a></li>
+                <li><a href="/charts/saladoil">食用油（サラダ油）</a></li>
+                <li><a href="/charts/margarine">マーガリン</a></li>
+                <li><a href="/charts/mayonnaise">マヨネーズ</a></li>
+                <li><a href="/charts/soysauce">しょう油</a></li>
+                <li><a href="/charts/miso">みそ</a></li>
+                <li><a href="/charts/fishcake">かまぼこ</a></li>
+                <li><a href="/charts/cannedtuna">まぐろ缶詰</a></li>
+                <li><a href="/charts/butter">バター</a></li>
+            </ul>
+            <h2>食肉・鶏卵</h2>
+            <ul>
+                <li><a href="/charts/importedbeef">輸入牛肉（冷蔵ロース）</a></li>
+                <li><a href="/charts/domesticbeef">国産牛肉（冷蔵ロース）</a></li>
+                <li><a href="/charts/pork">豚肉（ロース）</a></li>
+                <li><a href="/charts/chicken">鶏肉（もも肉）</a></li>
+                <li><a href="/charts/egg">鶏卵 サイズ混合・10個入り）</a></li>
+            </ul>
+            <h2>魚介類</h2>
+            <ul>
+                <li><a href="/charts/tuna">まぐろ</a></li>
+                <li><a href="/charts/shrimp">えび</a></li>
+                <li><a href="/charts/yellowtail">ぶり</a></li>
+                <li><a href="/charts/salmon">さけ</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="chart">
+        <div id="canvas_box" style="height:200px;">
+            <canvas id="chart" class="canvas"></canvas>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        var labelcount = 120;
+        var xAxisLabelMinWidth = 10;
+        var data = {{ price_list|tojson }};
+        var labels = {{ label_list|tojson }};
+
+        if (data.length < labelcount) {
+            for (let i=1; i < labelcount-data.length; i++) {
+                data.push(NaN);
+                labels.push("");
+            }
+        }
+
+        const ctx = document.getElementById('chart');
+
+        var width = data.length*xAxisLabelMinWidth;
+        //var width = data.length*xAxisLabelMinWidth*2;
+
+        ctx.style.width = width+"px";
+        ctx.style.height = "40vw";
+
+        const skipped = (ctx, value) => ctx.p0.skip || ctx.p1.skip ? value : undefined;
+        const down = (ctx, value) => ctx.p0.parsed.y > ctx.p1.parsed.y ? value : undefined;
+
+        var chart = new Chart(ctx, {
+            data: {
+                labels: labels,
+                datasets: [{
+                type: 'line',
+                label: "{{ name }}",
+                data: data,
+                borderColor: 'rgb(75, 192, 192)',
+                segment: {
+                    borderColor: ctx => skipped(ctx, 'rgb(0,0,0,0.2)') || down(ctx, 'rgb(192,75,75)'),
+                    borderDash: ctx => skipped(ctx, [6, 6]),
+                },
+                yAxisID: "Chart",
+                spanGaps: true
+                }]
+            },
+            options: {
+                responsive: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        align: "end",
+                        font: {size: 30},
+                        text: "{{name}}",
+                    },
+                    legend: {
+                        display: false,
+                    }
+                },
+                scales: {
+                    "Chart":{
+                        type:"linear",
+                        position:"right",
+                    },
+                },
+            }
+        });
+
+        ctx.scrollIntoView({
+            behavior: "smooth",
+            block: "end",
+            inline: "end"
+        });
+
+    </script>
+</div>
+{% endblock %}
