@@ -104,7 +104,23 @@ def cabbage():
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
+    print(label_list)
+    print(price_list)
+    #print(type(label_list[0]))
+    conn = sqlite3.connect("kakeibo.db")
+    db = conn.cursor()
+    plot_data = db.execute('SELECT transacted,price FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    conn.close()
+    print(type(plot_data))
+    print(plot_data)
+    '''
+    print(len(plot_data))
+    for i in range(len(plot_data)):
+        print(plot_data[i])
+        print(type(plot_data[i][0]))
+    '''
 
+    #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price,plot_data=plot_data)
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
 
