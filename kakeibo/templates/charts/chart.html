@@ -82,6 +82,7 @@
         const ctx = document.getElementById('chart');
 
         var width = data.length*xAxisLabelMinWidth;
+        //var width = data.length*xAxisLabelMinWidth*2;
 
         ctx.style.width = width+"px";
         ctx.style.height = "40vw";
@@ -90,10 +91,10 @@
         const down = (ctx, value) => ctx.p0.parsed.y > ctx.p1.parsed.y ? value : undefined;
 
         var chart = new Chart(ctx, {
-            type: 'line',
             data: {
                 labels: labels,
                 datasets: [{
+                type: 'line',
                 label: "{{ name }}",
                 data: data,
                 borderColor: 'rgb(75, 192, 192)',
@@ -101,6 +102,7 @@
                     borderColor: ctx => skipped(ctx, 'rgb(0,0,0,0.2)') || down(ctx, 'rgb(192,75,75)'),
                     borderDash: ctx => skipped(ctx, [6, 6]),
                 },
+                yAxisID: "Chart",
                 spanGaps: true
                 }]
             },
@@ -116,6 +118,12 @@
                     legend: {
                         display: false,
                     }
+                },
+                scales: {
+                    "Chart":{
+                        type:"linear",
+                        position:"right",
+                    },
                 },
             }
         });
