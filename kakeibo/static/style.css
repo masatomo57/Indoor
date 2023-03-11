@@ -208,3 +208,44 @@ nav .navbar-brand .green
     width: 15%;
     height: 15%;
 }
+
+.crayon-green {
+    background: linear-gradient(transparent 70%, #008000 90%);
+}
+.crayon-yellow {
+    background: linear-gradient(transparent 70%, #ffbb2f 90%);
+}
+.crayon-red {
+    background: linear-gradient(transparent 70%, #ef4868 90%);
+}
+.crayon-blue {
+    background: linear-gradient(transparent 70%, #2a5caa 90%);
+}
+
+a{
+    position: relative;
+    display: inline-block;
+    transition: .3s;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+}
+
+a:hover{
+    border-bottom-color: #31aae2;
+}
+
+a::after {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    content: '';
+    width: 0;
+    height: 2px;
+    background-color: #31aae2;
+    transition: .3s;
+    transform: translateX(-50%);
+}
+
+a:hover::after{
+    width: 100%;
+}
