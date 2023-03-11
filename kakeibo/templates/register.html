@@ -116,8 +116,8 @@
                     itemInput.style.borderColor = "green";
                     itemInput.style.borderWidth = "3px";
                   } else if (itemInput.value == "食パン" || itemInput.value == "即席めん" || itemInput.value == "ゆでうどん" || itemInput.value == "小麦粉" || itemInput.value == "牛乳" || itemInput.value == "チーズ" || itemInput.value == "豆腐" || itemInput.value == "バター" || itemInput.value == "食用油(キャノーラ油)" || itemInput.value == "食用油(サラダ油)" || itemInput.value == "マーガリン" || itemInput.value == "マヨネーズ" || itemInput.value == "しょう油" || itemInput.value == "みそ" || itemInput.value == "かまぼこ" || itemInput.value == "まぐろ缶詰"){
-                    itemInput.style.borderColor = "yellow";
-                    itemInput.style.borderWidth = "3px";
+                    itemInput.style.borderColor = "#ffbb2f";
+                    itemInput.style.borderWidth = "5px";
                   } else {
                     itemInput.style.borderColor = "white";
                   }
@@ -370,9 +370,9 @@
             tr.children[3].contentEditable = true;
             tr.children[4].contentEditable = true;
 
-            tr.children[2].style.border = '3px solid green';
-            tr.children[3].style.border = '3px solid green';
-            tr.children[4].style.border = '3px solid green';
+            tr.children[2].style.border = '3px dashed green';
+            tr.children[3].style.border = '3px dashed green';
+            tr.children[4].style.border = '3px dashed green';
 
             //編集ボタンを編集実行ボタンに変更
             var editBtn = tr.children[6].children[0];

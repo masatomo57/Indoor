@@ -150,6 +150,7 @@ def otoku(username):
                         break
                     else:
                         otoku_price = yasai_data.at[yasai_data.index[j],item_name] - (userskakeibo[i][2] / userskakeibo[i][3])
+                        otoku_price = userskakeibo[i][3] * otoku_price
                         '''
                         print(f'yasai_name:{item_name}')
                         print(f'kakeibo_price:{userskakeibo[i][2]}')
@@ -170,6 +171,7 @@ def otoku(username):
                         break
                     else:
                         otoku_price = kakou_data.at[kakou_data.index[j],item_name] - (userskakeibo[i][2] / userskakeibo[i][3])
+                        otoku_price = userskakeibo[i][3] * otoku_price
                         kakou_otoku_price += otoku_price
                     break
                     #otoku_price = 0
@@ -183,6 +185,7 @@ def otoku(username):
                         break
                     else:
                         otoku_price = sakana_data.at[sakana_data.index[j],item_name] - (userskakeibo[i][2] / userskakeibo[i][3])
+                        otoku_price = userskakeibo[i][3] * otoku_price
                         sakana_otoku_price += otoku_price
                     break
                     #otoku_price = 0
@@ -196,6 +199,7 @@ def otoku(username):
                         break
                     else:
                         otoku_price = niku_data.at[niku_data.index[j],item_name] - (userskakeibo[i][2] / userskakeibo[i][3])
+                        otoku_price = userskakeibo[i][3] * otoku_price
                         niku_otoku_price += otoku_price
                     break
                     #otoku_price = 0
