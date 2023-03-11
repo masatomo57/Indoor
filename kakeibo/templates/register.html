@@ -85,7 +85,7 @@
                 <p></p>
             </div>
             <div class="form-group row">
-                <label for="price" class="col-sm-2 col-form-label">総額(税抜)</label>
+                <label for="price" class="col-sm-2 col-form-label">総額(税込)</label>
                 <div class="col-sm-4">
                     <input type="number" class="form-control" id="regist_price" name="price" min="1" placeholder="(必須)">
                 </div>
@@ -93,6 +93,7 @@
                 <div class="col-sm-4">
                     <input type="number" class="form-control" id="regist_quantity" name="quantity" min="0.001" step="0.001" list="divided" placeholder="(必須)">
                     <datalist id="divided">
+                        <option value="1">
                         <option value="0.5" label="(1/2)">
                         <option value="0.25" label="(1/4)">
                         <option value="0.125" label="(1/8)">
@@ -166,7 +167,7 @@
         <tr>
             <th>日付</th>
             <th>品目</th>
-            <th>総額(税抜)</th>
+            <th>総額(税込)</th>
             <th>数量</th>
             <th>総重量</th>
             <th></th>
@@ -246,14 +247,14 @@
                 alert('品目を入力してください。');
                 correctFlg = false;
             }
-            // 総額(税抜)のチェック
+            // 総額(税込)のチェック
             if ( getElmId(price_id).value.length === 0 ){
-                alert('総額(税抜)を入力してください。');
+                alert('総額(税込)を入力してください。');
                 correctFlg = false;
             } else {
-                // 総額(税抜)の書式チェック
+                // 総額(税込)の書式チェック
                 if ( getElmId(price_id).value.match(/^[0-9]*$/g) === null ){
-                    alert('総額(税抜)が正しくありません。');
+                    alert('総額(税込)が正しくありません。');
                     correctFlg = false;
                 }
             }
@@ -272,16 +273,16 @@
         }
 
         /* 登録データのチェック2 */
-        function chkRegistData2(newPrice, newQuantity, newGram){
+        function chkRegistData2(newPrice, newQuantity, newGram, newItem){
             var correctFlg = true;
-            // 総額(税抜)のチェック
+            // 総額(税込)のチェック
             if ( newPrice === null  || newPrice === ''){
-                alert('総額(税抜)を入力してください。');
+                alert('総額(税込)を入力してください。');
                 correctFlg = false;
             } else {
-                // 総額(税抜)の書式チェック
+                // 総額(税込)の書式チェック
                 if ( isNaN(newPrice)  || newPrice < 1 || !Number.isInteger(Number(newPrice))){
-                    alert('総額(税抜)が正しくありません。');
+                    alert('総額(税込)が正しくありません。');
                     correctFlg = false;
                 }
             }
@@ -307,6 +308,11 @@
                 if (newGram !== 'None') {
                     if ( isNaN(newGram) || newGram < 0 || !Number.isInteger(Number(newGram))) {
                         alert('総重量が正しくありません。');
+                        correctFlg = false;
+                    }
+                } else {
+                    if (newItem == 'まぐろ' || newItem == 'えび' || newItem == 'ぶり' || newItem == 'さけ' || newItem == '輸入牛肉(冷蔵ロース)' || newItem == '国産牛肉(冷蔵ロース)' || newItem == '豚肉(ロース)' || newItem == '鶏肉(もも肉)' || newItem == '鶏卵') {
+                        alert('この品目の総重量の入力は必須です、');
                         correctFlg = false;
                     }
                 }
@@ -385,7 +391,7 @@
                 location.reload();
                 return;
             }
-            if( chkRegistData2(newPrice, newQuantity, newGram) ) {
+            if( chkRegistData2(newPrice, newQuantity, newGram, newItem) ) {
                 //データベースの更新処理を行う
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', '/test4');

@@ -4,6 +4,31 @@
 {% block main %}
 <header class="home_header">あなたは今までで{{ otoku[4] }}円お得に買い物をしました！！</header>
 <main class="home">
+
+    <div class="bubble_box">
+        <div class="bubble green">
+            <p>野菜を</p>
+            <p>合計{{ otoku[0] }}円</p>
+            <p>お得に購入しました！</p>
+        </div>
+        <div class="bubble yellow">
+            <p>加工食品を</p>
+            <p>合計{{ otoku[1] }}円</p>
+            <p>お得に購入しました！</p>
+        </div>
+        <div class="bubble red">
+            <p>食肉・鶏卵を</p>
+            <p>合計{{ otoku[3] }}円</p>
+            <p>お得に購入しました！</p>
+        </div>
+        <div class="bubble blue">
+            <p>魚介類を</p>
+            <p>合計{{ otoku[2] }}円</p>
+            <p>お得に購入しました！</p>
+        </div>
+    </div>
+
+
     <div class="grid4">
         <div id="area1" class="hanabatake">
             <div>
@@ -27,30 +52,6 @@
         </div>
     </div>
 
-    <div class="bubble_box">
-        <div class="bubble green">
-            <p>野菜を</p>
-            <p>合計{{ otoku[0] }}円</p>
-            <p>お得に購入しました！</p>
-        </div>
-        <div class="bubble gray">
-            <p>加工食品を</p>
-            <p>合計{{ otoku[1] }}円</p>
-            <p>お得に購入しました！</p>
-        </div>
-        <div class="bubble red">
-            <p>食肉・鶏卵を</p>
-            <p>合計{{ otoku[3] }}円</p>
-            <p>お得に購入しました！</p>
-        </div>
-        <div class="bubble blue">
-            <p>魚介類を</p>
-            <p>合計{{ otoku[2] }}円</p>
-            <p>お得に購入しました！</p>
-        </div>
-    </div>
-
-
     <!--script src="https://cdn.jsdelivr.net/npm/chart.js"></script-->
 
     <script>
@@ -63,12 +64,67 @@
         }
         for (let i = 0; i < 3; i++) {
             //document.getElementById("area1").innerHTML = "";
-            var image = document.createElement("img");
-            image.src = "/static/hana1.gif";
-            image.style.position = "absolute";
-            image.style.top = setRandomTop("111");//画像の横の長さをsetRandomTopに。
-            image.style.left = setRandomLeft("143");//画像の縦の長さをsetRandomLeftに。
-            document.getElementById("area1").appendChild(image);
+            var image1 = document.createElement("img");
+            image1.src = "/static/yasai.png";
+            image1.style.position = "absolute";
+            image1.style.top = setRandomTop("111");//画像の横の長さをsetRandomTopに。
+            image1.style.left = setRandomLeft("143");//画像の縦の長さをsetRandomLeftに。
+            image1.className = "home-icon";
+            document.getElementById("area1").appendChild(image1);
+        }
+
+        function setRandomLeft(imageWidth) {
+            return (Math.random() * (document.getElementById("area2").clientWidth - imageWidth)) + "px";
+        }
+
+        function setRandomTop(imageHeight) {
+            return (Math.random() * (document.getElementById("area2").clientHeight - imageHeight)) + "px";
+        }
+        for (let i = 0; i < 3; i++) {
+            //document.getElementById("area1").innerHTML = "";
+            var image2 = document.createElement("img");
+            image2.src = "/static/kakou.png";
+            image2.style.position = "absolute";
+            image2.style.top = setRandomTop("111");//画像の横の長さをsetRandomTopに。
+            image2.style.left = setRandomLeft("143");//画像の縦の長さをsetRandomLeftに。
+            image2.className = "home-icon";
+            document.getElementById("area2").appendChild(image2);
+        }
+
+        function setRandomLeft(imageWidth) {
+            return (Math.random() * (document.getElementById("area3").clientWidth - imageWidth)) + "px";
+        }
+
+        function setRandomTop(imageHeight) {
+            return (Math.random() * (document.getElementById("area3").clientHeight - imageHeight)) + "px";
+        }
+        for (let i = 0; i < 3; i++) {
+            //document.getElementById("area1").innerHTML = "";
+            var image3 = document.createElement("img");
+            image3.src = "/static/niku.png";
+            image3.style.position = "absolute";
+            image3.style.top = setRandomTop("111");//画像の横の長さをsetRandomTopに。
+            image3.style.left = setRandomLeft("143");//画像の縦の長さをsetRandomLeftに。
+            image3.className = "home-icon";
+            document.getElementById("area3").appendChild(image3);
+        }
+
+        function setRandomLeft(imageWidth) {
+            return (Math.random() * (document.getElementById("area4").clientWidth - imageWidth)) + "px";
+        }
+
+        function setRandomTop(imageHeight) {
+            return (Math.random() * (document.getElementById("area4").clientHeight - imageHeight)) + "px";
+        }
+        for (let i = 0; i < 3; i++) {
+            //document.getElementById("area1").innerHTML = "";
+            var image4 = document.createElement("img");
+            image4.src = "/static/sakana.png";
+            image4.style.position = "absolute";
+            image4.style.top = setRandomTop("111");//画像の横の長さをsetRandomTopに。
+            image4.style.left = setRandomLeft("143");//画像の縦の長さをsetRandomLeftに。
+            image4.className = "home-icon";
+            document.getElementById("area4").appendChild(image4);
         }
     </script>
 </main>
