@@ -93,6 +93,7 @@
                 <div class="col-sm-4">
                     <input type="number" class="form-control" id="regist_quantity" name="quantity" min="0.001" step="0.001" list="divided" placeholder="(必須)">
                     <datalist id="divided">
+                        <option value="1">
                         <option value="0.5" label="(1/2)">
                         <option value="0.25" label="(1/4)">
                         <option value="0.125" label="(1/8)">
@@ -272,7 +273,7 @@
         }
 
         /* 登録データのチェック2 */
-        function chkRegistData2(newPrice, newQuantity, newGram){
+        function chkRegistData2(newPrice, newQuantity, newGram, newItem){
             var correctFlg = true;
             // 総額(税込)のチェック
             if ( newPrice === null  || newPrice === ''){
@@ -307,6 +308,11 @@
                 if (newGram !== 'None') {
                     if ( isNaN(newGram) || newGram < 0 || !Number.isInteger(Number(newGram))) {
                         alert('総重量が正しくありません。');
+                        correctFlg = false;
+                    }
+                } else {
+                    if (newItem == 'まぐろ' || newItem == 'えび' || newItem == 'ぶり' || newItem == 'さけ' || newItem == '輸入牛肉(冷蔵ロース)' || newItem == '国産牛肉(冷蔵ロース)' || newItem == '豚肉(ロース)' || newItem == '鶏肉(もも肉)' || newItem == '鶏卵') {
+                        alert('この品目の総重量の入力は必須です、');
                         correctFlg = false;
                     }
                 }
@@ -385,7 +391,7 @@
                 location.reload();
                 return;
             }
-            if( chkRegistData2(newPrice, newQuantity, newGram) ) {
+            if( chkRegistData2(newPrice, newQuantity, newGram, newItem) ) {
                 //データベースの更新処理を行う
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', '/test4');

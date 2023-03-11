@@ -39,6 +39,7 @@ def after_request(response):
     response.headers["Pragma"] = "no-cache"
     return response
 
+
 # データベースを呼び出す関数の定義
 def get_db():
     if 'db' not in g:
@@ -88,10 +89,12 @@ def index():
     otoku = otoku_test.otoku(session["user_id"])
     return render_template("index.html", yasai_labels=yasai_labels, yasai_prices=yasai_prices, kakou_labels=kakou_labels, kakou_prices=kakou_prices, niku_labels=niku_labels, niku_prices=niku_prices, gyokai_labels=gyokai_labels, gyokai_prices=gyokai_prices, otoku=otoku)
 
+
 @app.route("/charts")
 @login_required
 def charts():
     return redirect("/charts/cabbage")
+
 
 @app.route("/charts/cabbage")
 @login_required
@@ -104,6 +107,7 @@ def cabbage():
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
+
 @app.route("/charts/greenonion")
 @login_required
 def greenonion():
@@ -114,6 +118,7 @@ def greenonion():
     last_price = data["lastprice"]
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+
 
 @app.route("/charts/lettuce")
 @login_required
@@ -126,6 +131,7 @@ def lettuce():
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
+
 @app.route("/charts/potato")
 @login_required
 def potato():
@@ -136,6 +142,7 @@ def potato():
     last_price = data["lastprice"]
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+
 
 @app.route("/charts/onion")
 @login_required
@@ -148,6 +155,7 @@ def onion():
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
+
 @app.route("/charts/cucumber")
 @login_required
 def cucumber():
@@ -158,6 +166,7 @@ def cucumber():
     last_price = data["lastprice"]
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+
 
 @app.route("/charts/tomato")
 @login_required
@@ -170,6 +179,7 @@ def tomato():
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
+
 @app.route("/charts/spinach")
 @login_required
 def spinach():
@@ -180,6 +190,7 @@ def spinach():
     last_price = data["lastprice"]
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+
 
 @app.route("/charts/carrot")
 @login_required
@@ -192,6 +203,7 @@ def carrot():
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
+
 @app.route("/charts/chinesecabbage")
 @login_required
 def chinesecabbage():
@@ -202,6 +214,7 @@ def chinesecabbage():
     last_price = data["lastprice"]
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+
 
 @app.route("/charts/raddish")
 @login_required
@@ -214,6 +227,7 @@ def raddish():
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
+
 @app.route("/charts/eggplant")
 @login_required
 def eggplant():
@@ -224,6 +238,7 @@ def eggplant():
     last_price = data["lastprice"]
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+
 
 @app.route("/charts/bread")
 @login_required
@@ -236,6 +251,7 @@ def bread():
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
+
 @app.route("/charts/instantnoodle")
 @login_required
 def instantnoodle():
@@ -246,6 +262,7 @@ def instantnoodle():
     last_price = data["lastprice"]
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+
 
 @app.route("/charts/udon")
 @login_required
@@ -258,6 +275,7 @@ def udon():
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
+
 @app.route("/charts/flour")
 @login_required
 def flour():
@@ -268,6 +286,7 @@ def flour():
     last_price = data["lastprice"]
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+
 
 @app.route("/charts/milk")
 @login_required
@@ -280,6 +299,7 @@ def milk():
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
+
 @app.route("/charts/cheese")
 @login_required
 def cheese():
@@ -290,6 +310,7 @@ def cheese():
     last_price = data["lastprice"]
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+
 
 @app.route("/charts/tofu")
 @login_required
@@ -302,6 +323,7 @@ def tofu():
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
+
 @app.route("/charts/canolaoil")
 @login_required
 def canolaoil():
@@ -312,6 +334,7 @@ def canolaoil():
     last_price = data["lastprice"]
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+
 
 @app.route("/charts/saladoil")
 @login_required
@@ -324,6 +347,7 @@ def saladoil():
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
+
 @app.route("/charts/margarine")
 @login_required
 def margarine():
@@ -334,6 +358,7 @@ def margarine():
     last_price = data["lastprice"]
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+
 
 @app.route("/charts/mayonnaise")
 @login_required
@@ -346,6 +371,7 @@ def mayonnaise():
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
+
 @app.route("/charts/soysauce")
 @login_required
 def soysauce():
@@ -356,6 +382,7 @@ def soysauce():
     last_price = data["lastprice"]
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+
 
 @app.route("/charts/miso")
 @login_required
@@ -368,6 +395,7 @@ def miso():
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
+
 @app.route("/charts/fishcake")
 @login_required
 def fishcake():
@@ -378,6 +406,7 @@ def fishcake():
     last_price = data["lastprice"]
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+
 
 @app.route("/charts/cannedtuna")
 @login_required
@@ -390,6 +419,7 @@ def cannedtuna():
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
+
 @app.route("/charts/butter")
 @login_required
 def butter():
@@ -400,6 +430,7 @@ def butter():
     last_price = data["lastprice"]
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+
 
 @app.route("/charts/importedbeef")
 @login_required
@@ -412,6 +443,7 @@ def importedbeef():
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
+
 @app.route("/charts/domesticbeef")
 @login_required
 def domesticbeef():
@@ -422,6 +454,7 @@ def domesticbeef():
     last_price = data["lastprice"]
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+
 
 @app.route("/charts/pork")
 @login_required
@@ -434,6 +467,7 @@ def pork():
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
+
 @app.route("/charts/chicken")
 @login_required
 def chicken():
@@ -444,6 +478,7 @@ def chicken():
     last_price = data["lastprice"]
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+
 
 @app.route("/charts/egg")
 @login_required
@@ -456,6 +491,7 @@ def egg():
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
+
 @app.route("/charts/tuna")
 @login_required
 def tuna():
@@ -466,6 +502,7 @@ def tuna():
     last_price = data["lastprice"]
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+
 
 @app.route("/charts/shrimp")
 @login_required
@@ -478,6 +515,7 @@ def shrimp():
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
+
 @app.route("/charts/yellowtail")
 @login_required
 def yellowtail():
@@ -489,6 +527,7 @@ def yellowtail():
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
+
 @app.route("/charts/salmon")
 @login_required
 def salmon():
@@ -499,6 +538,7 @@ def salmon():
     last_price = data["lastprice"]
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+
 
 """
 @app.route("/kakeibo", methods=["GET"])
@@ -541,6 +581,7 @@ def kakeibo():
         print(database)
         return render_template("kakeibo/index.html",database=database)
 
+
 @app.route("/test", methods=["POST"])
 @login_required
 def test():
@@ -559,7 +600,6 @@ def test():
     # return render_template("kakeibo/index.html", database=database)
 
 
-
 # 今月のデータを取得するための関数
 def thismonthdata():
     today = datetime.date.today()
@@ -571,6 +611,7 @@ def thismonthdata():
     database = cur.fetchall()
     conn.close()
     return database
+
 
 @app.route("/register", methods=["GET", "POST"])
 @login_required
@@ -609,10 +650,11 @@ def test1():
     result = db.execute("SELECT * FROM test_buying WHERE user_id = ? AND item = ? AND transacted = ?", (session["user_id"], regist_name, regist_date)).fetchone()
 
     if result:
-        error="すでにデータが登録されている可能性があります。"
+        # error="すでにデータが登録されている可能性があります。"
         if not regist_gram:
             regist_gram = None
         db.execute("UPDATE test_buying SET price = price + ?, shares = shares + ?, gram = ? WHERE user_id = ? AND item = ? AND transacted = ?", (regist_price,regist_quantity,regist_gram,session["user_id"],regist_name,regist_date))
+
     if regist_price:
         regist_sum = int(float(regist_price) * tax)
 
@@ -662,6 +704,7 @@ def test3():
     conn.close()
     return jsonify(database)
 
+
 @app.route("/test4", methods=["POST"])
 @login_required
 def test4():
@@ -684,6 +727,7 @@ def test4():
     database = cur.fetchall()
     conn.close()
     return render_template('register.html', database=database)
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -723,6 +767,7 @@ def login():
     # User reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("login.html")
+
 
 @app.route("/logout")
 def logout():
