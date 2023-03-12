@@ -6,23 +6,23 @@
 <main class="home">
     <div class="grid4">
         <div id="area1" class="hanabatake">
-            <div>
-                お得！花畑
+            <div class="otoku_header">
+                お得！花畑 Lv.{{ level_hana }}
             </div>
         </div>
         <div id="area2" class="kakoujou">
-            <div>
-                お得！加工場
+            <div class="otoku_header">
+                お得！加工場 Lv.{{ level_stone }}
             </div>
         </div>
         <div id="area3" class="zoo">
-            <div>
-                お得！動物園
+            <div class="otoku_header">
+                お得！動物園 Lv.{{ level_animal }}
             </div>
         </div>
         <div id="area4" class="suizokukan">
-            <div>
-                お得！水族館
+            <div class="otoku_header">
+                お得！水族館 Lv.{{ level_fish }}
             </div>
         </div>
     </div>
@@ -54,22 +54,42 @@
     <!--script src="https://cdn.jsdelivr.net/npm/chart.js"></script-->
 
     <script>
-        function setRandomLeft(imageWidth) {
-            return (Math.random() * (document.getElementById("area1").clientWidth - imageWidth)) + "px";
-        }
+        console.log(document.getElementById("area1").clientWidth)
+        console.log(document.getElementById("area1").clientHeight)
+        //document.getElementById("area1").innerHTML = "";
+        var image1 = document.createElement("img");
+        image1.src = "/static/hanabatake.jpg";
+        image1.style.position = "absolute";
+        image1.style.top = "35px";//題名分あけておく
+        image1.style.left = "0px";
+        document.getElementById("area1").appendChild(image1);
 
-        function setRandomTop(imageHeight) {
-            return (Math.random() * (document.getElementById("area1").clientHeight - imageHeight)) + "px";
-        }
-        for (let i = 0; i < 3; i++) {
-            //document.getElementById("area1").innerHTML = "";
-            var image = document.createElement("img");
-            image.src = "/static/hana1.gif";
-            image.style.position = "absolute";
-            image.style.top = setRandomTop("111");//画像の横の長さをsetRandomTopに。
-            image.style.left = setRandomLeft("143");//画像の縦の長さをsetRandomLeftに。
-            document.getElementById("area1").appendChild(image);
-        }
+        console.log(document.getElementById("area2").clientWidth)
+        console.log(document.getElementById("area2").clientHeight)
+        var image2 = document.createElement("img");
+        image2.src = "/static/kakoujou.jpg";
+        image2.style.position = "absolute";
+        image2.style.top = "35px";//題名分あけておく
+        image2.style.left = "0px";
+        document.getElementById("area2").appendChild(image2);
+
+        console.log(document.getElementById("area3").clientWidth)
+        console.log(document.getElementById("area3").clientHeight)
+        var image3 = document.createElement("img");
+        image3.src = "/static/zoo.jpg";
+        image3.style.position = "absolute";
+        image3.style.top = "35px";//題名分あけておく
+        image3.style.left = "0px";
+        document.getElementById("area3").appendChild(image3);
+
+        console.log(document.getElementById("area4").clientWidth)
+        console.log(document.getElementById("area4").clientHeight)
+        var image4 = document.createElement("img");
+        image4.src = "/static/suizokukan.jpg";
+        image4.style.position = "absolute";
+        image4.style.top = "35px";//題名分あけておく
+        image4.style.left = "0px";
+        document.getElementById("area4").appendChild(image4);
     </script>
 </main>
 
