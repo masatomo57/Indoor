@@ -104,6 +104,8 @@ def cabbage():
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
+    if last_price != None:
+        last_price = int(float(last_price))
     print(label_list)
     print(price_list)
     #print(type(label_list[0]))
@@ -132,6 +134,8 @@ def greenonion():
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
+    if last_price != None:
+        last_price = int(float(last_price))
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
@@ -144,6 +148,8 @@ def lettuce():
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
+    if last_price != None:
+        last_price = int(float(last_price))
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
@@ -156,6 +162,8 @@ def potato():
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
+    if last_price != None:
+        last_price = int(float(last_price))
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
@@ -168,6 +176,8 @@ def onion():
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
+    if last_price != None:
+        last_price = int(float(last_price))
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
@@ -180,6 +190,8 @@ def cucumber():
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
+    if last_price != None:
+        last_price = int(float(last_price))
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
@@ -192,6 +204,8 @@ def tomato():
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
+    if last_price != None:
+        last_price = int(float(last_price))
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
@@ -204,6 +218,8 @@ def spinach():
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
+    if last_price != None:
+        last_price = int(float(last_price))
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
@@ -216,6 +232,8 @@ def carrot():
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
+    if last_price != None:
+        last_price = int(float(last_price))
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
@@ -228,6 +246,8 @@ def chinesecabbage():
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
+    if last_price != None:
+        last_price = int(float(last_price))
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
@@ -240,6 +260,8 @@ def raddish():
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
+    if last_price != None:
+        last_price = int(float(last_price))
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
@@ -252,6 +274,8 @@ def eggplant():
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
+    if last_price != None:
+        last_price = int(float(last_price))
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
@@ -264,6 +288,8 @@ def bread():
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
+    if last_price != None:
+        last_price = int(float(last_price))
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
@@ -276,6 +302,8 @@ def instantnoodle():
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
+    if last_price != None:
+        last_price = int(float(last_price))
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
@@ -288,6 +316,8 @@ def udon():
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
+    if last_price != None:
+        last_price = int(float(last_price))
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
@@ -300,6 +330,8 @@ def flour():
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
+    if last_price != None:
+        last_price = int(float(last_price))
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
@@ -312,6 +344,8 @@ def milk():
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
+    if last_price != None:
+        last_price = int(float(last_price))
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
@@ -324,6 +358,8 @@ def cheese():
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
+    if last_price != None:
+        last_price = int(float(last_price))
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
@@ -336,6 +372,8 @@ def tofu():
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
+    if last_price != None:
+        last_price = int(float(last_price))
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
@@ -348,6 +386,8 @@ def canolaoil():
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
+    if last_price != None:
+        last_price = int(float(last_price))
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
@@ -360,6 +400,8 @@ def saladoil():
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
+    if last_price != None:
+        last_price = int(float(last_price))
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
@@ -372,6 +414,8 @@ def margarine():
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
+    if last_price != None:
+        last_price = int(float(last_price))
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
@@ -384,6 +428,8 @@ def mayonnaise():
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
+    if last_price != None:
+        last_price = int(float(last_price))
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
@@ -396,6 +442,8 @@ def soysauce():
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
+    if last_price != None:
+        last_price = int(float(last_price))
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
@@ -408,6 +456,8 @@ def miso():
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
+    if last_price != None:
+        last_price = int(float(last_price))
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
@@ -420,6 +470,8 @@ def fishcake():
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
+    if last_price != None:
+        last_price = int(float(last_price))
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
@@ -432,6 +484,8 @@ def cannedtuna():
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
+    if last_price != None:
+        last_price = int(float(last_price))
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
@@ -444,6 +498,8 @@ def butter():
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
+    if last_price != None:
+        last_price = int(float(last_price))
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
@@ -456,6 +512,8 @@ def importedbeef():
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
+    if last_price != None:
+        last_price = int(float(last_price))
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
@@ -468,6 +526,8 @@ def domesticbeef():
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
+    if last_price != None:
+        last_price = int(float(last_price))
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
@@ -480,6 +540,8 @@ def pork():
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
+    if last_price != None:
+        last_price = int(float(last_price))
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
@@ -492,6 +554,8 @@ def chicken():
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
+    if last_price != None:
+        last_price = int(float(last_price))
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
@@ -504,6 +568,8 @@ def egg():
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
+    if last_price != None:
+        last_price = int(float(last_price))
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
@@ -516,6 +582,8 @@ def tuna():
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
+    if last_price != None:
+        last_price = int(float(last_price))
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
@@ -528,6 +596,8 @@ def shrimp():
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
+    if last_price != None:
+        last_price = int(float(last_price))
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
@@ -540,6 +610,8 @@ def yellowtail():
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
+    if last_price != None:
+        last_price = int(float(last_price))
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
@@ -552,6 +624,8 @@ def salmon():
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
+    if last_price != None:
+        last_price = int(float(last_price))
 
     return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
 
