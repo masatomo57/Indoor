@@ -11,6 +11,7 @@ import calendar
 import json
 import sqlite3
 import otoku_test
+import otoku_show
 
 # Configure application
 app = Flask(__name__)
@@ -71,23 +72,32 @@ def read_csv(filename, item):
 @app.route("/")
 @login_required
 def index():
-    db = get_db()
-    label_query = "SELECT calculated FROM otoku WHERE kind=? AND user_id=?"
-    price_query = "SELECT price FROM otoku WHERE kind=? AND user_id=?"
-
-    data = read_csv("yasai", "キャベツ")
-
-    yasai_labels = [1,2,3,4]  # db.execute(label_query, ("野菜", session["user_id"],)).fetchall()
-    yasai_prices = [100, 200, 300, 400] # db.execute(price_query, ("野菜", session["user_id"],)).fetchall()
-    kakou_labels = [1,2,3,4] # db.execute(label_query, ("加工食品", session["user_id"],)).fetchall()
-    kakou_prices = [100, 200, 300, 400] # db.execute(price_query, ("加工食品", session["user_id"],)).fetchall()
-    niku_labels = [1,2,3,4] # db.execute(label_query, ("食肉・鶏卵", session["user_id"],)).fetchall()
-    niku_prices = [100, 200, 300, 400] # db.execute(price_query, ("食肉・鶏卵", session["user_id"],)).fetchall()
-    gyokai_labels = [1,2,3,4] # db.execute(label_query, ("魚介類", session["user_id"],)).fetchall()
-    gyokai_prices = [100, 200, 300, 400] # db.execute(price_query, ("魚介類", session["user_id"],)).fetchall()
-    db.close()
     otoku = otoku_test.otoku(session["user_id"])
-    return render_template("index.html", yasai_labels=yasai_labels, yasai_prices=yasai_prices, kakou_labels=kakou_labels, kakou_prices=kakou_prices, niku_labels=niku_labels, niku_prices=niku_prices, gyokai_labels=gyokai_labels, gyokai_prices=gyokai_prices, otoku=otoku)
+    #野菜のホーム画面データ
+    #num_list,judge=otoku_show.otoku_show_num(28711)
+    num_list,judge=otoku_show.otoku_show_num(otoku[0])
+    print(f'num_list:{num_list},judge:{judge}')
+    level_hana=otoku_show.show_hana(num_list)
+
+    #加工食品のホーム画面データ
+    #num_list,judge=otoku_show.otoku_show_num(98722)
+    num_list,judge=otoku_show.otoku_show_num(otoku[1])
+    print(f'num_list:{num_list},judge:{judge}')
+    level_stone=otoku_show.show_stone(num_list)
+
+    #魚介のホーム画面データ
+    #num_list,judge=otoku_show.otoku_show_num(999999)
+    num_list,judge=otoku_show.otoku_show_num(otoku[2])
+    print(f'num_list:{num_list},judge:{judge}')
+    level_fish=otoku_show.show_fish(num_list)
+
+    #肉食のホーム画面データ
+    #num_list,judge=otoku_show.otoku_show_num(4579)
+    num_list,judge=otoku_show.otoku_show_num(otoku[3])
+    print(f'num_list:{num_list},judge:{judge}')
+    level_animal=otoku_show.show_animal(num_list)
+
+    return render_template("index.html",otoku=otoku,level_hana=level_hana,level_stone=level_stone,level_fish=level_fish,level_animal=level_animal)
 
 
 @app.route("/charts")
