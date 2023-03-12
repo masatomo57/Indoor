@@ -114,7 +114,7 @@
                         display: true,
                         align: "end",
                         font: {size: 30},
-                        text: `{% if last_price is not none %}{{name}}  -   最新価格 {{last_price}} 円{% if name == 'キャベツ' or name == 'レタス'%} / 玉{% elif name == 'トマト' or name == 'たまねぎ' or name == 'はくさい' or name == 'ばれいしょ' or name == '即席めん'%} / 個{% elif name == 'にんじん' or name == 'ねぎ' or name == 'だいこん' or name == 'きゅうり' or name == 'なす' or name == 'ほうれんそう' %} / 本{% elif name == '食パン' %} / 袋(370g){% elif name == 'ゆでうどん' %} / 袋(200g){% elif name == '小麦粉' or name == '食用油（キャノーラ油）' or name == '食用油（サラダ油）'%} / kg{% elif name == '牛乳' %} / パック(1L){% elif name == 'チーズ' %} / 箱(135g){% elif name == '豆腐' %} / 丁(350g){% elif name == 'マーガリン' or name == 'かまぼこ'%} / 100g{% elif name == 'マヨネーズ' %} / 本(450g){% elif name == 'しょう油' %} / 本(1kg){% elif name == 'みそ' %} / 袋(750g){% elif name == 'まぐろ缶詰' %} / 個(80g){% elif name == 'バター' %} / 200g{% endif %}{% else %}{{name}}{% endif %}`,
+                        text: `{% if last_price is not none %}{{name}}  -   最新価格 {{last_price}} 円{% if name == 'キャベツ' or name == 'レタス'%} / 玉{% elif name == 'トマト' or name == 'たまねぎ' or name == 'はくさい' or name == 'ばれいしょ' or name == '即席めん'%} / 個{% elif name == 'にんじん' or name == 'ねぎ' or name == 'だいこん' or name == 'きゅうり' or name == 'なす' or name == 'ほうれんそう' %} / 本{% elif name == '食パン' %} / 袋(370g){% elif name == 'ゆでうどん' %} / 袋(200g){% elif name == '小麦粉' or name == '食用油（キャノーラ油）' or name == '食用油（サラダ油）'%} / kg{% elif name == '牛乳' %} / パック(1L){% elif name == 'チーズ' %} / 箱(135g){% elif name == '豆腐' %} / 丁(350g){% elif name == 'マーガリン' or name == 'かまぼこ'%} / 100g{% elif name == 'マヨネーズ' %} / 本(450g){% elif name == 'しょう油' %} / 本(1kg){% elif name == 'みそ' %} / 袋(750g){% elif name == 'まぐろ缶詰' %} / 個(80g){% elif name == 'バター' %} / 200g{% elif name == '輸入牛肉（冷蔵ロース）' or name == '国産牛肉（冷蔵ロース）' or name == '豚肉（ロース）' or name == '鶏肉（もも肉）' or name == '鶏卵 サイズ混合・10個入り）' or name == 'まぐろ' or name == 'えび' or name == 'ぶり' or name == 'さけ' %} / 100g{% endif %}{% else %}{{name}}{% endif %}`,
                     },
                     legend: {
                         display: false,
@@ -134,6 +134,8 @@
             block: "end",
             inline: "end"
         });
+
+
 
     </script>
 </div>
