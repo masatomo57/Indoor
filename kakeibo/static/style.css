@@ -124,7 +124,7 @@ nav .navbar-brand .green
     margin: 0 auto;
     overflow-x: scroll;
     position: relative;
-    background-color: rgba(150, 190, 157, 0.5);
+    background-color: rgba(150, 190, 157, 1);
 }
 .suizokukan {
     width: 40vw;
@@ -132,7 +132,7 @@ nav .navbar-brand .green
     margin: 0 auto;
     overflow-x: scroll;
     position: relative;
-    background-color: rgba(50, 60, 157, 0.5);
+    background-color: rgba(50, 60, 157, 1);
 }
 .zoo {
     width: 40vw;
@@ -140,7 +140,7 @@ nav .navbar-brand .green
     margin: 0 auto;
     overflow-x: scroll;
     position: relative;
-    background-color: rgba(50, 190, 57, 0.5);
+    background-color: rgba(50, 190, 57, 1);
 }
 .grid4 {
     display: grid;
@@ -202,4 +202,9 @@ nav .navbar-brand .green
     font-size: 2em;
     color: white;
     background-color: #ffbb2f;
+}
+
+.otoku_header {
+    font-size: 1.5em;
+    color: white;
 }
