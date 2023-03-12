@@ -4,6 +4,31 @@
 {% block main %}
 <header class="home_header">あなたは今までで{{ otoku[4] }}円お得に買い物をしました！！</header>
 <main class="home">
+
+    <div class="bubble_box">
+        <div class="bubble green">
+            <p>野菜を</p>
+            <p>合計{{ otoku[0] }}円</p>
+            <p>お得に購入しました！</p>
+        </div>
+        <div class="bubble yellow">
+            <p>加工食品を</p>
+            <p>合計{{ otoku[1] }}円</p>
+            <p>お得に購入しました！</p>
+        </div>
+        <div class="bubble red">
+            <p>食肉・鶏卵を</p>
+            <p>合計{{ otoku[3] }}円</p>
+            <p>お得に購入しました！</p>
+        </div>
+        <div class="bubble blue">
+            <p>魚介類を</p>
+            <p>合計{{ otoku[2] }}円</p>
+            <p>お得に購入しました！</p>
+        </div>
+    </div>
+
+
     <div class="grid4">
         <div id="area1" class="hanabatake">
             <div class="otoku_header">
@@ -26,30 +51,6 @@
             </div>
         </div>
     </div>
-
-    <div class="bubble_box">
-        <div class="bubble green">
-            <p>野菜を</p>
-            <p>合計{{ otoku[0] }}円</p>
-            <p>お得に購入しました！</p>
-        </div>
-        <div class="bubble gray">
-            <p>加工食品を</p>
-            <p>合計{{ otoku[1] }}円</p>
-            <p>お得に購入しました！</p>
-        </div>
-        <div class="bubble red">
-            <p>食肉・鶏卵を</p>
-            <p>合計{{ otoku[3] }}円</p>
-            <p>お得に購入しました！</p>
-        </div>
-        <div class="bubble blue">
-            <p>魚介類を</p>
-            <p>合計{{ otoku[2] }}円</p>
-            <p>お得に購入しました！</p>
-        </div>
-    </div>
-
 
     <!--script src="https://cdn.jsdelivr.net/npm/chart.js"></script-->
 
@@ -90,6 +91,7 @@
         image4.style.top = "35px";//題名分あけておく
         image4.style.left = "0px";
         document.getElementById("area4").appendChild(image4);
+
     </script>
 </main>
 

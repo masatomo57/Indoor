@@ -5,22 +5,22 @@
 <div class="chartpage">
     <div class="chartsidebar">
         <nav class="chartnav">
-            <h2>野菜</h2>
+            <h2><span class="crayon-green">野菜</span></h2>
             <ul>
                 <li><a href="/charts/cabbage">キャベツ</a></li>
-                <li><a href="/charts/greenonion">ねぎ</a></li>
                 <li><a href="/charts/lettuce">レタス</a></li>
-                <li><a href="/charts/potato">ばれいしょ</a></li>
-                <li><a href="/charts/onion">たまねぎ</a></li>
-                <li><a href="/charts/cucumber">きゅうり</a></li>
                 <li><a href="/charts/tomato">トマト</a></li>
-                <li><a href="/charts/spinach">ほうれんそう</a></li>
+                <li><a href="/charts/onion">たまねぎ</a></li>
                 <li><a href="/charts/carrot">にんじん</a></li>
+                <li><a href="/charts/greenonion">ねぎ</a></li>
                 <li><a href="/charts/chinesecabbage">はくさい</a></li>
                 <li><a href="/charts/raddish">だいこん</a></li>
+                <li><a href="/charts/cucumber">きゅうり</a></li>
+                <li><a href="/charts/potato">ばれいしょ</a></li>
                 <li><a href="/charts/eggplant">なす</a></li>
+                <li><a href="/charts/spinach">ほうれんそう</a></li>
             </ul>
-            <h2>加工食品</h2>
+            <h2><span class="crayon-yellow">加工食品</span></h2>
             <ul>
                 <li><a href="/charts/bread">食パン</a></li>
                 <li><a href="/charts/instantnoodle">即席めん</a></li>
@@ -39,7 +39,7 @@
                 <li><a href="/charts/cannedtuna">まぐろ缶詰</a></li>
                 <li><a href="/charts/butter">バター</a></li>
             </ul>
-            <h2>食肉・鶏卵</h2>
+            <h2><span class="crayon-red">食肉・鶏卵</span></h2>
             <ul>
                 <li><a href="/charts/importedbeef">輸入牛肉（冷蔵ロース）</a></li>
                 <li><a href="/charts/domesticbeef">国産牛肉（冷蔵ロース）</a></li>
@@ -47,12 +47,14 @@
                 <li><a href="/charts/chicken">鶏肉（もも肉）</a></li>
                 <li><a href="/charts/egg">鶏卵 サイズ混合・10個入り）</a></li>
             </ul>
-            <h2>魚介類</h2>
+            <h2><span class="crayon-blue">魚介類</span></h2>
             <ul>
                 <li><a href="/charts/tuna">まぐろ</a></li>
                 <li><a href="/charts/shrimp">えび</a></li>
                 <li><a href="/charts/yellowtail">ぶり</a></li>
                 <li><a href="/charts/salmon">さけ</a></li>
+                <br>
+                <br>
             </ul>
         </nav>
     </div>
@@ -62,7 +64,6 @@
             <canvas id="chart" class="canvas"></canvas>
         </div>
     </div>
-
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -113,7 +114,7 @@
                         display: true,
                         align: "end",
                         font: {size: 30},
-                        text: "{{name}}",
+                        text: `{% if last_price is not none %}{{name}}  -   最新価格 {{last_price}} 円{% if name == 'キャベツ' or name == 'レタス'%} / 玉{% elif name == 'トマト' or name == 'たまねぎ' or name == 'はくさい' or name == 'ばれいしょ' or name == '即席めん'%} / 個{% elif name == 'にんじん' or name == 'ねぎ' or name == 'だいこん' or name == 'きゅうり' or name == 'なす' or name == 'ほうれんそう' %} / 本{% elif name == '食パン' %} / 袋(370g){% elif name == 'ゆでうどん' %} / 袋(200g){% elif name == '小麦粉' or name == '食用油（キャノーラ油）' or name == '食用油（サラダ油）'%} / kg{% elif name == '牛乳' %} / パック(1L){% elif name == 'チーズ' %} / 箱(135g){% elif name == '豆腐' %} / 丁(350g){% elif name == 'マーガリン' or name == 'かまぼこ'%} / 100g{% elif name == 'マヨネーズ' %} / 本(450g){% elif name == 'しょう油' %} / 本(1kg){% elif name == 'みそ' %} / 袋(750g){% elif name == 'まぐろ缶詰' %} / 個(80g){% elif name == 'バター' %} / 200g{% endif %}{% else %}{{name}}{% endif %}`,
                     },
                     legend: {
                         display: false,
