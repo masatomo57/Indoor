@@ -7,8 +7,8 @@
                 padding-right: 70px;
             }
             .col-md-6.offset-md-3 {
-                background-color: #fff; /* 背景色を設定 */
-                background-image: url('/static/kakeibo.png'); /* 背景画像を追加 */
+                background-color: #a7d4a7; /* 背景色を設定 */
+                /*background-image: url('/static/kakeibo.png'); /* 背景画像を追加 */
                 background-repeat: no-repeat;
                 background-size: cover;
                 background-position: center center;
@@ -161,7 +161,7 @@
         &nbsp;〜&nbsp;
         <input type="date" id="last_date" name="last_date">
         &nbsp;&nbsp;
-        <button id="display_btn" type="submit">指定期間表示</button>
+        <button id="display_btn" class="btn-primary btn-sm" type="submit">指定期間表示</button>
     </form>
     <table id="kakei_tb" class="container" style="width: 50%;">
         <tr>
@@ -180,8 +180,8 @@
             <td>{{ data[2] }}</td>
             <td>{{ data[3] }}</td>
             <td>{{ data[4] }}</td>
-            <td><button type="button" onclick="deleteData('{{data[0]}}', '{{data[1]}}', '{{data[2]}}','{{data[3]}}','{{data[4]}}')">削除</button></td>
-            <td><button type="button" onclick="editData('{{data[0]}}', '{{data[1]}}', '{{data[2]}}','{{data[3]}}','{{data[4]}}')">編集</button></td>
+            <td><button type="button" class="btn-primary btn-sm" onclick="deleteData('{{data[0]}}', '{{data[1]}}', '{{data[2]}}','{{data[3]}}','{{data[4]}}')">削除</button></td>
+            <td><button type="button" class="btn-primary btn-sm" onclick="editData('{{data[0]}}', '{{data[1]}}', '{{data[2]}}','{{data[3]}}','{{data[4]}}')">編集</button></td>
         </tr>
         {% endfor %}
     </table>
