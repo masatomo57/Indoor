@@ -144,6 +144,6 @@ def otoku(username):
     return yasai_otoku_price, kakou_otoku_price, sakana_otoku_price, niku_otoku_price, total_otoku_price
 
 
-user_name = 'kk'
-ans = otoku(user_name)
-print(ans)
+#user_name = 'kk'
+#ans = otoku(user_name)
+#print(ans)
