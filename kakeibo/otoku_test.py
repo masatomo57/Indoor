@@ -30,6 +30,10 @@ def otoku(username):
     total_otoku_price = 0
 
     otoku_price = 0
+    point_yasai = 0
+    point_kakou = 0
+    point_sakana = 0
+    point_niku = 0
 
     for i in range(len(userskakeibo)):
         #家計簿の品目
@@ -45,16 +49,19 @@ def otoku(username):
                 #csvが古い年代から新しい年代にソートされている前提
                 csv_times=yasai_data.index[j].to_pydatetime()
                 if db_times < csv_times:
+                    #ポイント計算
+                    if yasai_data.at[yasai_data.index[j-1],item_name]-yasai_data.at[yasai_data.index[j],item_name] >0:
+                        point_yasai +=1
                     if np.isnan(yasai_data.at[yasai_data.index[j],item_name]) == True:
-                        print(f'{item_name}はお得を計算できなかった')
+                        #print(f'{item_name}はお得を計算できなかった')
                         break
                     else:
                         if userskakeibo[i][4] == None:
-                            print('gramなし')
+                            #print('gramなし')
                             otoku_price = yasai_data.at[yasai_data.index[j],item_name] - (userskakeibo[i][2] / userskakeibo[i][3])
                             otoku_price = userskakeibo[i][3] * otoku_price
                         else:
-                            print('gramあり')
+                            #print('gramあり')
                             otoku_price = yasai_data.at[yasai_data.index[j],item_name]*(userskakeibo[i][4]/il.yasai[item_name]) - (userskakeibo[i][2] / userskakeibo[i][3])
                             otoku_price = userskakeibo[i][3] * otoku_price
                         '''
@@ -74,6 +81,9 @@ def otoku(username):
                 csv_times=kakou_data.index[j].to_pydatetime()
                 #csvが古い年代から新しい年代にソートされている前提
                 if db_times < csv_times:
+                    #ポイント計算
+                    if kakou_data.at[kakou_data.index[j-1],item_name] - kakou_data.at[kakou_data.index[j],item_name] >0:
+                        point_kakou +=1
                     if np.isnan(kakou_data.at[kakou_data.index[j],item_name]) == True:
                         break
                     else:
@@ -93,6 +103,9 @@ def otoku(username):
                 csv_times=sakana_data.index[j].to_pydatetime()
                 #csvが古い年代から新しい年代にソートされている前提
                 if db_times < csv_times:
+                    #ポイント計算
+                    if sakana_data.at[sakana_data.index[j-1],item_name] -sakana_data.at[sakana_data.index[j],item_name] >0:
+                        point_sakana +=1
                     if np.isnan(sakana_data.at[sakana_data.index[j],item_name]) == True:
                         break
                     else:
@@ -112,6 +125,9 @@ def otoku(username):
                 csv_times=niku_data.index[j].to_pydatetime()
                 #csvが古い年代から新しい年代にソートされている前提
                 if db_times < csv_times:
+                    #ポイント計算
+                    if niku_data.at[niku_data.index[j-1],item_name] -niku_data.at[niku_data.index[j],item_name] >0:
+                        point_niku += 1
                     if np.isnan(niku_data.at[niku_data.index[j],item_name]) == True:
                         break
                     else:
@@ -141,7 +157,7 @@ def otoku(username):
     print(f'niku:{niku_otoku_price}')
     print(f'total:{total_otoku_price}')
     '''
-    return yasai_otoku_price, kakou_otoku_price, sakana_otoku_price, niku_otoku_price, total_otoku_price
+    return yasai_otoku_price, kakou_otoku_price, sakana_otoku_price, niku_otoku_price, total_otoku_price, point_yasai, point_kakou, point_sakana, point_niku
 
 
 #user_name = 'kk'
