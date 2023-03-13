@@ -147,3 +147,7 @@ def otoku(username):
 #user_name = 'kk'
 #ans = otoku(user_name)
 #print(ans)
+<<<<<<< HEAD
+=======
+
+>>>>>>> 84cf39eb79e135036d91f7992eff8263846d7a04
