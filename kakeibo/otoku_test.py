@@ -111,7 +111,7 @@ def otoku(username):
             for j in range(len(niku_data)):
                 csv_times=niku_data.index[j].to_pydatetime()
                 #csvが古い年代から新しい年代にソートされている前提
-                if db_times < niku_data.index[j]:
+                if db_times < csv_times:
                     if np.isnan(niku_data.at[niku_data.index[j],item_name]) == True:
                         break
                     else:
