@@ -717,6 +717,8 @@ def thismonthdata():
 @login_required
 def register():
     if request.method == "POST":
+        if request.form.get("submit") == "test0":
+            return redirect("/test0")
         if request.form.get("submit") == "test1":
             return redirect("/test1")
         elif request.form.get("submit") == "test2":
@@ -727,6 +729,14 @@ def register():
             return redirect("/test4")
     else:
         return render_template("register.html",database=thismonthdata())
+
+@app.route("/test0", methods=["POST"])
+@login_required
+def test0():
+    # reload専用
+    print("ここまで来た")
+    return render_template('register.html', database=thismonthdata())
+
 
 
 @app.route("/test1", methods=["POST"])
@@ -750,14 +760,14 @@ def test1():
     result = db.execute("SELECT * FROM test_buying WHERE user_id = ? AND item = ? AND transacted = ?", (session["user_id"], regist_name, regist_date)).fetchone()
 
     if result:
-        # error="すでにデータが登録されている可能性があります。"
+        error="すでにデータが登録されている可能性があります。"
         if not regist_gram:
             regist_gram = None
         db.execute("UPDATE test_buying SET price = price + ?, shares = shares + ?, gram = ? WHERE user_id = ? AND item = ? AND transacted = ?", (regist_price,regist_quantity,regist_gram,session["user_id"],regist_name,regist_date))
 
-    if regist_price:
-        regist_sum = int(float(regist_price) * tax)
-
+    #if regist_price:
+    #    regist_sum = int(float(regist_price) * tax)
+    # sum(カラム)はいらないので、後で消したい。
     if not result:
         if not regist_gram:
             db.execute("INSERT INTO test_buying (user_id,item,price,shares,transacted,sum) VALUES (?,?,?,?,?,?)",(session["user_id"],regist_name,regist_price,regist_quantity,regist_date,regist_price))
@@ -826,7 +836,7 @@ def test4():
     cur.execute('SELECT transacted,item,price,shares,gram FROM test_buying WHERE user_id = ? AND transacted BETWEEN ? AND ? ORDER BY transacted ASC, item ASC', (session["user_id"], start_date, last_date))
     database = cur.fetchall()
     conn.close()
-    return render_template('register.html', database=database)
+    return render_template('register.html', database=database, error=None)
 
 
 @app.route("/login", methods=["GET", "POST"])
