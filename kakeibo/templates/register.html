@@ -401,6 +401,7 @@
                         console.log(xhr.responseText);
                         //テーブルから該当行を削除して、更新されたデータを表示する
                         tr.remove();
+                        location.href = '/register';
                         alert('データが編集されました。');
                     }
                 };

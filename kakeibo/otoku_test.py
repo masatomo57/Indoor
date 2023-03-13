@@ -11,112 +11,12 @@ import numpy as np
 import datetime
 
 
-'''
-def weekly_otoku_calculate(filename, kind, database):
-    conn = sqlite3.connect(database)
-    db = conn.cursor()
-
-    users = db.execute("SELECT username FROM users").fetchall()
-    print(users)
-
-    otoku_price = 0
-
-    data=read_csv(filename, header=0)
-    print('doko')
-    print(data)
-    items=data.columns[2:]
-    print(items)
-
-    conn.close()
-
-def monthly_otoku_calculate(filename, kind, database):
-    user_id = 'kk'
-    conn = sqlite3.connect(database)
-    db = conn.cursor()
-
-    users = db.execute("SELECT username FROM users").fetchall()
-    print(users)
-
-    otoku_price = 0
-
-    #data=read_csv(filename, header=0,index_col='DATE')
-    data=read_csv(filename, header=0,index_col='DATE',parse_dates=True)
-    print(data)
-    print('check1')
-    print(data.index)
-    print(data.at[data.index[0],'食パン'])
-    print(type(data.at[data.index[0],'食パン']))
-    #print(data.)
-    if data.index[0]>data.index[1]:
-        print('a')
-    else:
-        print('b')
-    #data2=read_csv(filename, header=0,index_col='食パン')
-    #print(data2)
-
-    #items2=data.columns[:1]
-    #print(items2)
-
-    items=data.columns[0:]
-    print(items)#touple
-    print(items[0])
-    if items[0] == "食パン":
-        print("ok")
-    for i in range(len(items)):
-        if items[i] in il.yasai:
-            print(f'{items[i]}はyasaiです')
-        elif items[i] in il.kakou:
-            print(f'{items[i]}はkakouです')
-        elif items[i] in il.sakana:
-            print(f'{items[i]}はsakanaです')
-        elif items[i] in il.niku:
-            print(f'{items[i]}はnikuです')
-        else:
-            print(f'{items[i]}はお得を比較できません')
-
-    kakei_data = db.execute('SELECT item,transacted,sum FROM test_buying WHERE user_id = ?', (user_id,)).fetchall()
-    print('check2')
-    #print(type(datetime.datetime.strptime(kakei_data[0][1])))
-
-    dt = datetime.datetime.strptime(kakei_data[0][1],'%Y-%m-%d')
-    print(dt)
-    print('check3')
-    print(kakei_data[0][2])
-    print(type(kakei_data[0][2]))
-    if data.at[data.index[0],'食パン'] > kakei_data[0][2]:
-        print('買ったトマトはデータの食パンより安い')
-    else:
-        print('損してる')
-
-    if dt >data.index[0]:
-        print(f'{data.index[0]}の方が前')
-    else:
-        print(f'{data.index[0]}の方が後')
-
-    for i in range(len(kakei_data)):
-        if kakei_data[i][0] in il.yasai:
-            print(f'{kakei_data[i][0]}はyasaiです')
-        elif kakei_data[i][0] in il.kakou:
-            print(f'{kakei_data[i][0]}はkakouです')
-        elif kakei_data[i][0] in il.sakana:
-            print(f'{kakei_data[i][0]}はsakanaです')
-        elif kakei_data[i][0] in il.niku:
-            print(f'{kakei_data[i][0]}はnikuです')
-        else:
-            print(f'{kakei_data[i][0]}はお得を比較できません')
-    print(kakei_data[0][1])
-    hi = kakei_data[0][1]
-    print(hi[0])
-    #if hi[2] ==
-
-    conn.close()
-'''
-
 def otoku(username):
     user_id = username
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
-    userskakeibo = db.execute('SELECT item,transacted,sum,shares FROM test_buying WHERE user_id = ?', (user_id,)).fetchall()
+    userskakeibo = db.execute('SELECT item,transacted,sum,shares,gram FROM test_buying WHERE user_id = ?', (user_id,)).fetchall()
+    print(userskakeibo)
 
     yasai_data=read_csv("yasai_converted.csv", header=0,index_col='DATE',parse_dates=True)
     kakou_data=read_csv("kakou_converted.csv", header=0,index_col='DATE',parse_dates=True)
@@ -132,10 +32,8 @@ def otoku(username):
     otoku_price = 0
 
     for i in range(len(userskakeibo)):
-        #print(f'i:{i}')
         #家計簿の品目
         item_name = userskakeibo[i][0]
-        #print(f'item_name:{item_name}')
         #品目を買った日付
         db_times = datetime.datetime.strptime(userskakeibo[i][1],'%Y-%m-%d')
         #print(f'db_times:{db_times}')
@@ -145,12 +43,20 @@ def otoku(username):
             #野菜csvのどの時間と比較すべきか探す
             for j in range(len(yasai_data)):
                 #csvが古い年代から新しい年代にソートされている前提
-                if db_times < yasai_data.index[j]:
+                csv_times=yasai_data.index[j].to_pydatetime()
+                if db_times < csv_times:
                     if np.isnan(yasai_data.at[yasai_data.index[j],item_name]) == True:
+                        print(f'{item_name}はお得を計算できなかった')
                         break
                     else:
-                        otoku_price = yasai_data.at[yasai_data.index[j],item_name] - (userskakeibo[i][2] / userskakeibo[i][3])
-                        otoku_price = userskakeibo[i][3] * otoku_price
+                        if userskakeibo[i][4] == None:
+                            print('gramなし')
+                            otoku_price = yasai_data.at[yasai_data.index[j],item_name] - (userskakeibo[i][2] / userskakeibo[i][3])
+                            otoku_price = userskakeibo[i][3] * otoku_price
+                        else:
+                            print('gramあり')
+                            otoku_price = yasai_data.at[yasai_data.index[j],item_name]*(userskakeibo[i][4]/il.yasai[item_name]) - (userskakeibo[i][2] / userskakeibo[i][3])
+                            otoku_price = userskakeibo[i][3] * otoku_price
                         '''
                         print(f'yasai_name:{item_name}')
                         print(f'kakeibo_price:{userskakeibo[i][2]}')
@@ -159,49 +65,64 @@ def otoku(username):
                         print(f'otoku_price:{otoku_price}')
                         '''
                         yasai_otoku_price += otoku_price
-                    break
+                        break
                     #otoku_price = 0
         #商品が加工食品なら加工食品データと比較
         elif item_name in il.kakou:
             #加工csvのどの時間と比較すべきか探す
             for j in range(len(kakou_data)):
+                csv_times=kakou_data.index[j].to_pydatetime()
                 #csvが古い年代から新しい年代にソートされている前提
-                if db_times < kakou_data.index[j]:
+                if db_times < csv_times:
                     if np.isnan(kakou_data.at[kakou_data.index[j],item_name]) == True:
                         break
                     else:
-                        otoku_price = kakou_data.at[kakou_data.index[j],item_name] - (userskakeibo[i][2] / userskakeibo[i][3])
-                        otoku_price = userskakeibo[i][3] * otoku_price
+                        if userskakeibo[i][4] == None:
+                            otoku_price = kakou_data.at[kakou_data.index[j],item_name] - (userskakeibo[i][2] / userskakeibo[i][3])
+                            otoku_price = userskakeibo[i][3] * otoku_price
+                        else:
+                            otoku_price = kakou_data.at[kakou_data.index[j],item_name]*(userskakeibo[i][4]/il.kakou[item_name]) - (userskakeibo[i][2] / userskakeibo[i][3])
+                            otoku_price = userskakeibo[i][3] * otoku_price
                         kakou_otoku_price += otoku_price
-                    break
+                        break
                     #otoku_price = 0
         #商品が魚なら魚データと比較
         elif item_name in il.sakana:
             #加工csvのどの時間と比較すべきか探す
             for j in range(len(sakana_data)):
+                csv_times=sakana_data.index[j].to_pydatetime()
                 #csvが古い年代から新しい年代にソートされている前提
-                if db_times < sakana_data.index[j]:
+                if db_times < csv_times:
                     if np.isnan(sakana_data.at[sakana_data.index[j],item_name]) == True:
                         break
                     else:
-                        otoku_price = sakana_data.at[sakana_data.index[j],item_name] - (userskakeibo[i][2] / userskakeibo[i][3])
-                        otoku_price = userskakeibo[i][3] * otoku_price
+                        if userskakeibo[i][4] == None:
+                            otoku_price = sakana_data.at[sakana_data.index[j],item_name] - (userskakeibo[i][2] / userskakeibo[i][3])
+                            otoku_price = userskakeibo[i][3] * otoku_price
+                        else:
+                            otoku_price = sakana_data.at[sakana_data.index[j],item_name]*(userskakeibo[i][4]/il.sakana[item_name]) - (userskakeibo[i][2] / userskakeibo[i][3])
+                            otoku_price = userskakeibo[i][3] * otoku_price
                         sakana_otoku_price += otoku_price
-                    break
+                        break
                     #otoku_price = 0
         #商品が肉なら肉データと比較
         elif item_name in il.niku:
             #加工csvのどの時間と比較すべきか探す
             for j in range(len(niku_data)):
+                csv_times=niku_data.index[j].to_pydatetime()
                 #csvが古い年代から新しい年代にソートされている前提
-                if db_times < niku_data.index[j]:
+                if db_times < csv_times:
                     if np.isnan(niku_data.at[niku_data.index[j],item_name]) == True:
                         break
                     else:
-                        otoku_price = niku_data.at[niku_data.index[j],item_name] - (userskakeibo[i][2] / userskakeibo[i][3])
-                        otoku_price = userskakeibo[i][3] * otoku_price
+                        if userskakeibo[i][4] == None:
+                            otoku_price = niku_data.at[niku_data.index[j],item_name] - (userskakeibo[i][2] / userskakeibo[i][3])
+                            otoku_price = userskakeibo[i][3] * otoku_price
+                        else:
+                            otoku_price = niku_data.at[niku_data.index[j],item_name]*(userskakeibo[i][4]/il.niku[item_name]) - (userskakeibo[i][2] / userskakeibo[i][3])
+                            otoku_price = userskakeibo[i][3] * otoku_price
                         niku_otoku_price += otoku_price
-                    break
+                        break
                     #otoku_price = 0
     #データベースを閉じる
     conn.close()
@@ -223,12 +144,6 @@ def otoku(username):
     return yasai_otoku_price, kakou_otoku_price, sakana_otoku_price, niku_otoku_price, total_otoku_price
 
 
-
-# 毎週水曜日0時に実行する。前週月曜日から日曜日までのお得を計算する。
-#weekly_otoku_calculate("yasai.csv", "野菜", "kakeibo.db")
-# 毎月1日0時に実行する。先月1日から末日までのお得を計算する。
-#monthly_otoku_calculate("kakou_converted.csv", "加工食品", "kakeibo.db")
-
 #user_name = 'kk'
-#otoku(user_name)
-
+#ans = otoku(user_name)
+#print(ans)

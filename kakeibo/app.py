@@ -116,6 +116,7 @@ def cabbage():
     last_price = data["lastprice"]
     if last_price != None:
         last_price = int(float(last_price))
+    '''
     print(label_list)
     print(price_list)
     #print(type(label_list[0]))
@@ -125,7 +126,7 @@ def cabbage():
     conn.close()
     print(type(plot_data))
     print(plot_data)
-    '''
+    
     print(len(plot_data))
     for i in range(len(plot_data)):
         print(plot_data[i])
@@ -717,26 +718,16 @@ def thismonthdata():
 @login_required
 def register():
     if request.method == "POST":
-        if request.form.get("submit") == "test0":
-            return redirect("/test0")
-        if request.form.get("submit") == "test1":
-            return redirect("/test1")
-        elif request.form.get("submit") == "test2":
+        if request.form.get("submit") == "test2":
             return redirect("/test2")
+        elif request.form.get("submit") == "test1":
+            return redirect("/test1")
         elif request.form.get("submit") == "test3":
             return redirect("/test3")
         elif request.form.get("submit") == "test4":
             return redirect("/test4")
     else:
         return render_template("register.html",database=thismonthdata())
-
-@app.route("/test0", methods=["POST"])
-@login_required
-def test0():
-    # reload専用
-    print("ここまで来た")
-    return render_template('register.html', database=thismonthdata())
-
 
 
 @app.route("/test1", methods=["POST"])
@@ -836,7 +827,8 @@ def test4():
     cur.execute('SELECT transacted,item,price,shares,gram FROM test_buying WHERE user_id = ? AND transacted BETWEEN ? AND ? ORDER BY transacted ASC, item ASC', (session["user_id"], start_date, last_date))
     database = cur.fetchall()
     conn.close()
-    return render_template('register.html', database=database, error=None)
+    return jsonify(database)
+    # return render_template('register.html', database=database, error=None)
 
 
 @app.route("/login", methods=["GET", "POST"])
