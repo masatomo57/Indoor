@@ -116,6 +116,7 @@ def cabbage():
     last_price = data["lastprice"]
     if last_price != None:
         last_price = int(float(last_price))
+    '''
     print(label_list)
     print(price_list)
     #print(type(label_list[0]))
@@ -125,7 +126,7 @@ def cabbage():
     conn.close()
     print(type(plot_data))
     print(plot_data)
-    '''
+    
     print(len(plot_data))
     for i in range(len(plot_data)):
         print(plot_data[i])
