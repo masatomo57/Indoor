@@ -7,8 +7,8 @@
                 padding-right: 70px;
             }
             .col-md-6.offset-md-3 {
-                background-color: #fff; /* 背景色を設定 */
-                background-image: url('/static/kakeibo.png'); /* 背景画像を追加 */
+                background-color: #a7d4a7; /* 背景色を設定 */
+                /*background-image: url('/static/kakeibo.png'); /* 背景画像を追加 */
                 background-repeat: no-repeat;
                 background-size: cover;
                 background-position: center center;
@@ -117,7 +117,7 @@
                     itemInput.style.borderWidth = "3px";
                   } else if (itemInput.value == "食パン" || itemInput.value == "即席めん" || itemInput.value == "ゆでうどん" || itemInput.value == "小麦粉" || itemInput.value == "牛乳" || itemInput.value == "チーズ" || itemInput.value == "豆腐" || itemInput.value == "バター" || itemInput.value == "食用油(キャノーラ油)" || itemInput.value == "食用油(サラダ油)" || itemInput.value == "マーガリン" || itemInput.value == "マヨネーズ" || itemInput.value == "しょう油" || itemInput.value == "みそ" || itemInput.value == "かまぼこ" || itemInput.value == "まぐろ缶詰"){
                     itemInput.style.borderColor = "#ffbb2f";
-                    itemInput.style.borderWidth = "5px";
+                    itemInput.style.borderWidth = "3px";
                   } else {
                     itemInput.style.borderColor = "white";
                   }
@@ -161,7 +161,7 @@
         &nbsp;〜&nbsp;
         <input type="date" id="last_date" name="last_date">
         &nbsp;&nbsp;
-        <button id="display_btn" type="submit">指定期間表示</button>
+        <button id="display_btn" class="btn-primary btn-sm" type="submit">指定期間表示</button>
     </form>
     <table id="kakei_tb" class="container" style="width: 50%;">
         <tr>
@@ -180,8 +180,8 @@
             <td>{{ data[2] }}</td>
             <td>{{ data[3] }}</td>
             <td>{{ data[4] }}</td>
-            <td><button type="button" onclick="deleteData('{{data[0]}}', '{{data[1]}}', '{{data[2]}}','{{data[3]}}','{{data[4]}}')">削除</button></td>
-            <td><button type="button" onclick="editData('{{data[0]}}', '{{data[1]}}', '{{data[2]}}','{{data[3]}}','{{data[4]}}')">編集</button></td>
+            <td><button type="button" class="btn-primary btn-sm" onclick="deleteData('{{data[0]}}', '{{data[1]}}', '{{data[2]}}','{{data[3]}}','{{data[4]}}')">削除</button></td>
+            <td><button type="button" class="btn-primary btn-sm" onclick="editData('{{data[0]}}', '{{data[1]}}', '{{data[2]}}','{{data[3]}}','{{data[4]}}')">編集</button></td>
         </tr>
         {% endfor %}
     </table>

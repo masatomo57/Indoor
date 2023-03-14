@@ -94,26 +94,26 @@ def read_csv(filename, item):
 def index():
     otoku = otoku_test.otoku(session["user_id"])
     #野菜のホーム画面データ
-    #num_list,judge=otoku_show.otoku_show_num(28711)
-    num_list,judge=otoku_show.otoku_show_num(otoku[0])
+    num_list,judge=otoku_show.otoku_show_num(28711)
+    # num_list,judge=otoku_show.otoku_show_num(otoku[0])
     print(f'num_list:{num_list},judge:{judge}')
     level_hana=otoku_show.show_hana(num_list)
 
     #加工食品のホーム画面データ
-    #num_list,judge=otoku_show.otoku_show_num(98722)
-    num_list,judge=otoku_show.otoku_show_num(otoku[1])
+    num_list,judge=otoku_show.otoku_show_num(98722)
+    # num_list,judge=otoku_show.otoku_show_num(otoku[1])
     print(f'num_list:{num_list},judge:{judge}')
     level_stone=otoku_show.show_stone(num_list)
 
     #魚介のホーム画面データ
-    #num_list,judge=otoku_show.otoku_show_num(999999)
-    num_list,judge=otoku_show.otoku_show_num(otoku[2])
+    num_list,judge=otoku_show.otoku_show_num(999999)
+    # num_list,judge=otoku_show.otoku_show_num(otoku[2])
     print(f'num_list:{num_list},judge:{judge}')
     level_fish=otoku_show.show_fish(num_list)
 
     #肉食のホーム画面データ
-    #num_list,judge=otoku_show.otoku_show_num(4579)
-    num_list,judge=otoku_show.otoku_show_num(otoku[3])
+    num_list,judge=otoku_show.otoku_show_num(4579)
+    # num_list,judge=otoku_show.otoku_show_num(otoku[3])
     print(f'num_list:{num_list},judge:{judge}')
     level_animal=otoku_show.show_animal(num_list)
 
