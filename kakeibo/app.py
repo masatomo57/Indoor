@@ -74,19 +74,19 @@ def read_csv(filename, item):
 def index():
     otoku = otoku_test.otoku(session["user_id"])
     #野菜のホーム画面データ
-    num_list,judge=otoku_show.otoku_show_num(28711)
+    num_list,judge=otoku_show.otoku_show_num(287)
     # num_list,judge=otoku_show.otoku_show_num(otoku[0])
     print(f'num_list:{num_list},judge:{judge}')
     level_hana=otoku_show.show_hana(num_list)
 
     #加工食品のホーム画面データ
-    num_list,judge=otoku_show.otoku_show_num(98722)
+    num_list,judge=otoku_show.otoku_show_num(9872)
     # num_list,judge=otoku_show.otoku_show_num(otoku[1])
     print(f'num_list:{num_list},judge:{judge}')
     level_stone=otoku_show.show_stone(num_list)
 
     #魚介のホーム画面データ
-    num_list,judge=otoku_show.otoku_show_num(999999)
+    num_list,judge=otoku_show.otoku_show_num(9999)
     # num_list,judge=otoku_show.otoku_show_num(otoku[2])
     print(f'num_list:{num_list},judge:{judge}')
     level_fish=otoku_show.show_fish(num_list)
