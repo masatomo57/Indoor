@@ -7,16 +7,12 @@
 {% block main %}
 <main class="container-fluid py-5 text-center">
     <form action="/signup" method="post">
-        <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="Username" type="text">
-        </div>
-        <div class="mb-3">
-            <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password">
-        </div>
-        <div class="mb-3">
-            <input class="form-control mx-auto w-auto" id="confirmation" name="confirmation" placeholder="Password (again)" type="password">
-        </div>
-        <button class="btn btn-primary" type="submit">SignUp</button>
+        {{ form.csrf_token }}
+        <p>{{ form.username.label }} {{ form.username(placeholder="ユーザー名") }}</p>
+        <p>{{ form.password.label }} {{ form.password(placeholder="パスワード") }}</p>
+        <p>{{ form.confirmation.label }} {{ form.confirmation(placeholder="確認用パスワード") }}</p>
+        <br>
+        <p>{{ form.submit() }}</p>
     </form>
 </main>
 {% endblock %}
