@@ -7,13 +7,14 @@
 {% block main %}
 <main class="container-fluid py-5 text-center">
     <form action="/login" method="post">
-        <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="Username" type="text">
-        </div>
-        <div class="mb-3">
-            <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password">
-        </div>
-        <button class="btn btn-primary" type="submit">LogIn</button>
+        {{ form.csrf_token }}
+        <p>{{ form.username.label }} {{ form.username() }}</p>
+        <p>{{ form.password.label }} {{ form.password() }}</p>
+        <p>{{ form.remember_me() }} {{ form.remember_me.label }}<p>
+        <p>{{ form.submit() }}</p>
     </form>
+    {% for message in get_flashed_messages() %}
+        <div class="alert alert-danger my-3">{{ message }}</div>
+    {% endfor %}
 </main>
 {% endblock %}

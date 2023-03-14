@@ -5,6 +5,9 @@ from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
 from helpers import login_required
+from forms import SignUpForm, LoginForm
+from config import BaseConfig
+from flask_wtf.csrf import CSRFProtect
 import csv
 import datetime
 import calendar
@@ -12,9 +15,16 @@ import json
 import sqlite3
 import otoku_test
 import otoku_show
+import secrets
+import logging
+logging.basicConfig()
 
 # Configure application
 app = Flask(__name__)
+
+app.config.from_object(BaseConfig())
+
+app.config['SECRET_KEY'] = BaseConfig.SECRET_KEY # 秘密鍵を設定する
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -23,14 +33,15 @@ app.config["JSON_AS_ASCII"] = False
 # 税率宣言
 tax = 1.1
 
-app.config.from_object('config')
-
 # Configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
+# 秘密鍵を設定する
+app.secret_key = app.config['SECRET_KEY']
 
+csrf = CSRFProtect(app)
 # ブラウザがレスポンスをキャッシュしないようにしている
 @app.after_request
 def after_request(response):
@@ -41,13 +52,22 @@ def after_request(response):
     return response
 
 
+#if __name__ == "__main__":
+#    app.run(debug=True)
+
+
 # データベースを呼び出す関数の定義
 def get_db():
     if 'db' not in g:
         g.db = sqlite3.connect('kakeibo.db')
     return g.db
 
-
+"""
+@app.teardown_appcontext
+def close_db(error):
+    if 'db' in g:
+        g.db.close()
+"""
 
 # yasai.csvを読み込む関数の定義
 def read_csv(filename, item):
@@ -126,7 +146,7 @@ def cabbage():
     conn.close()
     print(type(plot_data))
     print(plot_data)
-    
+
     print(len(plot_data))
     for i in range(len(plot_data)):
         print(plot_data[i])
@@ -838,37 +858,43 @@ def login():
     # Forget any user_id
     session.clear()
 
+    form = LoginForm()
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
+        # if form.validate_on_submit():
+            db = get_db()
 
-        db = get_db()
+            username = form.username.data
+            password = form.password.data
 
-        # Ensure username was submitted
-        if not request.form.get("username"):
-            return redirect("/login")
+            # Ensure username was submitted
+            if not username:
+                return redirect("/login")
 
-        # Ensure password was submitted
-        elif not request.form.get("password"):
-            return redirect("/login")
+            # Ensure password was submitted
+            elif not password:
+                return redirect("/login")
 
-        # Query database for username
-        rows = db.execute("SELECT * FROM users WHERE username = ?", (request.form.get("username"),)).fetchall()
-        rows_count = db.execute("SELECT count(*) FROM users WHERE username = ?", (request.form.get("username"),)).fetchall()
+            # Query database for username
+            rows = db.execute("SELECT * FROM users WHERE username = ?", (username,)).fetchall()
+            rows_count = db.execute("SELECT count(*) FROM users WHERE username = ?", (username,)).fetchall()
 
-        # Ensure username exists and password is correct
-        if rows_count[0][0] != 1 or not check_password_hash(rows[0][2], request.form.get("password")):
-            return redirect("/login")
-        # Remember which user has logged in
-        session["user_id"] = rows[0][1]
+            # Ensure username exists and password is correct
+            if rows_count[0][0] != 1 or not check_password_hash(rows[0][2], password):
+                return redirect("/login")
+            # Remember which user has logged in
+            session["user_id"] = rows[0][1]
 
-        db.close()
+            db.close()
 
-        # Redirect user to home page
-        return redirect("/")
+            # Redirect user to home page
+            return redirect("/")
+        #else:
+        #    return redirect("/login")
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
-        return render_template("login.html")
+        return render_template("login.html",form=form)
 
 
 @app.route("/logout")
@@ -884,25 +910,35 @@ def logout():
 
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
+    form = SignUpForm()
     if request.method == "POST":
+        if form.validate_on_submit():
+            db = get_db()
 
-        db = get_db()
+            username = form.username.data
+            password = form.password.data
+            confirmation = form.confirmation.data
 
-        duplication=db.execute("SELECT id FROM users WHERE username=?", (request.form.get("username"),)).fetchall()
-        if request.form.get("username")=="" or request.form.get("password")=="":
-            return redirect("/signup")
-        elif request.form.get("password")=="" or not request.form.get("password")==request.form.get("confirmation"):
-            return redirect("/signup")
-        elif duplication:
-            return redirect("/signup")
-        else:
-            db.execute("INSERT INTO users (username, hash) VALUES(?, ?)", (request.form.get("username"), generate_password_hash(request.form.get("password"))))
-            db.commit()
-            db.close()
+            duplication=db.execute("SELECT id FROM users WHERE username=?", (username,)).fetchall()
+            if duplication:
+                flash("このユーザー名はすでに登録されています。他のユーザー名でご登録下さい。")
+                return redirect("/signup")
+            else:
+                if username=="" or password=="" or confirmation =="":
+                    return redirect("/signup")
+                elif not password==confirmation:
+                    flash("パスワードが一致していません。")
+                    return redirect("/signup")
+                else:
+                    db.execute("INSERT INTO users (username, hash) VALUES(?, ?)", (username, generate_password_hash(password)))
+                    db.commit()
+                    db.close()
 
-            return redirect("/login")
+                    flash("ユーザー登録に成功しました。")
+                    return redirect("/login")
+
     else:
-        return render_template("signup.html")
+        return render_template("signup.html",form=form)
 
 
 
