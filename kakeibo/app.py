@@ -22,6 +22,7 @@ logging.basicConfig()
 # Configure application
 app = Flask(__name__)
 
+# app.config.from_object('config')
 app.config.from_object(BaseConfig())
 
 app.config['SECRET_KEY'] = BaseConfig.SECRET_KEY # 秘密鍵を設定する
@@ -41,7 +42,7 @@ Session(app)
 # 秘密鍵を設定する
 app.secret_key = app.config['SECRET_KEY']
 
-csrf = CSRFProtect(app)
+# csrf = CSRFProtect(app)
 # ブラウザがレスポンスをキャッシュしないようにしている
 @app.after_request
 def after_request(response):
@@ -939,6 +940,3 @@ def signup():
 
     else:
         return render_template("signup.html",form=form)
-
-
-
