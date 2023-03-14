@@ -52,7 +52,7 @@ nav .navbar-brand .green
 }
 #kakei_tb tr:nth-child(2n+1) {
   /* background: #d2ead2; */
-  background: #ffffff;
+  background: #d2ead2;
 }
 #kakei_tb th, tr, td {
     border: 1px solid;
@@ -259,8 +259,4 @@ a:hover::after{
 .otoku_header {
     font-size: 1.5em;
     color: white;
-}
-
-body {
-    background-color: #d2ead2;
 }
