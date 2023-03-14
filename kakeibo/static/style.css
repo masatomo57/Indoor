@@ -118,7 +118,7 @@ nav .navbar-brand .green
     overflow-x: scroll;
     position: relative;
     color: #008000;
-    /* background-color: rgba(244, 177, 131, 1); */
+    background-color: rgba(244, 177, 131, 1);
 }
 .kakoujou {
     width: 40vw;
