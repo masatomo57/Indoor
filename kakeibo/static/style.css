@@ -51,7 +51,8 @@ nav .navbar-brand .green
     border-spacing: 0;
 }
 #kakei_tb tr:nth-child(2n+1) {
-  background: #d2ead2;
+  /* background: #d2ead2; */
+  background: #ffffff;
 }
 #kakei_tb th, tr, td {
     border: 1px solid;
