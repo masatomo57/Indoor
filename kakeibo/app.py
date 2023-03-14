@@ -862,36 +862,33 @@ def login():
     form = LoginForm()
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
-        # if form.validate_on_submit():
-            db = get_db()
+        db = get_db()
 
-            username = form.username.data
-            password = form.password.data
+        username = form.username.data
+        password = form.password.data
 
-            # Ensure username was submitted
-            if not username:
-                return redirect("/login")
+        # Ensure username was submitted
+        if not username:
+            return redirect("/login")
 
-            # Ensure password was submitted
-            elif not password:
-                return redirect("/login")
+        # Ensure password was submitted
+        elif not password:
+            return redirect("/login")
 
-            # Query database for username
-            rows = db.execute("SELECT * FROM users WHERE username = ?", (username,)).fetchall()
-            rows_count = db.execute("SELECT count(*) FROM users WHERE username = ?", (username,)).fetchall()
+        # Query database for username
+        rows = db.execute("SELECT * FROM users WHERE username = ?", (username,)).fetchall()
+        rows_count = db.execute("SELECT count(*) FROM users WHERE username = ?", (username,)).fetchall()
 
-            # Ensure username exists and password is correct
-            if rows_count[0][0] != 1 or not check_password_hash(rows[0][2], password):
-                return redirect("/login")
-            # Remember which user has logged in
-            session["user_id"] = rows[0][1]
+        # Ensure username exists and password is correct
+        if rows_count[0][0] != 1 or not check_password_hash(rows[0][2], password):
+            return redirect("/login")
+        # Remember which user has logged in
+        session["user_id"] = rows[0][1]
 
-            db.close()
+        db.close()
 
-            # Redirect user to home page
-            return redirect("/")
-        #else:
-        #    return redirect("/login")
+        # Redirect user to home page
+        return redirect("/")
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
