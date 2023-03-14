@@ -93,6 +93,8 @@ nav .navbar-brand .green
     width: 200px;
     min-width: 200px;
     padding: 10px;
+    background-color: #a7d4a7;
+    color: white;
 }
 
 .chart {
@@ -117,37 +119,63 @@ nav .navbar-brand .green
     margin: 0 auto;
     overflow-x: scroll;
     position: relative;
-    color: #008000;
-    background-color: rgba(244, 177, 131, 1);
+    /* background-color: rgba(244, 177, 131, 1); */
 }
+
+.hanabatake_header {
+    font-size: 1.5em;
+    background-color: #008000;
+    color: white;
+}
+
 .kakoujou {
     width: 40vw;
     text-align: center;
     margin: 0 auto;
     overflow-x: scroll;
     position: relative;
-    background-color: rgba(150, 190, 157, 1);
-    /*color: #ffbb2f;*/
-
+    /* background-color: rgba(150, 190, 157, 1);
+    color: #ffbb2f; */
 }
+
+.kakoujou_header {
+    font-size: 1.5em;
+    background-color: #ffbb2f;
+    color: white;
+}
+
 .suizokukan {
     width: 40vw;
     text-align: center;
     margin: 0 auto;
     overflow-x: scroll;
     position: relative;
-    background-color: rgba(50, 60, 157, 1);
-    /*color: #2a5caa;*/
+    /* background-color: rgba(50, 60, 157, 1);
+    color: #2a5caa; */
 }
+
+.suizokukan_header {
+    font-size: 1.5em;
+    background-color: #2a5caa;
+    color: white;
+}
+
 .zoo {
     width: 40vw;
     text-align: center;
     margin: 0 auto;
     overflow-x: scroll;
     position: relative;
-    background-color: rgba(50, 190, 57, 1);
-    /*color: #ef4868;*/
+    /* background-color: rgba(50, 190, 57, 1);
+    color: #ef4868; */
 }
+
+.zoo_header {
+    font-size: 1.5em;
+    background-color: #ef4868;
+    color: white;
+}
+
 .grid4 {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -207,7 +235,7 @@ nav .navbar-brand .green
     text-align: center;
     font-size: 2em;
     color: white;
-    background-color: #999999;
+    background-color: #a7d4a7;
 }
 
 .home-icon {
@@ -256,7 +284,3 @@ a:hover::after{
     width: 100%;
 }
 
-.otoku_header {
-    font-size: 1.5em;
-    color: white;
-}
