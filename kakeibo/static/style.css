@@ -259,3 +259,7 @@ a:hover::after{
     font-size: 1.5em;
     color: white;
 }
+
+body {
+    background-color: #d2ead2;
+}
