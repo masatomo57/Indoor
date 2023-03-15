@@ -754,7 +754,7 @@ def register():
             return redirect("/test4")
     else:
         csrf_token = generate_csrf()
-        return render_template("register.html",database=thismonthdata(),csrf_token=csrf_token)
+        return render_template("register.html",database=thismonthdata(),csrf_token=csrf_token,start=None,last=None)
 
 
 @app.route("/test1", methods=["POST"])
@@ -810,7 +810,7 @@ def test2():
     database = cur.fetchall()
     conn.close()
     csrf_token = generate_csrf()
-    return render_template('register.html', database=database,csrf_token=csrf_token)
+    return render_template('register.html', database=database,csrf_token=csrf_token,start=start_date, last=last_date)
 
 
 @app.route("/test3", methods=["POST"])
@@ -840,8 +840,9 @@ def test3():
 @login_required
 def test4():
      # 編集実行ボタンが押されたときの処理
-    start_date = '2023-03-02'
-    last_date = '2023-03-03'
+    today = datetime.date.today()
+    start_date = today.replace(day=1)
+    last_date = today
     data = request.json
     date = data['date']
     item = data['name']

@@ -5,22 +5,24 @@
 {% endblock %}
 
 {% block main %}
-<div class="mx-auto auth-main">
-    <div class="card auth-login">
-        <header>ユーザー新規登録</header>
-        <section class="container-fluid py-1 text-center">
-            <form method="post" action="/signup">
-                {% for message in get_flashed_messages() %}
-                    <div class="alert alert-danger my-3">{{ message }}</div>
-                {% endfor %}
-                {{ form.csrf_token }}
-                {{ form.username(class="form-control auth-input",placeholder="ユーザー名") }}
-                {{ form.password(class="form-control auth-input",placeholder="パスワード") }}
-                {{ form.confirmation(class="form-control auth-input",placeholder="確認用パスワード") }}
-                <p></p>
-                {{ form.submit(class="btn btn-md btn-primary btn-block auth-btn") }}
-            </form>
-        </section>
+<div class="signup-page">
+    <div class="mx-auto auth-main">
+        <div class="card auth-login">
+            <header>ユーザー新規登録</header>
+            <section class="container-fluid py-1 text-center">
+                <form method="post" action="/signup">
+                    {% for message in get_flashed_messages() %}
+                        <div class="alert alert-danger my-3">{{ message }}</div>
+                    {% endfor %}
+                    {{ form.csrf_token }}
+                    {{ form.username(class="form-control auth-input",placeholder="ユーザー名") }}
+                    {{ form.password(class="form-control auth-input",placeholder="パスワード") }}
+                    {{ form.confirmation(class="form-control auth-input",placeholder="確認用パスワード") }}
+                    <p></p>
+                    {{ form.submit(class="btn btn-md btn-primary btn-block auth-btn") }}
+                </form>
+            </section>
+        </div>
     </div>
 </div>
 {% endblock %}
