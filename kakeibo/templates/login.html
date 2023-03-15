@@ -5,16 +5,23 @@
 {% endblock %}
 
 {% block main %}
-<main class="container-fluid py-5 text-center">
-    <form action="/login" method="post">
-        {{ form.csrf_token }}
-        <p>{{ form.username.label }} {{ form.username() }}</p>
-        <p>{{ form.password.label }} {{ form.password() }}</p>
-        <p>{{ form.remember_me() }} {{ form.remember_me.label }}<p>
-        <p>{{ form.submit() }}</p>
-    </form>
-    {% for message in get_flashed_messages() %}
-        <div class="alert alert-danger my-3">{{ message }}</div>
-    {% endfor %}
-</main>
+
+<div class="mx-auto auth-main">
+    <div class="card auth-login">
+        <header>ログイン</header>
+        <section class="container-fluid py-1 text-center">
+            <form method="post" action="/login">
+                {% for message in get_flashed_messages() %}
+                    <div class="alert alert-danger my-3">{{ message }}</div>
+                {% endfor %}
+                {{ form.csrf_token }}
+                {{ form.username(class="form-control auth-input",placeholder="ユーザー名") }}
+                {{ form.password(class="form-control auth-input",placeholder="パスワード") }}
+                <br>
+                <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+                {{ form.submit(class="btn btn-md btn-primary btn-block auth-btn") }}
+            </form>
+        </section>
+    </div>
+</div>
 {% endblock %}

@@ -39,6 +39,7 @@ Session(app)
 
 csrf = CSRFProtect(app)
 
+
 # ブラウザがレスポンスをキャッシュしないようにしている
 @app.after_request
 def after_request(response):
@@ -52,6 +53,7 @@ def after_request(response):
 if __name__ == "__main__":
     app.debug = True
     csrf.init_app(app)
+    login_manager.init_app(app)
     app.run()
 
 # データベースを呼び出す関数の定義

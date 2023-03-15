@@ -5,7 +5,7 @@ from wtforms.validators import DataRequired, Email, Length
 
 class SignUpForm(FlaskForm):
     username = StringField(
-        "　　　ユーザー名　",
+        "ユーザー名",
         validators=[
             DataRequired("ユーザ名は必須です。"),
             Length(1, 30, "30文字以内で入力してください。"),
@@ -20,8 +20,8 @@ class SignUpForm(FlaskForm):
         ],
     )
     """
-    password = PasswordField("　　　パスワード　", validators=[DataRequired("パスワードは必須です。")])
-    confirmation = PasswordField("確認用パスワード　", validators=[DataRequired("確認用パスワードは必須です。")])
+    password = PasswordField("パスワード", validators=[DataRequired("パスワードは必須です。")])
+    confirmation = PasswordField("確認用パスワード", validators=[DataRequired("確認用パスワードは必須です。")])
     submit = SubmitField("新規登録")
 
 
