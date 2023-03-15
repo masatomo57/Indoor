@@ -661,7 +661,7 @@ def show_stone(num_list):
     #print(width)
     #print(height)
     # 画像を合成する
-    canvas = Image.new("RGB", (width, height), (150, 190, 157))
+    canvas = Image.new("RGB", (width, height), (200, 200, 200))
     for i in range(len(images)):
         canvas.paste(images[i], posi[i],images[i])
 
@@ -1249,7 +1249,7 @@ def show_animal(num_list):
     #print(width)
     #print(height)
     # 画像を合成する
-    canvas = Image.new("RGB", (width, height), (50, 190, 57))
+    canvas = Image.new("RGB", (width, height), (197, 149, 107))
     for i in range(len(images)):
         canvas.paste(images[i], posi[i],images[i])
 

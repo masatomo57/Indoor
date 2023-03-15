@@ -91,6 +91,7 @@ def read_csv(filename, item):
 @login_required
 def index():
     otoku = otoku_test.otoku(session["user_id"])
+    print(otoku)
     #野菜のホーム画面データ
     num_list,judge=otoku_show.otoku_show_num(287)
     # num_list,judge=otoku_show.otoku_show_num(otoku[0])
