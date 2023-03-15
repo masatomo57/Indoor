@@ -93,8 +93,6 @@ nav .navbar-brand .green
     width: 200px;
     min-width: 200px;
     padding: 10px;
-    background-color: #a7d4a7;
-    color: white;
 }
 
 .chart {
@@ -119,7 +117,7 @@ nav .navbar-brand .green
     margin: 0 auto;
     overflow-x: scroll;
     position: relative;
-    /* background-color: rgba(244, 177, 131, 1); */
+    background-color: #008000;
 }
 
 .hanabatake_header {
@@ -134,8 +132,8 @@ nav .navbar-brand .green
     margin: 0 auto;
     overflow-x: scroll;
     position: relative;
-    /* background-color: rgba(150, 190, 157, 1);
-    color: #ffbb2f; */
+    background-color: #ffbb2f;
+    color: #ffbb2f;
 }
 
 .kakoujou_header {
@@ -150,8 +148,7 @@ nav .navbar-brand .green
     margin: 0 auto;
     overflow-x: scroll;
     position: relative;
-    /* background-color: rgba(50, 60, 157, 1);
-    color: #2a5caa; */
+    background-color: #2a5caa;
 }
 
 .suizokukan_header {
@@ -166,8 +163,8 @@ nav .navbar-brand .green
     margin: 0 auto;
     overflow-x: scroll;
     position: relative;
-    /* background-color: rgba(50, 190, 57, 1);
-    color: #ef4868; */
+    background-color: #ef4868;
+    color: #ef4868;
 }
 
 .zoo_header {
