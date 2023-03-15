@@ -258,22 +258,29 @@ def merge_csv(word):
     csv = csv.drop("Unnamed: 0", axis=1)
 
   date = taking_new_data(word, date_=True, url_=False)
+  #print(date)
   url = taking_new_data(word, date_=False, url_=True)
   df = get_new_date(word, date, url)
+  #print(df.iloc[-1, 0])
 
   merged = pd.concat([csv, df], axis=0)
   merged = merged.reset_index()
   merged = merged.drop("index", axis=1)
 
-  words = "/workspaces/Indoor/kakeibo/" + word + "_converted.csv"
-  #テスト用↓
-  #words = "/workspaces/Indoor/kakeibo/" + word + "_converted1.csv"
+  if date == df.iloc[-1, 0]:
+    print("すでに最新データが反映されています")
+    return None
 
-  merged.to_csv(words)
+  #words = "/workspaces/Indoor/kakeibo/" + word + "_converted.csv"
+  #テスト用↓
+  words = "/workspaces/Indoor/kakeibo/" + word + "_converted1.csv"
+
+  merged.to_csv(words, index=False)
+  print("データを更新しました")
 
   #return merged
   # return はテスト用
 
 #=========================================
 
-#merge_csv("yasai")
+merge_csv("yasai")
