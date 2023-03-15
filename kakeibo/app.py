@@ -7,7 +7,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from helpers import login_required
 from forms import SignUpForm, LoginForm
 from config import BaseConfig
-from flask_wtf.csrf import CSRFProtect
+from flask_wtf.csrf import CSRFProtect, generate_csrf
 import csv
 import datetime
 import calendar
@@ -26,23 +26,19 @@ app = Flask(__name__)
 app.config.from_object(BaseConfig())
 
 app.config['SECRET_KEY'] = BaseConfig.SECRET_KEY # 秘密鍵を設定する
+app.config['WTF_CSRF_SECRET_KEY'] = BaseConfig.WTF_CSRF_SECRET_KEY # CSRF対策
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config["JSON_AS_ASCII"] = False
-
-# 税率宣言
-tax = 1.1
 
 # Configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-# 秘密鍵を設定する
-app.secret_key = app.config['SECRET_KEY']
+csrf = CSRFProtect(app)
 
-# csrf = CSRFProtect(app)
 # ブラウザがレスポンスをキャッシュしないようにしている
 @app.after_request
 def after_request(response):
@@ -53,9 +49,10 @@ def after_request(response):
     return response
 
 
-#if __name__ == "__main__":
-#    app.run(debug=True)
-
+if __name__ == "__main__":
+    app.debug = True
+    csrf.init_app(app)
+    app.run()
 
 # データベースを呼び出す関数の定義
 def get_db():
@@ -739,6 +736,11 @@ def thismonthdata():
 @login_required
 def register():
     if request.method == "POST":
+        # CSRFトークンを検証する
+        csrf_token = request.form.get('csrf_token')
+        if not csrf.validate_csrf(csrf_token):
+            abort(400, description='CSRF token validation failed')
+
         if request.form.get("submit") == "test2":
             return redirect("/test2")
         elif request.form.get("submit") == "test1":
@@ -748,7 +750,8 @@ def register():
         elif request.form.get("submit") == "test4":
             return redirect("/test4")
     else:
-        return render_template("register.html",database=thismonthdata())
+        csrf_token = generate_csrf()
+        return render_template("register.html",database=thismonthdata(),csrf_token=csrf_token)
 
 
 @app.route("/test1", methods=["POST"])
@@ -789,7 +792,8 @@ def test1():
     db.commit()
     db.close()
     database = thismonthdata()
-    return render_template('register.html', database=database, error=error)
+    csrf_token = generate_csrf()
+    return render_template('register.html', database=database, error=error,csrf_token=csrf_token)
 
 
 @app.route("/test2", methods=["POST"])
@@ -802,7 +806,8 @@ def test2():
     cur.execute('SELECT transacted,item,price,shares,gram FROM test_buying WHERE user_id = ? AND transacted BETWEEN ? AND ? ORDER BY transacted ASC, item ASC', (session["user_id"], start_date, last_date))
     database = cur.fetchall()
     conn.close()
-    return render_template('register.html', database=database)
+    csrf_token = generate_csrf()
+    return render_template('register.html', database=database,csrf_token=csrf_token)
 
 
 @app.route("/test3", methods=["POST"])
@@ -824,7 +829,8 @@ def test3():
     conn.commit()
     database = cur.fetchall()
     conn.close()
-    return jsonify(database)
+    csrf_token = generate_csrf()
+    return jsonify(database,csrf_token)
 
 
 @app.route("/test4", methods=["POST"])
@@ -848,7 +854,8 @@ def test4():
     cur.execute('SELECT transacted,item,price,shares,gram FROM test_buying WHERE user_id = ? AND transacted BETWEEN ? AND ? ORDER BY transacted ASC, item ASC', (session["user_id"], start_date, last_date))
     database = cur.fetchall()
     conn.close()
-    return jsonify(database)
+    csrf_token = generate_csrf()
+    return jsonify(database,csrf_token)
     # return render_template('register.html', database=database, error=None)
 
 

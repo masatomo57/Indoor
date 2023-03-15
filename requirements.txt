@@ -3,6 +3,7 @@ Flask-Session
 requests
 Flask-WTF
 Flask-Login
+flask-wtf
 Flask-Mail
 Werkzeug
 WTForms

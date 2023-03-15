@@ -29,6 +29,8 @@
     {% endif %}
     <div id="form-register">
         <form action="/test1" method="post">
+        <!-- CSRFトークンを含む隠しフィールド -->
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
         <div class="col-md-6 offset-md-3">
         <br>
         <h3>入力フォーム</h3>
@@ -157,6 +159,8 @@
     <h3>支出一覧</h3>
     </div>
     <form action="/test2" method="post">
+        <!-- CSRFトークンを含む隠しフィールド -->
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
         <input type="date" id="start_date" name="start_date">
         &nbsp;〜&nbsp;
         <input type="date" id="last_date" name="last_date">
@@ -350,6 +354,7 @@
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', '/test3');
                 xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.setRequestHeader('X-CSRFToken', document.getElementsByName('csrf_token')[0].value); // CSRFトークンを追加
                 xhr.onreadystatechange = function() {
                 if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                     console.log(xhr.responseText);
@@ -396,6 +401,7 @@
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', '/test4');
                 xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.setRequestHeader('X-CSRFToken', document.getElementsByName('csrf_token')[0].value); // CSRFトークンを追加
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                         console.log(xhr.responseText);
