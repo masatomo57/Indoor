@@ -268,7 +268,7 @@ def merge_csv(word):
   merged = merged.drop("index", axis=1)
 
   if date == df.iloc[-1, 0]:
-    print("すでに最新データが反映されています")
+    print(word,":すでに最新データが反映されています")
     return None
 
   #words = "/workspaces/Indoor/kakeibo/" + word + "_converted.csv"
@@ -276,7 +276,7 @@ def merge_csv(word):
   words = "/workspaces/Indoor/kakeibo/" + word + "_converted1.csv"
 
   merged.to_csv(words, index=False)
-  print("データを更新しました")
+  print(word,":データを更新しました")
 
   #return merged
   # return はテスト用

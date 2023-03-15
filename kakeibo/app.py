@@ -18,6 +18,7 @@ import otoku_show
 import secrets
 import logging
 logging.basicConfig()
+import update_data
 
 # Configure application
 app = Flask(__name__)
@@ -117,6 +118,11 @@ def index():
     # num_list,judge=otoku_show.otoku_show_num(otoku[3])
     print(f'num_list:{num_list},judge:{judge}')
     level_animal=otoku_show.show_animal(num_list)
+
+    update_data.merge_csv("yasai")
+    update_data.merge_csv("kakou")
+    update_data.merge_csv("niku")
+    update_data.merge_csv("sakana")
 
     return render_template("index.html",otoku=otoku,level_hana=level_hana,level_stone=level_stone,level_fish=level_fish,level_animal=level_animal)
 
