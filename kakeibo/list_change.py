@@ -1,6 +1,6 @@
 
 from datetime import datetime as dt
-
+import item_lists as il
 '''
 # yasai.csvを読み込む関数の定義
 def read_csv(filename, item):
@@ -46,7 +46,7 @@ def greenonion():
 '''
 
 
-def list_change(label_list,price_list,count,plot_data):
+def list_change(label_list,price_list,count,plot_data,name):
     flag=0
     plot_list=[None for i in range(count)]#noneリストの作成
     #print(len(plot_list))
@@ -63,7 +63,28 @@ def list_change(label_list,price_list,count,plot_data):
                 buy_dy=buy_dy[0:10]
                 flag=1
                 label_list.insert(j,buy_dy)
-                pld=int(i[1]/i[2])
+                if name in il.yasai:
+                    if i[3]==None:
+                        pld=int(i[1]/i[2])
+                    else:
+                        pld=int(i[1]*il.yasai[name]/i[3])
+                elif name in il.kakou:
+                    if i[3]==None:
+                        pld=int(i[1]/i[2])
+                    else:
+                        pld=int(i[1]*il.kakou[name]/i[3])
+                elif name in il.sakana:
+                    if i[3]==None:
+                        pld=int(i[1]/i[2])
+                    else:
+                        pld=int(i[1]*il.sakana[name]/i[3])
+                elif name in il.niku:
+                    if i[3]==None:
+                        pld=int(i[1]/i[2])
+                    else:
+                        pld=int(i[1]*il.niku[name]/i[3])
+                else:
+                    pld=int(i[1]/i[2])
                 plot_list.insert(j,str(pld))
                 price_list.insert(j,None)
                 break
