@@ -59,7 +59,7 @@ def get_date(date, day=True):
   if day == True:
     date = datetime.date(date[0], date[2], date[3])
   else:
-    date = datetime.date(date[0], date[2], 1)
+    date = datetime.date(date[0], date[2]+1, 1)
 
 
   return date
