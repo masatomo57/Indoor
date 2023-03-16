@@ -127,10 +127,7 @@ def index():
     print(f'num_list:{num_list},judge:{judge}')
     level_animal=otoku_show.show_animal(num_list)
 
-    update_data.merge_csv("yasai")
-    update_data.merge_csv("kakou")
-    update_data.merge_csv("niku")
-    update_data.merge_csv("sakana")
+
 
     return render_template("index.html",otoku=otoku,level_hana=level_hana,level_stone=level_stone,level_fish=level_fish,level_animal=level_animal)
 
@@ -1196,6 +1193,11 @@ def login():
         session["user_id"] = rows[0][1]
 
         db.close()
+
+        update_data.merge_csv("yasai")
+        update_data.merge_csv("kakou")
+        update_data.merge_csv("niku")
+        update_data.merge_csv("sakana")
 
         # Redirect user to home page
         return redirect("/")
