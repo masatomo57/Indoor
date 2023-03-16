@@ -64,13 +64,13 @@ def otoku(username):
                             #print('gramあり')
                             otoku_price = yasai_data.at[yasai_data.index[j],item_name]*(userskakeibo[i][4]/il.yasai[item_name]) - (userskakeibo[i][2] / userskakeibo[i][3])
                             otoku_price = userskakeibo[i][3] * otoku_price
-                        '''
+
                         print(f'yasai_name:{item_name}')
                         print(f'kakeibo_price:{userskakeibo[i][2]}')
                         print(f'shares:{userskakeibo[i][3]}')
                         print(f'yasai_data_price:{yasai_data.at[yasai_data.index[j],item_name]}')
                         print(f'otoku_price:{otoku_price}')
-                        '''
+
                         yasai_otoku_price += otoku_price
                         break
                     #otoku_price = 0
@@ -159,8 +159,7 @@ def otoku(username):
     '''
     return yasai_otoku_price, kakou_otoku_price, sakana_otoku_price, niku_otoku_price, total_otoku_price, point_yasai, point_kakou, point_sakana, point_niku
 
-'''
-user_name = 'kk'
+
+user_name = 'Masatomo'
 ans = otoku(user_name)
 print(ans)
-'''
