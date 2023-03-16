@@ -8,6 +8,7 @@ df_num = [10,10,5,3,2,0]
 
 #お得額を入れる
 def otoku_show_num(otoku):
+    flag_len=0
     show_num = [0,0,0,0,0,0]
     otoku=int(otoku)
     #print(type(otoku))
@@ -16,7 +17,8 @@ def otoku_show_num(otoku):
         plamai = True
         otoku_len = len(str(otoku))
         #print(f'otoku_len:{otoku_len}')
-        if otoku_len >= 6:
+        if otoku_len > 6:
+            flag_len=1
             otoku_len = 6
         for i in range(-1,-1*otoku_len -1,-1):
             #print(i)
@@ -43,6 +45,8 @@ def otoku_show_num(otoku):
         if otoku_len >= 6:
             pu =int(ans[-6])
             show_num[-6]=pu
+        if flag_len == 1:
+            show_num=df_num
         #print(f'40:{show_num}')
 
     else:
