@@ -90,6 +90,10 @@ def read_csv(filename, item):
             count += 1
     data["price"] = price
     data["date"] = date
+    if filename=="kakou" or filename=="niku" or filename=="gyokai":
+        for date in data["date"]:
+            date = date[:7]
+
     data["lastprice"] = price[len(price)-1]
     return data,count
 
