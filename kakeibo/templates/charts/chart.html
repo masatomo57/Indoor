@@ -73,11 +73,13 @@
         var xAxisLabelMinWidth = 10;
         var data = {{ price_list|tojson }};
         var labels = {{ label_list|tojson }};
+        var data2 = {{ plot_list|tojson}}
 
         if (data.length < labelcount) {
             for (let i=1; i < labelcount-data.length; i++) {
                 data.push(NaN);
                 labels.push("");
+                data2.push(NaN)
             }
         }
 
@@ -104,6 +106,15 @@
                     borderColor: ctx => skipped(ctx, 'rgb(0,0,0,0.2)') || down(ctx, 'rgb(192,75,75)'),
                     borderDash: ctx => skipped(ctx, [6, 6]),
                 },
+                yAxisID: "Chart",
+                spanGaps: true
+                },{
+                type: 'scatter',
+                label: "{{ name }}",
+                data: data2,
+                backgroundColor: 'rgba(0,159,255,0.6)',
+                borderColor: 'rgb(0, 0, 255,0.7)',
+                pointRadius: 6,
                 yAxisID: "Chart",
                 spanGaps: true
                 }]
