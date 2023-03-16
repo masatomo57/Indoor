@@ -208,13 +208,13 @@
            // 今月の「初日」と「最終日」をUIに表示
            getElmId('start_date').value = YM + "-01";
 
-           {% if start %}
-                getElmId('start_date').value = "{{ start }}";
+           {% if start_date %}
+                getElmId('start_date').value = "{{ start_date }}";
            {% endif %}
 
            getElmId('last_date').value = YM + "-" + lastDateArray[2];
-           {% if last %}
-                getElmId('last_date').value = "{{ last }}";
+           {% if last_date %}
+                getElmId('last_date').value = "{{ last_date }}";
            {% endif %}
         }
 
@@ -335,16 +335,21 @@
         function display_data(){
             var start_date = document.getElementById("start_date").value;
             var last_date = document.getElementById("last_date").value;
+            //let formData = new FormData(start_date);
+            //formData.append(last_date, document.getElementById("last_date").value)
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '/test2');
             xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.setRequestHeader('X-CSRFToken', document.getElementsByName('csrf_token')[0].value); // CSRFトークンを追加
+
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                    database = JSON.parse(this.responseText);
+                    // database = JSON.parse(this.responseText);
                     console.log(xhr.responseText);
                 }
             };
             xhr.send(JSON.stringify({ start_date: start_date, last_date: last_date }));
+            //xhr.send(formData);
         }
 
        /*「削除ボタン」クリック時の処理 */

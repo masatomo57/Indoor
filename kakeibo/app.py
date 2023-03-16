@@ -754,7 +754,7 @@ def register():
             return redirect("/test4")
     else:
         csrf_token = generate_csrf()
-        return render_template("register.html",database=thismonthdata(),csrf_token=csrf_token,start=None,last=None)
+        return render_template("register.html",database=thismonthdata(),csrf_token=csrf_token,start_date=None,las_datet=None)
 
 
 @app.route("/test1", methods=["POST"])
@@ -802,15 +802,23 @@ def test1():
 @app.route("/test2", methods=["POST"])
 @login_required
 def test2():
+    """
+    data = request.get_json()
+    start_date = data.get('start_date')
+    last_date = data.get('last_date')
+    """
     start_date = request.form.get("start_date")
     last_date = request.form.get("last_date")
+    print(start_date)
+    print(last_date)
     conn = sqlite3.connect('kakeibo.db')
     cur = conn.cursor()
     cur.execute('SELECT transacted,item,price,shares,gram FROM test_buying WHERE user_id = ? AND transacted BETWEEN ? AND ? ORDER BY transacted ASC, item ASC', (session["user_id"], start_date, last_date))
     database = cur.fetchall()
     conn.close()
     csrf_token = generate_csrf()
-    return render_template('register.html', database=database,csrf_token=csrf_token,start=start_date, last=last_date)
+    # return jsonify(database,csrf_token,start_date,last_date)
+    return render_template('register.html', database=database,csrf_token=csrf_token,start_date=start_date, last_date=last_date)
 
 
 @app.route("/test3", methods=["POST"])
