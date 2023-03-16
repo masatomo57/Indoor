@@ -72,7 +72,7 @@ def close_db(error):
         g.db.close()
 """
 
-# yasai.csvを読み込む関数の定義
+# csvを読み込む関数の定義
 def read_csv(filename, item):
     price = []
     date = []
