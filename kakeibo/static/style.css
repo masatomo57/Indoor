@@ -27,6 +27,10 @@ nav .navbar-brand .green
     color: #2e944b;
 }
 
+.container-fluid {
+    background-color: #a7d4a7;
+}
+
 /* ---------------------- */
 /* -- css for register -- */
 #regist_spending {
