@@ -153,9 +153,9 @@ def cabbage():
         last_price = int(float(last_price))
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
-    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    plot_data = db.execute('SELECT transacted,price,shares,gram FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
     conn.close()
-    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data,name)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/yasai_converted.csv", yasai_price=True)[name]
     #print(prediction)
@@ -175,9 +175,9 @@ def greenonion():
         last_price = int(float(last_price))
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
-    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    plot_data = db.execute('SELECT transacted,price,shares,gram FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
     conn.close()
-    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data,name)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/yasai_converted.csv", yasai_price=True)[name]
     #print(prediction)
@@ -197,9 +197,9 @@ def lettuce():
         last_price = int(float(last_price))
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
-    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    plot_data = db.execute('SELECT transacted,price,shares,gram FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
     conn.close()
-    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data,name)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/yasai_converted.csv", yasai_price=True)[name]
     #print(prediction)
@@ -218,9 +218,9 @@ def potato():
         last_price = int(float(last_price))
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
-    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    plot_data = db.execute('SELECT transacted,price,shares,gram FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
     conn.close()
-    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data,name)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/yasai_converted.csv", yasai_price=True)[name]
     #print(prediction)
@@ -240,9 +240,9 @@ def onion():
         last_price = int(float(last_price))
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
-    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    plot_data = db.execute('SELECT transacted,price,shares,gram FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
     conn.close()
-    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data,name)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/yasai_converted.csv", yasai_price=True)[name]
     #print(prediction)
@@ -262,9 +262,9 @@ def cucumber():
         last_price = int(float(last_price))
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
-    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    plot_data = db.execute('SELECT transacted,price,shares,gram FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
     conn.close()
-    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data,name)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/yasai_converted.csv", yasai_price=True)[name]
     #print(prediction)
@@ -284,9 +284,9 @@ def tomato():
         last_price = int(float(last_price))
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
-    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    plot_data = db.execute('SELECT transacted,price,shares,gram FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
     conn.close()
-    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data,name)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/yasai_converted.csv", yasai_price=True)[name]
     #print(prediction)
@@ -306,9 +306,9 @@ def spinach():
         last_price = int(float(last_price))
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
-    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    plot_data = db.execute('SELECT transacted,price,shares,gram FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
     conn.close()
-    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data,name)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/yasai_converted.csv", yasai_price=True)[name]
     #print(prediction)
@@ -328,9 +328,9 @@ def carrot():
         last_price = int(float(last_price))
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
-    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    plot_data = db.execute('SELECT transacted,price,shares,gram FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
     conn.close()
-    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data,name)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/yasai_converted.csv", yasai_price=True)[name]
     #print(prediction)
@@ -349,9 +349,9 @@ def chinesecabbage():
         last_price = int(float(last_price))
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
-    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    plot_data = db.execute('SELECT transacted,price,shares,gram FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
     conn.close()
-    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data,name)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/yasai_converted.csv", yasai_price=True)[name]
     #print(prediction)
@@ -371,9 +371,9 @@ def raddish():
         last_price = int(float(last_price))
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
-    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    plot_data = db.execute('SELECT transacted,price,shares,gram FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
     conn.close()
-    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data,name)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/yasai_converted.csv", yasai_price=True)[name]
     #print(prediction)
@@ -393,9 +393,9 @@ def eggplant():
         last_price = int(float(last_price))
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
-    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    plot_data = db.execute('SELECT transacted,price,shares,gram FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
     conn.close()
-    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data,name)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/yasai_converted.csv", yasai_price=True)[name]
     #print(prediction)
@@ -415,9 +415,9 @@ def bread():
         last_price = int(float(last_price))
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
-    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    plot_data = db.execute('SELECT transacted,price,shares,gram FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
     conn.close()
-    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data,name)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
     #print(prediction)
@@ -437,9 +437,9 @@ def instantnoodle():
         last_price = int(float(last_price))
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
-    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    plot_data = db.execute('SELECT transacted,price,shares,gram FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
     conn.close()
-    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data,name)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
     #print(prediction)
@@ -459,9 +459,9 @@ def udon():
         last_price = int(float(last_price))
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
-    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    plot_data = db.execute('SELECT transacted,price,shares,gram FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
     conn.close()
-    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data,name)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
     #print(prediction)
@@ -481,9 +481,9 @@ def flour():
         last_price = int(float(last_price))
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
-    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    plot_data = db.execute('SELECT transacted,price,shares,gram FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
     conn.close()
-    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data,name)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
     #print(prediction)
@@ -503,9 +503,9 @@ def milk():
         last_price = int(float(last_price))
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
-    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    plot_data = db.execute('SELECT transacted,price,shares,gram FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
     conn.close()
-    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data,name)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
     #print(prediction)
@@ -525,9 +525,9 @@ def cheese():
         last_price = int(float(last_price))
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
-    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    plot_data = db.execute('SELECT transacted,price,shares,gram FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
     conn.close()
-    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data,name)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
     #print(prediction)
@@ -547,9 +547,9 @@ def tofu():
         last_price = int(float(last_price))
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
-    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    plot_data = db.execute('SELECT transacted,price,shares,gram FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
     conn.close()
-    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data,name)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
     #print(prediction)
@@ -569,9 +569,9 @@ def canolaoil():
         last_price = int(float(last_price))
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
-    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    plot_data = db.execute('SELECT transacted,price,shares,gram FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
     conn.close()
-    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data,name)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
     #print(prediction)
@@ -591,9 +591,9 @@ def saladoil():
         last_price = int(float(last_price))
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
-    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    plot_data = db.execute('SELECT transacted,price,shares,gram FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
     conn.close()
-    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data,name)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
     #print(prediction)
@@ -613,9 +613,9 @@ def margarine():
         last_price = int(float(last_price))
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
-    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    plot_data = db.execute('SELECT transacted,price,shares,gram FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
     conn.close()
-    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data,name)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
     #print(prediction)
@@ -635,9 +635,9 @@ def mayonnaise():
         last_price = int(float(last_price))
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
-    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    plot_data = db.execute('SELECT transacted,price,shares,gram FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
     conn.close()
-    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data,name)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
     #print(prediction)
@@ -657,9 +657,9 @@ def soysauce():
         last_price = int(float(last_price))
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
-    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    plot_data = db.execute('SELECT transacted,price,shares,gram FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
     conn.close()
-    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data,name)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
     #print(prediction)
@@ -679,9 +679,9 @@ def miso():
         last_price = int(float(last_price))
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
-    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    plot_data = db.execute('SELECT transacted,price,shares,gram FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
     conn.close()
-    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data,name)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
     #print(prediction)
@@ -701,9 +701,9 @@ def fishcake():
         last_price = int(float(last_price))
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
-    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    plot_data = db.execute('SELECT transacted,price,shares,gram FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
     conn.close()
-    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data,name)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
     #print(prediction)
@@ -723,9 +723,9 @@ def cannedtuna():
         last_price = int(float(last_price))
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
-    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    plot_data = db.execute('SELECT transacted,price,shares,gram FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
     conn.close()
-    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data,name)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
     #print(prediction)
@@ -745,9 +745,9 @@ def butter():
         last_price = int(float(last_price))
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
-    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    plot_data = db.execute('SELECT transacted,price,shares,gram FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
     conn.close()
-    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data,name)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
     #print(prediction)
@@ -767,9 +767,9 @@ def importedbeef():
         last_price = int(float(last_price))
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
-    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    plot_data = db.execute('SELECT transacted,price,shares,gram FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
     conn.close()
-    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data,name)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/niku_converted.csv", yasai_price=False)[name]
     #print(prediction)
@@ -789,9 +789,9 @@ def domesticbeef():
         last_price = int(float(last_price))
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
-    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    plot_data = db.execute('SELECT transacted,price,shares,gram FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
     conn.close()
-    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data,name)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/niku_converted.csv", yasai_price=False)[name]
     #print(prediction)
@@ -811,9 +811,9 @@ def pork():
         last_price = int(float(last_price))
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
-    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    plot_data = db.execute('SELECT transacted,price,shares,gram FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
     conn.close()
-    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data,name)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/niku_converted.csv", yasai_price=False)[name]
     #print(prediction)
@@ -833,9 +833,9 @@ def chicken():
         last_price = int(float(last_price))
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
-    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    plot_data = db.execute('SELECT transacted,price,shares,gram FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
     conn.close()
-    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data,name)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/niku_converted.csv", yasai_price=False)[name]
     #print(prediction)
@@ -855,9 +855,9 @@ def egg():
         last_price = int(float(last_price))
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
-    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    plot_data = db.execute('SELECT transacted,price,shares,gram FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
     conn.close()
-    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data,name)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/niku_converted.csv", yasai_price=False)[name]
     #print(prediction)
@@ -877,9 +877,9 @@ def tuna():
         last_price = int(float(last_price))
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
-    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    plot_data = db.execute('SELECT transacted,price,shares,gram FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
     conn.close()
-    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data,name)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/sakana_converted.csv", yasai_price=False)[name]
     #print(prediction)
@@ -899,9 +899,9 @@ def shrimp():
         last_price = int(float(last_price))
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
-    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    plot_data = db.execute('SELECT transacted,price,shares,gram FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
     conn.close()
-    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data,name)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/sakana_converted.csv", yasai_price=False)[name]
     #print(prediction)
@@ -921,9 +921,9 @@ def yellowtail():
         last_price = int(float(last_price))
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
-    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    plot_data = db.execute('SELECT transacted,price,shares,gram FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
     conn.close()
-    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data,name)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/sakana_converted.csv", yasai_price=False)[name]
     #print(prediction)
@@ -943,9 +943,9 @@ def salmon():
         last_price = int(float(last_price))
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
-    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    plot_data = db.execute('SELECT transacted,price,shares,gram FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
     conn.close()
-    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data,name)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/sakana_converted.csv", yasai_price=False)[name]
     #print(prediction)
