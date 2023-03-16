@@ -20,6 +20,7 @@ import logging
 logging.basicConfig()
 import update_data
 import predict
+import list_change
 
 # Configure application
 app = Flask(__name__)
@@ -76,6 +77,7 @@ def read_csv(filename, item):
     price = []
     date = []
     data = {}
+    count = 0
     csv_file = filename + "_converted.csv"
     with open(csv_file, "r") as f:
         reader = csv.DictReader(f)
@@ -85,10 +87,11 @@ def read_csv(filename, item):
             else:
                 price.append(row[item])
             date.append(row["DATE"])
+            count += 1
     data["price"] = price
     data["date"] = date
     data["lastprice"] = price[len(price)-1]
-    return data
+    return data,count
 
 
 @app.route("/")
@@ -138,608 +141,812 @@ def charts():
 @login_required
 def cabbage():
     name = "キャベツ"
-    data = read_csv("yasai", name)
+    data,count = read_csv("yasai", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
     if last_price != None:
         last_price = int(float(last_price))
-    '''
-    print(label_list)
-    print(price_list)
-    #print(type(label_list[0]))
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
-    plot_data = db.execute('SELECT transacted,price FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
     conn.close()
-    print(type(plot_data))
-    print(plot_data)
-
-    print(len(plot_data))
-    for i in range(len(plot_data)):
-        print(plot_data[i])
-        print(type(plot_data[i][0]))
-    '''
-
-    #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price,plot_data=plot_data)
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/yasai_converted.csv", yasai_price=True)[name]
     #print(prediction)
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
+    return render_template("charts/chart.html", label_list=l1, price_list=l2, name=name, last_price=last_price, prediction=prediction,plot_list=l3)
+    #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/greenonion")
 @login_required
 def greenonion():
     name = "ねぎ"
-    data = read_csv("yasai", name)
+    data,count = read_csv("yasai", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
     if last_price != None:
         last_price = int(float(last_price))
+    conn = sqlite3.connect("kakeibo.db")
+    db = conn.cursor()
+    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    conn.close()
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/yasai_converted.csv", yasai_price=True)[name]
     #print(prediction)
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
+    return render_template("charts/chart.html", label_list=l1, price_list=l2, name=name, last_price=last_price, prediction=prediction,plot_list=l3)
+    #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/lettuce")
 @login_required
 def lettuce():
     name = "レタス"
-    data = read_csv("yasai", name)
+    data,count = read_csv("yasai", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
     if last_price != None:
         last_price = int(float(last_price))
+    conn = sqlite3.connect("kakeibo.db")
+    db = conn.cursor()
+    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    conn.close()
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/yasai_converted.csv", yasai_price=True)[name]
     #print(prediction)
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
+    return render_template("charts/chart.html", label_list=l1, price_list=l2, name=name, last_price=last_price, prediction=prediction,plot_list=l3)
+    #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 @app.route("/charts/potato")
 @login_required
 def potato():
     name = "ばれいしょ"
-    data = read_csv("yasai", name)
+    data,count = read_csv("yasai", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
     if last_price != None:
         last_price = int(float(last_price))
+    conn = sqlite3.connect("kakeibo.db")
+    db = conn.cursor()
+    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    conn.close()
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/yasai_converted.csv", yasai_price=True)[name]
     #print(prediction)
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
+    return render_template("charts/chart.html", label_list=l1, price_list=l2, name=name, last_price=last_price, prediction=prediction,plot_list=l3)
+    #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/onion")
 @login_required
 def onion():
     name = "たまねぎ"
-    data = read_csv("yasai", name)
+    data,count = read_csv("yasai", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
     if last_price != None:
         last_price = int(float(last_price))
+    conn = sqlite3.connect("kakeibo.db")
+    db = conn.cursor()
+    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    conn.close()
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/yasai_converted.csv", yasai_price=True)[name]
     #print(prediction)
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
+    return render_template("charts/chart.html", label_list=l1, price_list=l2, name=name, last_price=last_price, prediction=prediction,plot_list=l3)
+    #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/cucumber")
 @login_required
 def cucumber():
     name = "きゅうり"
-    data = read_csv("yasai", name)
+    data,count = read_csv("yasai", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
     if last_price != None:
         last_price = int(float(last_price))
+    conn = sqlite3.connect("kakeibo.db")
+    db = conn.cursor()
+    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    conn.close()
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/yasai_converted.csv", yasai_price=True)[name]
     #print(prediction)
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
+    return render_template("charts/chart.html", label_list=l1, price_list=l2, name=name, last_price=last_price, prediction=prediction,plot_list=l3)
+    #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/tomato")
 @login_required
 def tomato():
     name = "トマト"
-    data = read_csv("yasai", name)
+    data,count = read_csv("yasai", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
     if last_price != None:
         last_price = int(float(last_price))
+    conn = sqlite3.connect("kakeibo.db")
+    db = conn.cursor()
+    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    conn.close()
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/yasai_converted.csv", yasai_price=True)[name]
     #print(prediction)
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
+    return render_template("charts/chart.html", label_list=l1, price_list=l2, name=name, last_price=last_price, prediction=prediction,plot_list=l3)
+    #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/spinach")
 @login_required
 def spinach():
     name = "ほうれんそう"
-    data = read_csv("yasai", name)
+    data,count = read_csv("yasai", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
     if last_price != None:
         last_price = int(float(last_price))
+    conn = sqlite3.connect("kakeibo.db")
+    db = conn.cursor()
+    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    conn.close()
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/yasai_converted.csv", yasai_price=True)[name]
     #print(prediction)
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
+    return render_template("charts/chart.html", label_list=l1, price_list=l2, name=name, last_price=last_price, prediction=prediction,plot_list=l3)
+    #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/carrot")
 @login_required
 def carrot():
     name = "にんじん"
-    data = read_csv("yasai", name)
+    data,count = read_csv("yasai", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
     if last_price != None:
         last_price = int(float(last_price))
+    conn = sqlite3.connect("kakeibo.db")
+    db = conn.cursor()
+    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    conn.close()
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/yasai_converted.csv", yasai_price=True)[name]
     #print(prediction)
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
+    return render_template("charts/chart.html", label_list=l1, price_list=l2, name=name, last_price=last_price, prediction=prediction,plot_list=l3)
+    #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 @app.route("/charts/chinesecabbage")
 @login_required
 def chinesecabbage():
     name = "はくさい"
-    data = read_csv("yasai", name)
+    data,count = read_csv("yasai", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
     if last_price != None:
         last_price = int(float(last_price))
+    conn = sqlite3.connect("kakeibo.db")
+    db = conn.cursor()
+    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    conn.close()
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/yasai_converted.csv", yasai_price=True)[name]
     #print(prediction)
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
+    return render_template("charts/chart.html", label_list=l1, price_list=l2, name=name, last_price=last_price, prediction=prediction,plot_list=l3)
+    #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/raddish")
 @login_required
 def raddish():
     name = "だいこん"
-    data = read_csv("yasai", name)
+    data,count = read_csv("yasai", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
     if last_price != None:
         last_price = int(float(last_price))
+    conn = sqlite3.connect("kakeibo.db")
+    db = conn.cursor()
+    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    conn.close()
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/yasai_converted.csv", yasai_price=True)[name]
     #print(prediction)
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
+    return render_template("charts/chart.html", label_list=l1, price_list=l2, name=name, last_price=last_price, prediction=prediction,plot_list=l3)
+    #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/eggplant")
 @login_required
 def eggplant():
     name = "なす"
-    data = read_csv("yasai", name)
+    data,count = read_csv("yasai", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
     if last_price != None:
         last_price = int(float(last_price))
+    conn = sqlite3.connect("kakeibo.db")
+    db = conn.cursor()
+    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    conn.close()
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/yasai_converted.csv", yasai_price=True)[name]
     #print(prediction)
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
+    return render_template("charts/chart.html", label_list=l1, price_list=l2, name=name, last_price=last_price, prediction=prediction,plot_list=l3)
+    #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/bread")
 @login_required
 def bread():
     name = "食パン"
-    data = read_csv("kakou", name)
+    data,count = read_csv("kakou", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
     if last_price != None:
         last_price = int(float(last_price))
+    conn = sqlite3.connect("kakeibo.db")
+    db = conn.cursor()
+    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    conn.close()
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
     #print(prediction)
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
+    return render_template("charts/chart.html", label_list=l1, price_list=l2, name=name, last_price=last_price, prediction=prediction,plot_list=l3)
+    #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/instantnoodle")
 @login_required
 def instantnoodle():
     name = "即席めん"
-    data = read_csv("kakou", name)
+    data,count = read_csv("kakou", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
     if last_price != None:
         last_price = int(float(last_price))
+    conn = sqlite3.connect("kakeibo.db")
+    db = conn.cursor()
+    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    conn.close()
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
     #print(prediction)
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
+    return render_template("charts/chart.html", label_list=l1, price_list=l2, name=name, last_price=last_price, prediction=prediction,plot_list=l3)
+    #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/udon")
 @login_required
 def udon():
     name = "ゆでうどん"
-    data = read_csv("kakou", name)
+    data,count = read_csv("kakou", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
     if last_price != None:
         last_price = int(float(last_price))
+    conn = sqlite3.connect("kakeibo.db")
+    db = conn.cursor()
+    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    conn.close()
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
     #print(prediction)
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
+    return render_template("charts/chart.html", label_list=l1, price_list=l2, name=name, last_price=last_price, prediction=prediction,plot_list=l3)
+    #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/flour")
 @login_required
 def flour():
     name = "小麦粉"
-    data = read_csv("kakou", name)
+    data,count = read_csv("kakou", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
     if last_price != None:
         last_price = int(float(last_price))
+    conn = sqlite3.connect("kakeibo.db")
+    db = conn.cursor()
+    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    conn.close()
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
     #print(prediction)
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
+    return render_template("charts/chart.html", label_list=l1, price_list=l2, name=name, last_price=last_price, prediction=prediction,plot_list=l3)
+    #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/milk")
 @login_required
 def milk():
     name = "牛乳"
-    data = read_csv("kakou", name)
+    data,count = read_csv("kakou", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
     if last_price != None:
         last_price = int(float(last_price))
+    conn = sqlite3.connect("kakeibo.db")
+    db = conn.cursor()
+    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    conn.close()
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
     #print(prediction)
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
+    return render_template("charts/chart.html", label_list=l1, price_list=l2, name=name, last_price=last_price, prediction=prediction,plot_list=l3)
+    #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/cheese")
 @login_required
 def cheese():
     name = "チーズ"
-    data = read_csv("kakou", name)
+    data,count = read_csv("kakou", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
     if last_price != None:
         last_price = int(float(last_price))
+    conn = sqlite3.connect("kakeibo.db")
+    db = conn.cursor()
+    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    conn.close()
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
     #print(prediction)
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
+    return render_template("charts/chart.html", label_list=l1, price_list=l2, name=name, last_price=last_price, prediction=prediction,plot_list=l3)
+    #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/tofu")
 @login_required
 def tofu():
     name = "豆腐"
-    data = read_csv("kakou", name)
+    data,count = read_csv("kakou", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
     if last_price != None:
         last_price = int(float(last_price))
+    conn = sqlite3.connect("kakeibo.db")
+    db = conn.cursor()
+    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    conn.close()
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
     #print(prediction)
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
+    return render_template("charts/chart.html", label_list=l1, price_list=l2, name=name, last_price=last_price, prediction=prediction,plot_list=l3)
+    #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/canolaoil")
 @login_required
 def canolaoil():
     name = "食用油（キャノーラ油）"
-    data = read_csv("kakou", name)
+    data,count = read_csv("kakou", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
     if last_price != None:
         last_price = int(float(last_price))
+    conn = sqlite3.connect("kakeibo.db")
+    db = conn.cursor()
+    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    conn.close()
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
     #print(prediction)
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
+    return render_template("charts/chart.html", label_list=l1, price_list=l2, name=name, last_price=last_price, prediction=prediction,plot_list=l3)
+    #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/saladoil")
 @login_required
 def saladoil():
     name = "食用油（サラダ油）"
-    data = read_csv("kakou", name)
+    data,count = read_csv("kakou", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
     if last_price != None:
         last_price = int(float(last_price))
+    conn = sqlite3.connect("kakeibo.db")
+    db = conn.cursor()
+    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    conn.close()
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
     #print(prediction)
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
+    return render_template("charts/chart.html", label_list=l1, price_list=l2, name=name, last_price=last_price, prediction=prediction,plot_list=l3)
+    #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/margarine")
 @login_required
 def margarine():
     name = "マーガリン"
-    data = read_csv("kakou", name)
+    data,count = read_csv("kakou", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
     if last_price != None:
         last_price = int(float(last_price))
+    conn = sqlite3.connect("kakeibo.db")
+    db = conn.cursor()
+    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    conn.close()
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
     #print(prediction)
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
+    return render_template("charts/chart.html", label_list=l1, price_list=l2, name=name, last_price=last_price, prediction=prediction,plot_list=l3)
+    #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/mayonnaise")
 @login_required
 def mayonnaise():
     name = "マヨネーズ"
-    data = read_csv("kakou", name)
+    data,count = read_csv("kakou", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
     if last_price != None:
         last_price = int(float(last_price))
+    conn = sqlite3.connect("kakeibo.db")
+    db = conn.cursor()
+    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    conn.close()
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
     #print(prediction)
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
+    return render_template("charts/chart.html", label_list=l1, price_list=l2, name=name, last_price=last_price, prediction=prediction,plot_list=l3)
+    #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/soysauce")
 @login_required
 def soysauce():
     name = "しょう油"
-    data = read_csv("kakou", name)
+    data,count = read_csv("kakou", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
     if last_price != None:
         last_price = int(float(last_price))
+    conn = sqlite3.connect("kakeibo.db")
+    db = conn.cursor()
+    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    conn.close()
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
     #print(prediction)
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
+    return render_template("charts/chart.html", label_list=l1, price_list=l2, name=name, last_price=last_price, prediction=prediction,plot_list=l3)
+    #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/miso")
 @login_required
 def miso():
     name = "みそ"
-    data = read_csv("kakou", name)
+    data,count = read_csv("kakou", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
     if last_price != None:
         last_price = int(float(last_price))
+    conn = sqlite3.connect("kakeibo.db")
+    db = conn.cursor()
+    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    conn.close()
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
     #print(prediction)
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
+    return render_template("charts/chart.html", label_list=l1, price_list=l2, name=name, last_price=last_price, prediction=prediction,plot_list=l3)
+    #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/fishcake")
 @login_required
 def fishcake():
     name = "かまぼこ"
-    data = read_csv("kakou", name)
+    data,count = read_csv("kakou", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
     if last_price != None:
         last_price = int(float(last_price))
+    conn = sqlite3.connect("kakeibo.db")
+    db = conn.cursor()
+    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    conn.close()
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
     #print(prediction)
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
+    return render_template("charts/chart.html", label_list=l1, price_list=l2, name=name, last_price=last_price, prediction=prediction,plot_list=l3)
+    #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/cannedtuna")
 @login_required
 def cannedtuna():
     name = "まぐろ缶詰"
-    data = read_csv("kakou", name)
+    data,count = read_csv("kakou", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
     if last_price != None:
         last_price = int(float(last_price))
+    conn = sqlite3.connect("kakeibo.db")
+    db = conn.cursor()
+    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    conn.close()
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
     #print(prediction)
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
+    return render_template("charts/chart.html", label_list=l1, price_list=l2, name=name, last_price=last_price, prediction=prediction,plot_list=l3)
+    #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/butter")
 @login_required
 def butter():
     name = "バター"
-    data = read_csv("kakou", name)
+    data,count = read_csv("kakou", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
     if last_price != None:
         last_price = int(float(last_price))
+    conn = sqlite3.connect("kakeibo.db")
+    db = conn.cursor()
+    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    conn.close()
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
     #print(prediction)
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
+    return render_template("charts/chart.html", label_list=l1, price_list=l2, name=name, last_price=last_price, prediction=prediction,plot_list=l3)
+    #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/importedbeef")
 @login_required
 def importedbeef():
     name = "輸入牛肉（冷蔵ロース）"
-    data = read_csv("niku", name)
+    data,count = read_csv("niku", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
     if last_price != None:
         last_price = int(float(last_price))
+    conn = sqlite3.connect("kakeibo.db")
+    db = conn.cursor()
+    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    conn.close()
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/niku_converted.csv", yasai_price=False)[name]
     #print(prediction)
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
+    return render_template("charts/chart.html", label_list=l1, price_list=l2, name=name, last_price=last_price, prediction=prediction,plot_list=l3)
+    #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/domesticbeef")
 @login_required
 def domesticbeef():
     name = "国産牛肉（冷蔵ロース）"
-    data = read_csv("niku", name)
+    data,count = read_csv("niku", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
     if last_price != None:
         last_price = int(float(last_price))
+    conn = sqlite3.connect("kakeibo.db")
+    db = conn.cursor()
+    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    conn.close()
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/niku_converted.csv", yasai_price=False)[name]
     #print(prediction)
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
+    return render_template("charts/chart.html", label_list=l1, price_list=l2, name=name, last_price=last_price, prediction=prediction,plot_list=l3)
+    #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/pork")
 @login_required
 def pork():
     name = "豚肉（ロース）"
-    data = read_csv("niku", name)
+    data,count = read_csv("niku", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
     if last_price != None:
         last_price = int(float(last_price))
+    conn = sqlite3.connect("kakeibo.db")
+    db = conn.cursor()
+    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    conn.close()
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/niku_converted.csv", yasai_price=False)[name]
     #print(prediction)
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
+    return render_template("charts/chart.html", label_list=l1, price_list=l2, name=name, last_price=last_price, prediction=prediction,plot_list=l3)
+    #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/chicken")
 @login_required
 def chicken():
     name = "鶏肉（もも肉）"
-    data = read_csv("niku", name)
+    data,count = read_csv("niku", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
     if last_price != None:
         last_price = int(float(last_price))
+    conn = sqlite3.connect("kakeibo.db")
+    db = conn.cursor()
+    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    conn.close()
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/niku_converted.csv", yasai_price=False)[name]
     #print(prediction)
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
+    return render_template("charts/chart.html", label_list=l1, price_list=l2, name=name, last_price=last_price, prediction=prediction,plot_list=l3)
+    #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/egg")
 @login_required
 def egg():
     name = "鶏卵 サイズ混合・10個入り）"
-    data = read_csv("niku", name)
+    data,count = read_csv("niku", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
     if last_price != None:
         last_price = int(float(last_price))
+    conn = sqlite3.connect("kakeibo.db")
+    db = conn.cursor()
+    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    conn.close()
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/niku_converted.csv", yasai_price=False)[name]
     #print(prediction)
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
+    return render_template("charts/chart.html", label_list=l1, price_list=l2, name=name, last_price=last_price, prediction=prediction,plot_list=l3)
+    #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/tuna")
 @login_required
 def tuna():
     name = "まぐろ"
-    data = read_csv("sakana", name)
+    data,count = read_csv("sakana", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
     if last_price != None:
         last_price = int(float(last_price))
+    conn = sqlite3.connect("kakeibo.db")
+    db = conn.cursor()
+    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    conn.close()
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/sakana_converted.csv", yasai_price=False)[name]
     #print(prediction)
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
+    return render_template("charts/chart.html", label_list=l1, price_list=l2, name=name, last_price=last_price, prediction=prediction,plot_list=l3)
+    #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/shrimp")
 @login_required
 def shrimp():
     name = "えび"
-    data = read_csv("sakana", name)
+    data,count = read_csv("sakana", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
     if last_price != None:
         last_price = int(float(last_price))
+    conn = sqlite3.connect("kakeibo.db")
+    db = conn.cursor()
+    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    conn.close()
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/sakana_converted.csv", yasai_price=False)[name]
     #print(prediction)
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
+    return render_template("charts/chart.html", label_list=l1, price_list=l2, name=name, last_price=last_price, prediction=prediction,plot_list=l3)
+    #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/yellowtail")
 @login_required
 def yellowtail():
     name = "ぶり"
-    data = read_csv("sakana", name)
+    data,count = read_csv("sakana", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
     if last_price != None:
         last_price = int(float(last_price))
+    conn = sqlite3.connect("kakeibo.db")
+    db = conn.cursor()
+    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    conn.close()
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/sakana_converted.csv", yasai_price=False)[name]
     #print(prediction)
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
+    return render_template("charts/chart.html", label_list=l1, price_list=l2, name=name, last_price=last_price, prediction=prediction,plot_list=l3)
+    #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/salmon")
 @login_required
 def salmon():
     name = "さけ"
-    data = read_csv("sakana", name)
+    data,count = read_csv("sakana", name)
     label_list = data["date"]
     price_list = data["price"]
     last_price = data["lastprice"]
     if last_price != None:
         last_price = int(float(last_price))
+    conn = sqlite3.connect("kakeibo.db")
+    db = conn.cursor()
+    plot_data = db.execute('SELECT transacted,price,shares FROM test_buying WHERE user_id = ? AND item = ?', (session["user_id"],name)).fetchall()
+    conn.close()
+    l1,l2,l3=list_change.list_change(label_list,price_list,count,plot_data)
 
     prediction = predict.predict_price("/workspaces/Indoor/kakeibo/sakana_converted.csv", yasai_price=False)[name]
     #print(prediction)
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
+    return render_template("charts/chart.html", label_list=l1, price_list=l2, name=name, last_price=last_price, prediction=prediction,plot_list=l3)
+    #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 """
