@@ -18,6 +18,8 @@ import otoku_show
 import secrets
 import logging
 logging.basicConfig()
+import update_data
+import predict
 
 # Configure application
 app = Flask(__name__)
@@ -95,28 +97,33 @@ def index():
     otoku = otoku_test.otoku(session["user_id"])
     print(otoku)
     #野菜のホーム画面データ
-    num_list,judge=otoku_show.otoku_show_num(287)
-    # num_list,judge=otoku_show.otoku_show_num(otoku[0])
+    # num_list,judge=otoku_show.otoku_show_num(287)
+    num_list,judge=otoku_show.otoku_show_num(otoku[0])
     print(f'num_list:{num_list},judge:{judge}')
     level_hana=otoku_show.show_hana(num_list)
 
     #加工食品のホーム画面データ
-    num_list,judge=otoku_show.otoku_show_num(9872)
-    # num_list,judge=otoku_show.otoku_show_num(otoku[1])
+    # num_list,judge=otoku_show.otoku_show_num(9872)
+    num_list,judge=otoku_show.otoku_show_num(otoku[1])
     print(f'num_list:{num_list},judge:{judge}')
     level_stone=otoku_show.show_stone(num_list)
 
     #魚介のホーム画面データ
-    num_list,judge=otoku_show.otoku_show_num(9999)
-    # num_list,judge=otoku_show.otoku_show_num(otoku[2])
+    # num_list,judge=otoku_show.otoku_show_num(9999)
+    num_list,judge=otoku_show.otoku_show_num(otoku[2])
     print(f'num_list:{num_list},judge:{judge}')
     level_fish=otoku_show.show_fish(num_list)
 
     #肉食のホーム画面データ
-    num_list,judge=otoku_show.otoku_show_num(4579)
-    # num_list,judge=otoku_show.otoku_show_num(otoku[3])
+    # num_list,judge=otoku_show.otoku_show_num(4579)
+    num_list,judge=otoku_show.otoku_show_num(otoku[3])
     print(f'num_list:{num_list},judge:{judge}')
     level_animal=otoku_show.show_animal(num_list)
+
+    update_data.merge_csv("yasai")
+    update_data.merge_csv("kakou")
+    update_data.merge_csv("niku")
+    update_data.merge_csv("sakana")
 
     return render_template("index.html",otoku=otoku,level_hana=level_hana,level_stone=level_stone,level_fish=level_fish,level_animal=level_animal)
 
@@ -155,7 +162,10 @@ def cabbage():
     '''
 
     #return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price,plot_data=plot_data)
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+
+    prediction = predict.predict_price("/workspaces/Indoor/kakeibo/yasai_converted.csv", yasai_price=True)[name]
+    #print(prediction)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/greenonion")
@@ -169,7 +179,9 @@ def greenonion():
     if last_price != None:
         last_price = int(float(last_price))
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+    prediction = predict.predict_price("/workspaces/Indoor/kakeibo/yasai_converted.csv", yasai_price=True)[name]
+    #print(prediction)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/lettuce")
@@ -183,8 +195,9 @@ def lettuce():
     if last_price != None:
         last_price = int(float(last_price))
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
-
+    prediction = predict.predict_price("/workspaces/Indoor/kakeibo/yasai_converted.csv", yasai_price=True)[name]
+    #print(prediction)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 @app.route("/charts/potato")
 @login_required
@@ -197,7 +210,9 @@ def potato():
     if last_price != None:
         last_price = int(float(last_price))
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+    prediction = predict.predict_price("/workspaces/Indoor/kakeibo/yasai_converted.csv", yasai_price=True)[name]
+    #print(prediction)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/onion")
@@ -211,7 +226,9 @@ def onion():
     if last_price != None:
         last_price = int(float(last_price))
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+    prediction = predict.predict_price("/workspaces/Indoor/kakeibo/yasai_converted.csv", yasai_price=True)[name]
+    #print(prediction)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/cucumber")
@@ -225,7 +242,9 @@ def cucumber():
     if last_price != None:
         last_price = int(float(last_price))
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+    prediction = predict.predict_price("/workspaces/Indoor/kakeibo/yasai_converted.csv", yasai_price=True)[name]
+    #print(prediction)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/tomato")
@@ -239,7 +258,9 @@ def tomato():
     if last_price != None:
         last_price = int(float(last_price))
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+    prediction = predict.predict_price("/workspaces/Indoor/kakeibo/yasai_converted.csv", yasai_price=True)[name]
+    #print(prediction)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/spinach")
@@ -253,7 +274,9 @@ def spinach():
     if last_price != None:
         last_price = int(float(last_price))
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+    prediction = predict.predict_price("/workspaces/Indoor/kakeibo/yasai_converted.csv", yasai_price=True)[name]
+    #print(prediction)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/carrot")
@@ -267,8 +290,9 @@ def carrot():
     if last_price != None:
         last_price = int(float(last_price))
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
-
+    prediction = predict.predict_price("/workspaces/Indoor/kakeibo/yasai_converted.csv", yasai_price=True)[name]
+    #print(prediction)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 @app.route("/charts/chinesecabbage")
 @login_required
@@ -281,7 +305,9 @@ def chinesecabbage():
     if last_price != None:
         last_price = int(float(last_price))
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+    prediction = predict.predict_price("/workspaces/Indoor/kakeibo/yasai_converted.csv", yasai_price=True)[name]
+    #print(prediction)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/raddish")
@@ -295,7 +321,9 @@ def raddish():
     if last_price != None:
         last_price = int(float(last_price))
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+    prediction = predict.predict_price("/workspaces/Indoor/kakeibo/yasai_converted.csv", yasai_price=True)[name]
+    #print(prediction)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/eggplant")
@@ -309,7 +337,9 @@ def eggplant():
     if last_price != None:
         last_price = int(float(last_price))
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+    prediction = predict.predict_price("/workspaces/Indoor/kakeibo/yasai_converted.csv", yasai_price=True)[name]
+    #print(prediction)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/bread")
@@ -323,7 +353,9 @@ def bread():
     if last_price != None:
         last_price = int(float(last_price))
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+    prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
+    #print(prediction)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/instantnoodle")
@@ -337,7 +369,9 @@ def instantnoodle():
     if last_price != None:
         last_price = int(float(last_price))
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+    prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
+    #print(prediction)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/udon")
@@ -351,7 +385,9 @@ def udon():
     if last_price != None:
         last_price = int(float(last_price))
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+    prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
+    #print(prediction)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/flour")
@@ -365,7 +401,9 @@ def flour():
     if last_price != None:
         last_price = int(float(last_price))
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+    prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
+    #print(prediction)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/milk")
@@ -379,7 +417,9 @@ def milk():
     if last_price != None:
         last_price = int(float(last_price))
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+    prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
+    #print(prediction)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/cheese")
@@ -393,7 +433,9 @@ def cheese():
     if last_price != None:
         last_price = int(float(last_price))
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+    prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
+    #print(prediction)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/tofu")
@@ -407,7 +449,9 @@ def tofu():
     if last_price != None:
         last_price = int(float(last_price))
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+    prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
+    #print(prediction)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/canolaoil")
@@ -421,7 +465,9 @@ def canolaoil():
     if last_price != None:
         last_price = int(float(last_price))
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+    prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
+    #print(prediction)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/saladoil")
@@ -435,7 +481,9 @@ def saladoil():
     if last_price != None:
         last_price = int(float(last_price))
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+    prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
+    #print(prediction)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/margarine")
@@ -449,7 +497,9 @@ def margarine():
     if last_price != None:
         last_price = int(float(last_price))
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+    prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
+    #print(prediction)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/mayonnaise")
@@ -463,7 +513,9 @@ def mayonnaise():
     if last_price != None:
         last_price = int(float(last_price))
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+    prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
+    #print(prediction)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/soysauce")
@@ -477,7 +529,9 @@ def soysauce():
     if last_price != None:
         last_price = int(float(last_price))
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+    prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
+    #print(prediction)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/miso")
@@ -491,7 +545,9 @@ def miso():
     if last_price != None:
         last_price = int(float(last_price))
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+    prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
+    #print(prediction)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/fishcake")
@@ -505,7 +561,9 @@ def fishcake():
     if last_price != None:
         last_price = int(float(last_price))
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+    prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
+    #print(prediction)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/cannedtuna")
@@ -519,7 +577,9 @@ def cannedtuna():
     if last_price != None:
         last_price = int(float(last_price))
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+    prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
+    #print(prediction)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/butter")
@@ -533,7 +593,9 @@ def butter():
     if last_price != None:
         last_price = int(float(last_price))
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+    prediction = predict.predict_price("/workspaces/Indoor/kakeibo/kakou_converted.csv", yasai_price=False)[name]
+    #print(prediction)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/importedbeef")
@@ -547,7 +609,9 @@ def importedbeef():
     if last_price != None:
         last_price = int(float(last_price))
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+    prediction = predict.predict_price("/workspaces/Indoor/kakeibo/niku_converted.csv", yasai_price=False)[name]
+    #print(prediction)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/domesticbeef")
@@ -561,7 +625,9 @@ def domesticbeef():
     if last_price != None:
         last_price = int(float(last_price))
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+    prediction = predict.predict_price("/workspaces/Indoor/kakeibo/niku_converted.csv", yasai_price=False)[name]
+    #print(prediction)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/pork")
@@ -575,7 +641,9 @@ def pork():
     if last_price != None:
         last_price = int(float(last_price))
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+    prediction = predict.predict_price("/workspaces/Indoor/kakeibo/niku_converted.csv", yasai_price=False)[name]
+    #print(prediction)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/chicken")
@@ -589,7 +657,9 @@ def chicken():
     if last_price != None:
         last_price = int(float(last_price))
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+    prediction = predict.predict_price("/workspaces/Indoor/kakeibo/niku_converted.csv", yasai_price=False)[name]
+    #print(prediction)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/egg")
@@ -603,7 +673,9 @@ def egg():
     if last_price != None:
         last_price = int(float(last_price))
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+    prediction = predict.predict_price("/workspaces/Indoor/kakeibo/niku_converted.csv", yasai_price=False)[name]
+    #print(prediction)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/tuna")
@@ -617,7 +689,9 @@ def tuna():
     if last_price != None:
         last_price = int(float(last_price))
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+    prediction = predict.predict_price("/workspaces/Indoor/kakeibo/sakana_converted.csv", yasai_price=False)[name]
+    #print(prediction)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/shrimp")
@@ -631,7 +705,9 @@ def shrimp():
     if last_price != None:
         last_price = int(float(last_price))
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+    prediction = predict.predict_price("/workspaces/Indoor/kakeibo/sakana_converted.csv", yasai_price=False)[name]
+    #print(prediction)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/yellowtail")
@@ -645,7 +721,9 @@ def yellowtail():
     if last_price != None:
         last_price = int(float(last_price))
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+    prediction = predict.predict_price("/workspaces/Indoor/kakeibo/sakana_converted.csv", yasai_price=False)[name]
+    #print(prediction)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 @app.route("/charts/salmon")
@@ -659,7 +737,9 @@ def salmon():
     if last_price != None:
         last_price = int(float(last_price))
 
-    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price)
+    prediction = predict.predict_price("/workspaces/Indoor/kakeibo/sakana_converted.csv", yasai_price=False)[name]
+    #print(prediction)
+    return render_template("charts/chart.html", label_list=label_list, price_list=price_list, name=name, last_price=last_price, prediction=prediction)
 
 
 """

@@ -117,7 +117,7 @@ nav .navbar-brand .green
     margin: 0 auto;
     overflow-x: scroll;
     position: relative;
-    background-color: #008000;
+    background-color: #008000;/*rgb=(0,128,0)*/
 }
 
 .hanabatake_header {
@@ -132,7 +132,7 @@ nav .navbar-brand .green
     margin: 0 auto;
     overflow-x: scroll;
     position: relative;
-    background-color: #ffbb2f;
+    background-color: #ffbb2f;/*rgb=(255,187,47)*/
     color: #ffbb2f;
 }
 
@@ -148,7 +148,7 @@ nav .navbar-brand .green
     margin: 0 auto;
     overflow-x: scroll;
     position: relative;
-    background-color: #2a5caa;
+    background-color: #2a5caa;/*rgb=(42,92,170)*/
 }
 
 .suizokukan_header {
@@ -163,7 +163,7 @@ nav .navbar-brand .green
     margin: 0 auto;
     overflow-x: scroll;
     position: relative;
-    background-color: #ef4868;
+    background-color: #ef4868;/*rgb=(239, 72, 104)*/
     color: #ef4868;
 }
 

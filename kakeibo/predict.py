@@ -92,4 +92,4 @@ def predict_price(address, yasai_price=True):
   return predict_data_plus
 
 #確認用
-print(predict_price("/workspaces/Indoor/kakeibo/yasai_converted.csv", yasai_price=True))
+#print(predict_price("/workspaces/Indoor/kakeibo/yasai_converted.csv", yasai_price=True))
