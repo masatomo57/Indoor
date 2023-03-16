@@ -116,8 +116,18 @@ def otoku(username):
                             otoku_price = sakana_data.at[sakana_data.index[j],item_name]*(userskakeibo[i][4]/il.sakana[item_name]) - (userskakeibo[i][2] / userskakeibo[i][3])
                             otoku_price = userskakeibo[i][3] * otoku_price
                         sakana_otoku_price += otoku_price
-                        break
+
                     #otoku_price = 0
+
+                        print(f'sakana_name:{item_name}')
+                        print(f'kakeibo_price:{userskakeibo[i][2]}')
+                        print(f'shares:{userskakeibo[i][3]}')
+                        print(f'sakana_data_price:{sakana_data.at[sakana_data.index[j],item_name]}')
+                        print(f'otoku_price:{otoku_price}')
+
+
+                        break
+
         #商品が肉なら肉データと比較
         elif item_name in il.niku:
             #加工csvのどの時間と比較すべきか探す
