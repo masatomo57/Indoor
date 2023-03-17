@@ -21,6 +21,28 @@ https://www.maff.go.jp/j/zyukyu/anpo/kouri/
 買った金額をカレンダー上で見ることができます。
 
 ## Requirements
+Flask
+Flask-Session
+requests
+Flask-WTF
+Flask-Login
+flask-wtf
+Flask-Mail
+Werkzeug
+WTForms
+email_validator
+beautifulsoup4
+requests
+bs4
+pandas
+numpy
+datetime
+schedule
+tika
+ipython
+openpyxl
+scikit-learn
 
-
-## Usage
+```
+pip install -r requirements.txt
+```
