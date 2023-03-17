@@ -46,3 +46,8 @@ scikit-learn
 ```
 pip install -r requirements.txt
 ```
+
+## Usage
+```
+git clone https://github.com/masatomo57/Indoor.git
+```
