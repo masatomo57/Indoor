@@ -1022,6 +1022,19 @@ def thismonthdata():
     conn.close()
     return database
 
+# csvを読み込み、品目をリストに格納する関数の定義
+def datalist_csv(filename):
+    item_list = []
+    csv_file = filename + "_converted.csv"
+    with open(csv_file, "r") as f:
+        reader = csv.reader(f)
+        reader = next(reader)
+        for item in reader:
+            if item != 'DATE':
+                item_list.append(item)
+
+    return item_list
+
 
 @app.route("/register", methods=["GET", "POST"])
 @login_required
@@ -1042,15 +1055,27 @@ def register():
             return redirect("/test4")
     else:
         csrf_token = generate_csrf()
-        return render_template("register.html",database=thismonthdata(),csrf_token=csrf_token,start_date=None,las_datet=None)
+        # CSVの品目リストを作成している
+        yasai_list = datalist_csv('yasai')
+        niku_list = datalist_csv('niku')
+        kakou_list = datalist_csv('kakou')
+        sakana_list = datalist_csv('sakana')
+        item_list = yasai_list + kakou_list + niku_list + sakana_list
+        return render_template("register.html",database=thismonthdata(),csrf_token=csrf_token,start_date=None,las_datet=None,item_list=item_list,yasai_list=yasai_list,kakou_list=kakou_list,niku_list=niku_list,sakana_list=sakana_list)
 
 
 @app.route("/test1", methods=["POST"])
 @login_required
 def test1():
+    # CSVの品目リストを作成している
+    yasai_list = datalist_csv('yasai')
+    niku_list = datalist_csv('niku')
+    kakou_list = datalist_csv('kakou')
+    sakana_list = datalist_csv('sakana')
+    item_list = yasai_list + kakou_list + niku_list + sakana_list
     # 今月のデータを取得
     database = thismonthdata()
-
+    csrf_token = generate_csrf()
     regist_name = request.form.get("name")
     regist_price = request.form.get("price")
     regist_quantity = request.form.get("quantity")
@@ -1058,7 +1083,18 @@ def test1():
     regist_gram = request.form.get("gram")
 
     if not regist_name or not regist_price or not regist_quantity or not regist_date:
-        return render_template("register.html",database=database)
+        return render_template("register.html",database=database,csrf_token=csrf_token,item_list=item_list,yasai_list=yasai_list,kakou_list=kakou_list,niku_list=niku_list,sakana_list=sakana_list)
+
+    # 品目が肉か魚であるか判断
+    flag = 0
+    for item in niku_list:
+        if item == regist_name:
+            flag = 1
+    for item in sakana_list:
+        if item == regist_name:
+            flag = 1
+    if flag != 0 and not regist_gram:
+        return render_template("register.html",database=database,csrf_token=csrf_token,item_list=item_list,yasai_list=yasai_list,kakou_list=kakou_list,niku_list=niku_list,sakana_list=sakana_list)
 
     db = get_db()
     error = None
@@ -1071,8 +1107,6 @@ def test1():
             regist_gram = None
         db.execute("UPDATE test_buying SET price = price + ?, shares = shares + ?, gram = ? WHERE user_id = ? AND item = ? AND transacted = ?", (regist_price,regist_quantity,regist_gram,session["user_id"],regist_name,regist_date))
 
-    #if regist_price:
-    #    regist_sum = int(float(regist_price) * tax)
     # sum(カラム)はいらないので、後で消したい。
     if not result:
         if not regist_gram:
@@ -1083,8 +1117,7 @@ def test1():
     db.commit()
     db.close()
     database = thismonthdata()
-    csrf_token = generate_csrf()
-    return render_template('register.html', database=database, error=error,csrf_token=csrf_token)
+    return render_template('register.html', database=database, error=error,csrf_token=csrf_token,item_list=item_list,yasai_list=yasai_list,kakou_list=kakou_list,niku_list=niku_list,sakana_list=sakana_list)
 
 
 @app.route("/test2", methods=["POST"])
@@ -1106,7 +1139,13 @@ def test2():
     conn.close()
     csrf_token = generate_csrf()
     # return jsonify(database,csrf_token,start_date,last_date)
-    return render_template('register.html', database=database,csrf_token=csrf_token,start_date=start_date, last_date=last_date)
+    # CSVの品目リストを作成している
+    yasai_list = datalist_csv('yasai')
+    niku_list = datalist_csv('niku')
+    kakou_list = datalist_csv('kakou')
+    sakana_list = datalist_csv('sakana')
+    item_list = yasai_list + kakou_list + niku_list + sakana_list
+    return render_template('register.html', database=database,csrf_token=csrf_token,start_date=start_date,last_date=last_date,item_list=item_list,yasai_list=yasai_list,kakou_list=kakou_list,niku_list=niku_list,sakana_list=sakana_list)
 
 
 @app.route("/test3", methods=["POST"])

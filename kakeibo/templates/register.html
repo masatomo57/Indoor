@@ -45,43 +45,9 @@
                 <div class="col-sm-4">
                     <input type="text" class="form-control" id="regist_name" name="name" list="item" placeholder="(必須)" oninput="checkItem()">
                     <datalist id="item">
-                        <option value="トマト">
-                        <option value="キャベツ">
-                        <option value="レタス">
-                        <option value="はくさい">
-                        <option value="だいこん">
-                        <option value="ねぎ">
-                        <option value="ばれいしょ">
-                        <option value="たまねぎ">
-                        <option value="きゅうり">
-                        <option value="ほうれんそう">
-                        <option value="なす">
-                        <option value="にんじん">
-                        <option value="食パン">
-                        <option value="即席めん">
-                        <option value="ゆでうどん">
-                        <option value="小麦粉">
-                        <option value="牛乳">
-                        <option value="チーズ">
-                        <option value="豆腐">
-                        <option value="食用油（キャノーラ油）">
-                        <option value="食用油（サラダ油）">
-                        <option value="マーガリン">
-                        <option value="マヨネーズ">
-                        <option value="しょう油">
-                        <option value="みそ">
-                        <option value="かまぼこ">
-                        <option value="まぐろ缶詰">
-                        <option value="バター">
-                        <option value="まぐろ">
-                        <option value="えび">
-                        <option value="ぶり">
-                        <option value="さけ">
-                        <option value="輸入牛肉（冷蔵ロース）">
-                        <option value="国産牛肉（冷蔵ロース）">
-                        <option value="豚肉（ロース）">
-                        <option value="鶏肉（もも肉）">
-                        <option value="鶏卵 サイズ混合・10個入り）">
+                        {% for item in item_list %}
+                            <option value="{{ item }}">
+                        {% endfor %}
                     </datalist>
                 </div>
                 <p></p>
@@ -103,41 +69,6 @@
                 </div>
                 <p></p>
             </div>
-
-            <!-- 野菜は緑、加工食品は黄色、肉は赤、魚は青 -->
-            <script>
-                function checkItem() {
-                  var itemInput = document.getElementById("regist_name");
-                  if ( itemInput.value == "まぐろ"|| itemInput.value == "えび" || itemInput.value == "ぶり" || itemInput.value == "さけ") {
-                    itemInput.style.borderColor = "blue";
-                    itemInput.style.borderWidth = "3px";
-                  } else if (itemInput.value == "輸入牛肉（冷蔵ロース）" || itemInput.value == "国産牛肉（冷蔵ロース）" || itemInput.value == "豚肉（ロース）" || itemInput.value == "鶏卵 サイズ混合・10個入り）" || itemInput.value == "鶏肉（もも肉）"){
-                    itemInput.style.borderColor = "red";
-                    itemInput.style.borderWidth = "3px";
-                  } else if (itemInput.value == "トマト" || itemInput.value == "キャベツ" || itemInput.value == "レタス" || itemInput.value == "はくさい" || itemInput.value == "だいこん" || itemInput.value == "ねぎ" || itemInput.value == "ばれいしょ" || itemInput.value == "たまねぎ" || itemInput.value == "きゅうり" || itemInput.value == "ほうれんそう" || itemInput.value == "なす" || itemInput.value == "にんじん"){
-                    itemInput.style.borderColor = "green";
-                    itemInput.style.borderWidth = "3px";
-                  } else if (itemInput.value == "食パン" || itemInput.value == "即席めん" || itemInput.value == "ゆでうどん" || itemInput.value == "小麦粉" || itemInput.value == "牛乳" || itemInput.value == "チーズ" || itemInput.value == "豆腐" || itemInput.value == "バター" || itemInput.value == "食用油（キャノーラ油）" || itemInput.value == "食用油（サラダ油）" || itemInput.value == "マーガリン" || itemInput.value == "マヨネーズ" || itemInput.value == "しょう油" || itemInput.value == "みそ" || itemInput.value == "かまぼこ" || itemInput.value == "まぐろ缶詰"){
-                    itemInput.style.borderColor = "#ffbb2f";
-                    itemInput.style.borderWidth = "3px";
-                  } else {
-                    itemInput.style.borderColor = "white";
-                  }
-                }
-            </script>
-
-            <!-- 特定の品目が入力された時に表示を変える (推奨) → (必須) -->
-            <script>
-                document.querySelector('#regist_name').addEventListener('input', function() {
-                  var itemName = document.querySelector('#regist_name').value;
-                  var gramInput = document.querySelector('#regist_gram');
-                  if (['まぐろ', 'えび', 'ぶり', 'さけ', '輸入牛肉（冷蔵ロース）', '国産牛肉（冷蔵ロース）', '豚肉（ロース）', '鶏肉（もも肉）', '鶏卵 サイズ混合・10個入り）'].includes(itemName)) {
-                    gramInput.placeholder = '(必須)';
-                  } else {
-                    gramInput.placeholder = '(推奨)';
-                  }
-                });
-            </script>
 
             <div class="form-group row">
                 <label for="gram" class="col-sm-2 col-form-label">総重量</label>
@@ -190,6 +121,64 @@
         {% endfor %}
     </table>
     <script>
+        var yasai_list  = {{ yasai_list | tojson }}
+        var kakou_list  = {{ kakou_list | tojson }}
+        var niku_list   = {{ niku_list | tojson }}
+        var sakana_list = {{ sakana_list | tojson }}
+
+        // 野菜は緑、加工食品は黄色、肉は赤、魚は青
+        function checkItem() {
+            var itemInput = document.getElementById("regist_name");
+            flag = 0
+
+            for (i = 0; i < yasai_list.length; ++i) {
+                if (itemInput.value == yasai_list[i]) {
+                    itemInput.style.borderColor = "green";
+                    itemInput.style.borderWidth = "3px";
+                    flag = 1
+                }
+            }
+
+            if (flag == 0) {
+                for (i = 0; i < sakana_list.length; ++i) {
+                    if (itemInput.value == sakana_list[i]) {
+                    itemInput.style.borderColor = "blue";
+                    itemInput.style.borderWidth = "3px";
+                    flag = 1
+                    }
+                }
+            }
+
+            if (flag == 0) {
+                for (i = 0; i < kakou_list.length; ++i) {
+                    if (itemInput.value == kakou_list[i]) {
+                        itemInput.style.borderColor = "#ffbb2f";
+                        itemInput.style.borderWidth = "3px";
+                        flag = 1
+                    }
+                }
+            }
+
+            if (flag == 0) {
+                for (i = 0; i < niku_list.length; ++i) {
+                    if (itemInput.value == niku_list[i]) {
+                    itemInput.style.borderColor = "red";
+                    itemInput.style.borderWidth = "3px";
+                    }
+                }
+            }
+        }
+        // 特定の品目が入力された時に表示を変える (推奨) → (必須)
+        document.querySelector('#regist_name').addEventListener('input', function() {
+            var itemName = document.querySelector('#regist_name').value;
+            var gramInput = document.querySelector('#regist_gram');
+            if (niku_list.includes(itemName) || sakana_list.includes(itemName)) {
+                gramInput.placeholder = '(必須)';
+            } else {
+                gramInput.placeholder = '(推奨)';
+            }
+        });
+
         var today = new Date();
         // 「年月日」を配列で取得 ( [0]:年, [1]:月, [2]:日 )
         var dateArray = getTSDate(today);
@@ -243,6 +232,8 @@
                 }
                 // ここでデータを登録する
                 alert('データを登録しました。');
+            } else {
+                return;
             }
         }
 
@@ -323,7 +314,7 @@
                         correctFlg = false;
                     }
                 } else {
-                    if (newItem == 'まぐろ' || newItem == 'えび' || newItem == 'ぶり' || newItem == 'さけ' || newItem == '輸入牛肉(冷蔵ロース)' || newItem == '国産牛肉(冷蔵ロース)' || newItem == '豚肉(ロース)' || newItem == '鶏肉(もも肉)' || newItem == '鶏卵') {
+                    if(niku_list.includes(newItem) || sakana_list.includes(newItem)){
                         alert('この品目の総重量の入力は必須です、');
                         correctFlg = false;
                     }
@@ -406,7 +397,8 @@
             if(newDate === date && newItem === item && newPrice === price && newQuantity == quantity && newGram == gram){
             //何も変更されていない場合は何もしない
                 alert('何も変更されませんでした。');
-                location.reload();
+                // location.reload();
+                location.href = '/register';
                 return;
             }
             if( chkRegistData2(newPrice, newQuantity, newGram, newItem) ) {
@@ -427,7 +419,8 @@
                 xhr.send(JSON.stringify({date: newDate, name: newItem, price: newPrice, quantity: newQuantity, gram: newGram}));
             } else {
                 alert('不適切な値が入力されました。');
-                location.reload();
+                // location.reload();
+                location.href = '/register';
                 return;
             }
             };
