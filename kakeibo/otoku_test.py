@@ -16,7 +16,7 @@ def otoku(username):
     conn = sqlite3.connect("kakeibo.db")
     db = conn.cursor()
     userskakeibo = db.execute('SELECT item,transacted,price,shares,gram FROM test_buying WHERE user_id = ?', (user_id,)).fetchall()
-    print(userskakeibo)
+    # print(userskakeibo)
 
     yasai_data=read_csv("yasai_converted.csv", header=0,index_col='DATE',parse_dates=True)
     kakou_data=read_csv("kakou_converted.csv", header=0,index_col='DATE',parse_dates=True)

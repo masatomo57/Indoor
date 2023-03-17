@@ -86,7 +86,9 @@ def list_change(label_list,price_list,count,plot_data,name):
                 else:
                     pld=int(i[1]/i[2])
                 plot_list.insert(j,str(pld))
-                price_list.insert(j,None)
+                ave = str((float(price_list[j-1]) + float(price_list[j])) / 2)
+                # price_list.insert(j,None)
+                price_list.insert(j,ave)
                 break
 
         if flag==0 and buy_day.year >= 2020:
