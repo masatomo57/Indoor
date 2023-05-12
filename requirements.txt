@@ -19,3 +19,5 @@ tika
 ipython
 openpyxl
 scikit-learn
+pystan
+prophet
